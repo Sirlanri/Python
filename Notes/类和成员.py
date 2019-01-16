@@ -62,3 +62,12 @@ print(r.staticShowTotal())#调用静态方法
 print(r.show())
 print(Root.classShowTotal())#通过类名调用类方法
 print(Root.staticShowTotal())#通过类名调用静方法
+
+class Demo:
+    pass
+t=Demo()
+def test(self,v):
+    self._value=v
+t.test=test#动态增加普通函数
+print(t.test)
+
