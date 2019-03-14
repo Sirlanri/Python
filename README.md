@@ -14,3 +14,11 @@
 
 主要是OS库的练习，OS会对电脑文件进行操作，有一定的风险，别闲着没事用物理机练OS库
 
+***
+# * 传送门
+
+[C语言代码库](https://coding.net/u/SLdeongaree/p/Coding/git)
+
+[Python代码库](https://coding.net/u/SLdeongaree/p/Python/git)
+
+[Java代码库](https://coding.net/u/SLdeongaree/p/Java/git)
