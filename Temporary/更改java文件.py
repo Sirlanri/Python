@@ -19,4 +19,16 @@ def file_name(file_dir):
                 allfile.append(name)
 
 onedir=r'E:\代码\云端同步\Java'
-file_name(onedir)
+#file_name(onedir)
+
+def rename():
+    for one in allfile:
+        with open('one','a') as f:
+            f.seek(0,0)
+            f.write('package {}'.format())
+
+secdir=[]
+def lujing():
+    for item in allfile:
+        secdir.append(item[15:item.length])#包名
+    
