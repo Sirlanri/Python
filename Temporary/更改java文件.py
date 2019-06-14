@@ -18,17 +18,23 @@ def file_name(file_dir):
                 name=os.path.join(root, file)
                 allfile.append(name)
 
-onedir=r'E:\代码\云端同步\Java'
-#file_name(onedir)
-
 def rename():
-    for one in allfile:
-        with open('one','a') as f:
+    for i in range(len(allfile)):
+        with open(allfile[i],'w+') as f:
+            content=f.read()
             f.seek(0,0)
-            f.write('package {}'.format())
+            f.write('package {};\n'+content.format(secdir[i]))
+
 
 secdir=[]
 def lujing():
     for item in allfile:
-        secdir.append(item[15:item.length])#包名
-    
+        
+        secdir.append(os.path.split(item[16:-5])[0].replace('\\','.'))#包名
+    print(secdir)
+
+onedir=r'E:\代码\云端同步\Java'
+test=r'E:\代码\云端同步\Java - 副本\JavaFX'
+file_name(test)
+lujing()
+rename()
