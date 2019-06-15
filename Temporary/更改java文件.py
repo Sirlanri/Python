@@ -1,5 +1,6 @@
 import os
 import os.path
+import sys
 
 
 def listdir(path, list_name):
@@ -19,11 +20,14 @@ def file_name(file_dir):
                 allfile.append(name)
 
 def rename():
+
+
     for i in range(len(allfile)):
         with open(allfile[i],'w+') as f:
             content=f.read()
             f.seek(0,0)
-            f.write('package {};\n'+content.format(secdir[i]))
+            temp='package '+secdir[i]+';\n'+content
+            f.write(str(temp).encode('utf-8'))
 
 
 secdir=[]
@@ -34,7 +38,7 @@ def lujing():
     print(secdir)
 
 onedir=r'E:\代码\云端同步\Java'
-test=r'E:\代码\云端同步\Java - 副本\JavaFX'
+test=r'E:\代码\云端同步\Java - 副本\Homework\第三章'
 file_name(test)
 lujing()
 rename()
