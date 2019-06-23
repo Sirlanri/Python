@@ -20,8 +20,6 @@ def file_name(file_dir):
                 allfile.append(name)
 
 def rename():
-
-
     for i in range(len(allfile)):
         with open(allfile[i],'w+') as f:
             content=f.read()
