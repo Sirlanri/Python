@@ -1,6 +1,6 @@
 import re
 t='i wanna something just like this'
-x=re.match('wan',t)#从头位置匹配i，如果没有，就返回none
+x=re.match('i',t)#从头位置匹配i，如果没有，就返回none
 print(x)
 
 y=re.search("wan",t)#扫描整个字符串
@@ -81,18 +81,19 @@ print(m.groups())#返回所有结果
 print(m.group(1))#返回第一部分
 print('\n\n\n')
 
-#提取电话号
 
-telword='this is my number:999-2331546 and 233-985671'
-pattern=re.compile(r'(\d{3,4})-(\d{7,8})')
-index=0
-while 1:
-    result=pattern.search(telword)#从上次停下的位置继续下次搜索
-    if not result:
-        break
-    print('---------------')
-    for i in range(3):
-        print('号码：',result.group(i))#分别输出号码的不同部分
-        print('开始 ',result.start(i),' 结束 ',result.end(i))#分别起始和结束的位置
-        print('位置 ',result.span(i))#起始&结束
-    index=result.end()
+#提取电话号
+def gettel():
+    telword='this is my number:999-2331546 and 233-985671'
+    pattern=re.compile(r'(\d{3,4})-(\d{7,8})')
+    index=0
+    while 1:
+        result=pattern.search(telword)#从上次停下的位置继续下次搜索
+        if not result:
+            break
+        print('---------------')
+        for i in range(3):
+            print('号码：',result.group(i))#分别输出号码的不同部分
+            print('开始 ',result.start(i),' 结束 ',result.end(i))#分别起始和结束的位置
+            print('位置 ',result.span(i))#起始&结束
+        index=result.end()
