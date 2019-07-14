@@ -1,5 +1,6 @@
 # Python
 
+暂时弃用GitHub，改用coding
 
 ## Note
 
