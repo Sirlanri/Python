@@ -81,3 +81,5 @@ class Throttle:
             if sleep_secs>0:
                 time.sleep(sleep_secs)
         self.domains[domain]=time.time()
+
+print(download_safe('https://www.baidu.com/'))
