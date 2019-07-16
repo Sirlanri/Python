@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import lxml
+import re
 #一个演示用的html
 html = """
 <html><head><title>The Dormouse's story</title></head>
@@ -34,4 +35,17 @@ for child in soup.a.children:
 for child in soup.p.descendants:
     print('子孙节点',child)
 
-    
+#父节点
+p=soup.p
+print(p.parent.name)
+
+#查找所有的标签
+print(soup.find_all('a'))
+#使用正则表达式查找
+print(soup.find_all(re.compile('^p')))
+
+#CSS选择器
+print('\n\nCSS')
+print(soup.select('title'))#通过标签名
+print(soup.select('.sister'))#通过类名
+print(soup.select('#link3'))#通过ID搜索
