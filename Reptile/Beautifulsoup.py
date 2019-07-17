@@ -49,3 +49,4 @@ print('\n\nCSS')
 print(soup.select('title'))#通过标签名
 print(soup.select('.sister'))#通过类名
 print(soup.select('#link3'))#通过ID搜索
+
