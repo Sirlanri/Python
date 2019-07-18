@@ -1,3 +1,4 @@
+#比赛的几个题，顺手做一下，做到自闭_(:з」∠)_
 def qiuhe(num1,num2):
     fen=[]
     result=0
