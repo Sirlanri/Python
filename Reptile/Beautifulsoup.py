@@ -46,7 +46,7 @@ print(soup.find_all(re.compile('^p')))
 
 #CSS选择器
 print('\n\nCSS')
-print(soup.select('title'))#通过标签名
-print(soup.select('.sister'))#通过类名
-print(soup.select('#link3'))#通过ID搜索
+print('标签名',soup.select('title'))#通过标签名
+print('class名',soup.select('.sister'))#通过类名
+print('ID搜索',soup.select('#link3'))#通过ID搜索
 
