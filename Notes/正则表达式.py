@@ -97,3 +97,21 @@ def gettel():
             print('开始 ',result.start(i),' 结束 ',result.end(i))#分别起始和结束的位置
             print('位置 ',result.span(i))#起始&结束
         index=result.end()
+
+def test2():
+    a = "123abcD456"
+    b='my email is sown887@gmail.com and 89w@foxmail.com'
+
+    print (re.search("([0-9]+)([a-z]*)([0-9]+)",a).group(0))   #123abc456,返回整体
+    print (re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(1))   #123
+    print (re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(2))   #abc
+    print (re.search("([0-9]*)([a-z]*)([0-9]*)",a).group(3))   #456
+    print(re.search('[a-z]\d+',a))
+    print(re.search('\d+[d-z]*',a).group(),'\n\n')
+    print(re.findall('\s(\w+)@(\w+)',b))
+    yuming=re.findall(r'@\w+\.com',b)#原始字符串r，一个\就OK
+    
+    
+    print(yuming)
+    
+test2()
