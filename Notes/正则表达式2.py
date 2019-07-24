@@ -44,8 +44,14 @@ def wangye():
         </ul>
     </div>'''
 
-    final=re.findall(r'singer="(\s+)"',html1)
+    final=re.findall('singer="(\w+)">(\w+)<',html1)
     print(final)
+
+def chaifen():
+    poem='窗前不止明月光，疑是地上霜；举头看太阳。低头撕裤裆'
+    devide=re.split('[,.。;；，]',poem)
+    print(devide)
 
 shuzi1()
 wangye()
+chaifen()
