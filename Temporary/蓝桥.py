@@ -10,28 +10,25 @@ def god():
 def xinlang():
     import math
     for i in range(int(input())):
-        all,wrong=map(int,input().split())
-        n=math.factorial(wrong)
+        all, wrong = map(int, input().split())
+        n = math.factorial(wrong)
         print(n)
-def bigbrother():
-
-    source=[input().split('')]
 
 def zhuan():
-    after={}
-    time=1
+    after = {}
+    time = 1
     while 1:
         input()
-        source=[(input().split(' '))]
-        if 0 in source and len(source)==1:
+        source = [(input().split(' '))]
+        if 0 in source and len(source) == 1:
             break
-        minnum=min(source)
-        move_num=0
+        minnum = min(source)
+        move_num = 0
         for i in source:
-            if i>minnum:
-                move_num+=i-minnum
-                time+=1
-        after[time]=move_num
+            if i > minnum:
+                move_num += i-minnum
+                time += 1
+        after[time] = move_num
     for key in after.keys:
-        print('Set #{}\nThe minimum number of moves is{}'.format(key,after[key]))
-zhuan()
+        print('Set #{}\nThe minimum number of moves is{}'.format(
+            key, after[key]))
