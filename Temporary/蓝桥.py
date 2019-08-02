@@ -14,6 +14,7 @@ def xinlang():
         n = math.factorial(wrong)
         print(n)
 
+
 def zhuan():
     after = {}
     time = 1
@@ -32,3 +33,24 @@ def zhuan():
     for key in after.keys:
         print('Set #{}\nThe minimum number of moves is{}'.format(
             key, after[key]))
+
+
+def test2():
+    num = 13.6
+    int('69.9')
+    round()
+
+
+def test3():
+    def nn(x):
+        if not isinstance(x, (int, float)):
+            print('类型不一样')
+
+        if int(x) > 0:
+            return "大于0"
+        else:
+            return "小于0"
+
+    d = input("输入")
+    print(nn(d))
+test3()
