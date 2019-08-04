@@ -4,6 +4,7 @@ from random import randint
 from time import time, sleep
 import threading
 
+
 #多进程
 def download_task(filename):
     print('启动下载进程，进程号[%d].' % getpid())
@@ -78,4 +79,4 @@ class Bank:
             threading.Lock.release()
         print('第{}计算完毕，结果是{}'.format(num,balance))
 
-bank=Bank()
+mainMy()

@@ -53,4 +53,36 @@ def test3():
 
     d = input("输入")
     print(nn(d))
-test3()
+
+
+def trim1(s):
+    if s[:1] == "":
+        s = s[1:]
+        if s[-1:] == "":
+            return s[:-1]
+    else:
+        return s
+
+
+def trim(s):
+    if s[:1] == " ":
+        s = s[1:]
+        if s[-1:] == " ":
+            return s[:-1]
+        else:
+            return s
+    elif s[-1:] == " ":
+        return s[:-1]
+    else:
+        return s
+
+
+def hy1(s):
+    while s[:1] == ' ':
+        s = s[1:]
+
+    while s[-1:] == ' ':
+        s = s[:-1]
+
+    return s
+print(hy1(' 58 '))
