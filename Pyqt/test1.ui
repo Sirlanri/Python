@@ -59,8 +59,8 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>243</x>
-      <y>206</y>
+      <x>210</x>
+      <y>200</y>
       <width>421</width>
       <height>141</height>
      </rect>

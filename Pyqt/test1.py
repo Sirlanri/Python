@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
 
 
-class Ui_MainWindow(object):
+class Ui_MainWindow(QWidget):
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
