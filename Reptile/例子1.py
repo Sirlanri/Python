@@ -64,5 +64,3 @@ def douban():
             words = ''.join([key, '\n', result[key], '\n\n'])
             f.write(words)
 
-
-douban()
