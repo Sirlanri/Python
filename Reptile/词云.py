@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup # 导入网页解析库
 import os
 from wordcloud import WordCloud #词云
 import jieba
+import matplotlib.pyplot as plt
 
 #获取网址
 allURLs=[]
@@ -39,4 +40,20 @@ def main_txt():
 #词云
 def cloud():
     f=open('上海堡垒.txt','r',encoding='utf-8').read()
-    
+
+    #用jieba包来分词
+    wordlist=jieba.cut(f,cut_all=True)
+    wl=' '.join(wordlist)
+
+    wc=WordCloud(font_path='msyh.ttc',max_words=700,random_state=30,
+    max_font_size=250,width=1920,height=1000)
+    myword=wc.generate(wl)#生成词云
+
+    plt.imshow(myword)
+    plt.axis('off')
+    plt.show()
+    #plt.savefig('ciyun3.png')
+    #展示词云图
+
+	
+cloud()
