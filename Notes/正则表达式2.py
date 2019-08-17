@@ -52,6 +52,57 @@ def chaifen():
     devide=re.split('[,.。;；，]',poem)
     print(devide)
 
-shuzi1()
-wangye()
-chaifen()
+def chongfu():
+    infor='张三：0731-8825951，李四：0733-8794561，\
+        王五： 985-985634'
+    #返回一个列表
+    after=re.findall('[\d]{3,4}',infor)
+    #返回一个对象...嗯 对象！
+    after2=re.search('[\d]{3,4}?',infor).group()
+    after3=re.findall('[\d]{7}',infor)
+
+    #试试分组
+    after4=re.findall('([\d]{3,4})(-)([\d]{7,8})',infor)#是元组的列表
+    fenkai=after4[1][0]
+    print(after)
+
+    longnum='''2138675501
+        (213)8675502
+        213.867.5503
+        (213)-867-5504
+        1(213)867-5505
+        +1-213-867-5506
+        '''
+    getnumall=re.findall('([\d]{3})[\.]?([\d]{3})',longnum,re.MULTILINE)
+
+def practice1():
+
+    source='''
+        张伟 86-14870293148  \n
+        王伟   +86-13285654569    \n
+        王芳        15856529115    \n
+        李伟         13022816340  \n
+        王秀英   (86)14785720656     \n
+        李秀英    17201444672    \n
+        李娜         15682812452     \n
+        张秀英         14326967740     \n
+        刘伟  15146435743    \n
+        张敏        (86)-17712576838   \n
+        李静       86 14295083635  \n
+        张丽     (+86) 13722348123   \n
+        王静         17587918887   \n
+        王丽    15493106739    \n
+        李强      13786842977   \n
+        张静         86-15542304386     \n
+        李敏         15642387356 \n
+        王敏          18627216756  \n
+        王磊       17206185726   \n
+        李军      17857426238     \n
+        刘洋        17345352790     \n
+    '''
+
+    num1=re.findall('[\d]{11}',source)
+    num2=re.findall('1[3|8]\d{9}',source)
+    num3=re.findall('王\S*',source)
+    num4=re.findall('张\S+[\s]([\d]{11})',source)
+practice1()
