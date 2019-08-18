@@ -104,5 +104,12 @@ def practice1():
     num1=re.findall('[\d]{11}',source)
     num2=re.findall('1[3|8]\d{9}',source)
     num3=re.findall('王\S*',source)
-    num4=re.findall('张\S+[\s]([\d]{11})',source)
+    #错误示范-姓张的手机号
+    num4=re.findall('张\S+[\s]+([\d]{11})',source)
+    #正确方法
+    num5=re.findall(r'(张\S*)\s+\(?(\+?86?)?\)?[ .-]?([\d]{11})',source)
+
+    #格式化电话号
+    num6=re.sub(r'[\+\-\(\)]',' ',source)
+
 practice1()
