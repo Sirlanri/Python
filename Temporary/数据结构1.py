@@ -19,5 +19,5 @@ class ShunXu:
 class SX_list1(list):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-    def cutin(self,sx):
+    def cutin(self,sx,num=self.__len__):
         self.append(sx)
