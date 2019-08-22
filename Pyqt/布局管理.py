@@ -123,7 +123,7 @@ class Nduo(QWidget):
 
         grid=QGridLayout()
         grid.setSpacing(10)#间距
-        grid
+        
         grid.addWidget(title,1,0)
         grid.addWidget(titleEdit,1,1)
 
@@ -141,3 +141,4 @@ def wangge():
     app=QApplication(sys.argv)
     ex=Nduo()
     sys.exit(app.exec_())
+

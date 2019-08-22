@@ -6,13 +6,15 @@
 #
 # WARNING! All changes made in this file will be lost!
 
+from PyQt5 import QtWidgets,QtCore,QtGui
+from PyQt5.QtWidgets import *
 
-from PyQt5 import QtCore, QtGui, QtWidgets
-
-import sys
 
 
 class Ui_MainWindow(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -38,18 +40,19 @@ class Ui_MainWindow(QWidget):
         self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit.setGeometry(QtCore.QRect(243, 206, 421, 141))
         self.textEdit.setObjectName("textEdit")
-        MainWindow.setCentralWidget(self.centralwidget)
+        
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 818, 26))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
+        
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+
 
         self.retranslateUi(MainWindow)
-        self.pushButton.clicked.connect(MainWindow.wodeclick)
+
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -58,10 +61,7 @@ class Ui_MainWindow(QWidget):
         self.pushButton.setText(_translate("MainWindow", "确定"))
 
 
-import  sys
-app=QtWidgets.QApplication(sys.argv)
-widget= QtWidgets.QMainWindow()
-ui= Ui_MainWindow()
-ui.setupUi(widget)
-widget.show()
+import sys
+app=QApplication(sys.argv)
+mian=Ui_MainWindow()
 sys.exit(app.exec_())
