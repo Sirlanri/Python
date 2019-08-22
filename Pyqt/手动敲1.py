@@ -1,7 +1,6 @@
 import sys
-
 # 这里我们提供必要的引用。基本控件位于pyqt5.qtwidgets模块中。
-from PyQt5.QtWidgets import QApplication, QWidget,QPushButton,QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget,QPushButton,QMessageBox,QDesktopWidget
 from PyQt5.QtCore import QCoreApplication
 
 
@@ -89,3 +88,29 @@ class Duihuak(QWidget):
             event.accept()
         else:
             event.ignore()
+
+#在平面中间显示
+class Center(QWidget):
+    def __init__(self, parent=None, flags=Qt.WindowFlags()):
+        super().__init__(parent=parent, flags=flags)
+        self.inUI()
+    
+    def inUI(self):
+        self.resize(300,200)
+        self.center()
+        self.setWindowTitle('中心显示')
+        self.show()
+    
+    def center(self):#在中间显示的方法
+        #获得窗口
+        qr=self.frameGeometry()
+        #获得平面中心点
+        centerPoint=QDesktopWidget().availableGeometry().center()
+        #显示到屏幕中心
+        qr.moveCenter(centerPoint)
+        self.move(qr.topLeft())
+
+def center():#启动中心类
+    app=QApplication(sys.argv)
+    ex=Center()
+    sys.exit(app.exec_())
