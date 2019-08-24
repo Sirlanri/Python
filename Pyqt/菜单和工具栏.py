@@ -51,5 +51,4 @@ class Tolls(QMainWindow):
     def __init__(self):
         super().__init__()
         self.UI()
-    def UI(self):
-        
+    #懒得写了咕咕咕
