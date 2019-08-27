@@ -1,23 +1,55 @@
 class ShunXu:
+    '''有三个变量——num，name，price'''
 
-    def __init__(self,num='',name='',price=0):
-        self.num=num
-        self.name=name
-        self.price=price
-    
+    def __init__(self, num='', name='', price=0):
+        self.num = num
+        self.name = name
+        self.price = price
+
     @property
     def infor(self):
         return self.name+self.num+str(self.price)
 
     @infor.setter
-    def infor(self,name,price):
-        self.num=num
-        self.name=name
-        self.price=price
+    def infor(self, name, price):
+        self.num = num
+        self.name = name
+        self.price = price
 
 
-class SX_list1(list):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-    def cutin(self,sx,num=self.__len__):
-        self.append(sx)
+class SX_list2():  # 顺序表2号
+    '''一个线性顺序列表'''
+
+    def __init__(self):
+        # 初始化
+        self.list = []
+
+    def insert(self, item):
+        '''插入一个元素，必须是同类型'''
+        if isinstance(item, ShunXu):
+            self.list.append(item)
+            print('成功插入')
+        else:
+            print('类型错误')
+
+    def lookfor(self, num='', name='', price=0):
+        '''查找元素，可以传入三个变量的任意一个或多个'''
+        # item为结构体类
+        for inum, iname, iprice in self.list:
+            if num == inum or name == iname or price == iprice:
+                print('编号{0}，名字{1}，价格{2}'.format(inum, iname, iprice))
+            else:
+                print('没有查找到')
+
+    def delit(self, num='', name='', price=0):
+        '''删除指定元素，可以传入三个变量的任意一个或多个'''
+        count = 0
+        for inum, iname, iprice in self.list:
+            if num == inum or name == iname or price == iprice:
+                self.list.remove(count)
+            else:
+                print('没找到这个元素')
+            count += 1
+
+
+#未完待续的链表
