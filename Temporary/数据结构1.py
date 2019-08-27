@@ -34,12 +34,13 @@ class SX_list2():  # 顺序表2号
 
     def lookfor(self, num='', name='', price=0):
         '''查找元素，可以传入三个变量的任意一个或多个'''
-        # item为结构体类
+        # item为结构体
         for item in self.list:
             if num == item.num or name == item.name or price == item.price:
                 print('编号{0}，名字{1}，价格{2}'.format(item.num, item.name, item.price))
-            else:
-                print('没有查找到')
+                indeu=False
+        if indeu:
+            print('没找到哟')
 
     def delit(self, num='', name='', price=0):
         '''删除指定元素，可以传入三个变量的任意一个或多个'''
@@ -53,6 +54,7 @@ class SX_list2():  # 顺序表2号
 
 
 def test1():
+    '''用来测试的函数'''
     list1=SX_list2()
 
     cplus=ShunXu('12346','C++入门到入坟',30)
