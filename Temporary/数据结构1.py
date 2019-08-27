@@ -35,21 +35,35 @@ class SX_list2():  # 顺序表2号
     def lookfor(self, num='', name='', price=0):
         '''查找元素，可以传入三个变量的任意一个或多个'''
         # item为结构体类
-        for inum, iname, iprice in self.list:
-            if num == inum or name == iname or price == iprice:
-                print('编号{0}，名字{1}，价格{2}'.format(inum, iname, iprice))
+        for item in self.list:
+            if num == item.num or name == item.name or price == item.price:
+                print('编号{0}，名字{1}，价格{2}'.format(item.num, item.name, item.price))
             else:
                 print('没有查找到')
 
     def delit(self, num='', name='', price=0):
         '''删除指定元素，可以传入三个变量的任意一个或多个'''
         count = 0
-        for inum, iname, iprice in self.list:
-            if num == inum or name == iname or price == iprice:
+        for item in self.list:
+            if num == item.num or name == item.name or price == item.price:
                 self.list.remove(count)
             else:
                 print('没找到这个元素')
             count += 1
 
 
-#未完待续的链表
+def test1():
+    list1=SX_list2()
+
+    cplus=ShunXu('12346','C++入门到入坟',30)
+    java=ShunXu('654231','Java从看懂到看开',50)
+    py=ShunXu('233333','Python世界第一',99)
+
+    #将元素添加到list
+    list1.insert(cplus)
+    list1.insert(java)
+    list1.insert(py)
+    
+    #查找测试
+    list1.lookfor(num='233333')
+test1()
