@@ -46,4 +46,3 @@ def tiaohe():
         print('第{}W，和{}，用时{}'.format(count*10,min,end-clock))
 
         count+=1
-tiaohe()
