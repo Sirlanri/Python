@@ -7,12 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 
-#报错信息：114行
-#AttributeError: 'Ui_MainWindow' object has no attribute 'lineEdit'
+# 报错信息：114行
+# AttributeError: 'Ui_MainWindow' object has no attribute 'lineEdit'
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 import sys
 import socket
+
 
 class Ui_MainWindow(QMainWindow):
     def __init__(self):
@@ -40,10 +41,10 @@ class Ui_MainWindow(QMainWindow):
         self.tou.setFont(font)
         self.tou.setObjectName("tou")
 
-        self.kaiqi=QtWidgets.QPushButton(self.centralwidget)
-        self.kaiqi.setGeometry(90,410,100,40)
+        self.kaiqi = QtWidgets.QPushButton(self.centralwidget)
+        self.kaiqi.setGeometry(90, 410, 100, 40)
         self.kaiqi.clicked.connect(self.connectNet())
- 
+
         self.guanbi = QtWidgets.QPushButton(self.centralwidget)
         self.guanbi.setGeometry(QtCore.QRect(590, 482, 111, 41))
         font = QtGui.QFont()
@@ -96,7 +97,6 @@ class Ui_MainWindow(QMainWindow):
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.show()
 
-
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "socket服务器端"))
@@ -109,23 +109,23 @@ class Ui_MainWindow(QMainWindow):
 
     def connectNet(self):
 
-        #获取本机IP，用于跨电脑传输
-        ip=socket.gethostbyname(socket.gethostname())
+        # 获取本机IP，用于跨电脑传输
+        ip = socket.gethostbyname(socket.gethostname())
         self.lineEdit.setText(ip)
         self.zhuangtai.setText('成功获取本地IP')
 
-        #开启socket服务
-        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-        s.bind(('127.0.0.1',1081))
+        # 开启socket服务
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('127.0.0.1', 1081))
         s.listen(5)
         self.zhuangtai.setText('开启本地服务器')
-        conn,address=s.accept()#等待客户端连接
+        conn, address = s.accept()  # 等待客户端连接
         while 1:
-            client_data=conn.recv(1024).decode()
-            if client_data=='shutdown58468w':
+            client_data = conn.recv(1024).decode()
+            if client_data == 'shutdown58468w':
                 exit('通讯结束')
-                
-            #将接收到的信息，放入文字框
+
+            # 将接收到的信息，放入文字框
             self.xiaoxi.appendPlainText(client_data+'\n\n')
             self.zhuangtai.setText('接收到消息')
             conn.sendall('(反馈）成功接收'.encode())
@@ -134,7 +134,9 @@ class Ui_MainWindow(QMainWindow):
 
 def do():
     app = QtWidgets.QApplication(sys.argv)
-    w=Ui_MainWindow()
+    w = Ui_MainWindow()
     sys.exit(app.exec_())
-do() 
+
+
+do()
 input()
