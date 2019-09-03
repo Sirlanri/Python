@@ -1,6 +1,7 @@
 import socket
 import uuid
 
+first=socket.gethostname()
 ip=socket.gethostbyname(socket.gethostname())#获取本机IP
 print(ip)
 node=uuid.getnode()
