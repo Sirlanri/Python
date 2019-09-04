@@ -3,7 +3,7 @@ import socket
 #服务器端
 def fu():
     s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    ip_port=('127.0.0.1',9999)
+    ip_port=('127.0.0.1',1082)
     s.bind(ip_port)
     s.listen(5) #监听链接请求
     print('已经启动服务端')

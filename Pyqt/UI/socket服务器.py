@@ -16,12 +16,10 @@ import socket
 
 
 class Ui_MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        self.setupUi(self)
+
 
     def setupUi(self, MainWindow):
-        self.setWindowTitle("服务器端")
+        
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -43,7 +41,8 @@ class Ui_MainWindow(QMainWindow):
 
         self.kaiqi = QtWidgets.QPushButton(self.centralwidget)
         self.kaiqi.setGeometry(90, 410, 100, 40)
-        self.kaiqi.clicked.connect(self.connectNet())
+        self.kaiqi.setText('连接服务器')
+        #self.kaiqi.clicked.connect(self.connectNet())
 
         self.guanbi = QtWidgets.QPushButton(self.centralwidget)
         self.guanbi.setGeometry(QtCore.QRect(590, 482, 111, 41))
@@ -87,16 +86,19 @@ class Ui_MainWindow(QMainWindow):
         self.pushButton.setObjectName("pushButton")
 
         MainWindow.setCentralWidget(self.centralwidget)
-        MainWindow.setMenuBar(self.menubar)
+        #MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
+        
         self.guanbi.clicked.connect(MainWindow.close)
         self.pushButton.clicked.connect(self.zhuangtai.clear)
         self.pushButton.pressed.connect(self.lineEdit.selectAll)
         self.pushButton.released.connect(self.lineEdit.copy)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
         self.show()
-
+        self.xiaoxi.setPlainText('之前测试')
+ 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "socket服务器端"))
@@ -107,8 +109,9 @@ class Ui_MainWindow(QMainWindow):
         self.label.setText(_translate("MainWindow", "本地IP："))
         self.pushButton.setText(_translate("MainWindow", "复制IP"))
 
-    def connectNet(self):
 
+    def connectNet(self):
+        
         # 获取本机IP，用于跨电脑传输
         ip = socket.gethostbyname(socket.gethostname())
         self.lineEdit.setText(ip)
@@ -133,10 +136,13 @@ class Ui_MainWindow(QMainWindow):
 
 
 def do():
-    app = QtWidgets.QApplication(sys.argv)
-    w = Ui_MainWindow()
+    app=QApplication(sys.argv)
+    ex=Ui_MainWindow()
+    w=QtWidgets.QMainWindow()
+    ex.setupUi(w)
+    w.show()
+    
     sys.exit(app.exec_())
 
 
 do()
-input()

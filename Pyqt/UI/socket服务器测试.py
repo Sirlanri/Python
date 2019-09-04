@@ -8,7 +8,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import sys
+import socket
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -87,7 +88,9 @@ class Ui_MainWindow(object):
         self.pushButton.released.connect(self.IPlan.copy)
         self.IPlan.textChanged['QString'].connect(self.zhuangtai.setText)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
+        
+        self.test()
+        self.connectNet()
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -98,3 +101,41 @@ class Ui_MainWindow(object):
         self.label.setText(_translate("MainWindow", "本地IP："))
         self.pushButton.setText(_translate("MainWindow", "复制IP"))
         self.pushButton_2.setText(_translate("MainWindow", "开启服务器"))
+
+    def test(self):
+        self.zhuangtai.setText('测试')
+        self.zhuangtai.setText('测试2')
+
+        
+    def connectNet(self):
+        
+        # 获取本机IP，用于跨电脑传输
+        ip = socket.gethostbyname(socket.gethostname())
+        self.lineEdit.setText(ip)
+        self.zhuangtai.setText('成功获取本地IP')
+
+        # 开启socket服务
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.bind(('127.0.0.1', 1081))
+        s.listen(5)
+        self.zhuangtai.setText('开启本地服务器')
+        conn, address = s.accept()  # 等待客户端连接
+        while 1:
+            client_data = conn.recv(1024).decode()
+            if client_data == 'shutdown58468w':
+                exit('通讯结束')
+
+            # 将接收到的信息，放入文字框
+            self.xiaoxi.appendPlainText(client_data+'\n\n')
+            self.zhuangtai.setText('接收到消息')
+            conn.sendall('(反馈）成功接收'.encode())
+        s.close()
+
+def do():
+    app = QtWidgets.QApplication(sys.argv)
+    ex = Ui_MainWindow()
+    w = QtWidgets.QMainWindow()
+    ex.setupUi(w)
+    w.show()
+    sys.exit(app.exec_())
+do()

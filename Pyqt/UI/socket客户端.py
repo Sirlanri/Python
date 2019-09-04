@@ -8,7 +8,8 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import sys
+import socket
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -92,6 +93,9 @@ class Ui_MainWindow(object):
         self.qingkong.clicked.connect(self.text.clear)
         self.guanbi.clicked.connect(MainWindow.close)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        
+        self.fasong.clicked.connect(self.net)
+        self.test()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -104,3 +108,38 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "服务器IP："))
         self.lineEdit.setText(_translate("MainWindow", "127.0.0.1"))
         self.pushButton.setText(_translate("MainWindow", "连接"))
+
+    def test(self):
+        self.text.appendPlainText('啊 加个文字')
+        self.zhuangtai.setText('测试一下')
+        self.lineEdit.setText('127.0.0.1')
+
+    def net(self):
+        sk=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        ip=self.lineEdit.text()
+        sk.connect(('127.0.0.1',1082))
+        self.zhuangtai.setText('连接服务器')
+
+        try:
+            information=self.text.toPlainText()
+            print('获得文字')
+            sk.sendall(information.encode())
+            print('发送消息')
+            reply=sk.recv(1024).decode()
+            print('接收反馈')
+            self.zhuangtai.setText(reply)
+        except:
+            print('net2出错')
+        sk.close()
+
+
+
+
+def do():
+    app = QtWidgets.QApplication(sys.argv)
+    ex = Ui_MainWindow()
+    w = QtWidgets.QMainWindow()
+    ex.setupUi(w)
+    w.show()
+    sys.exit(app.exec_())
+do()
