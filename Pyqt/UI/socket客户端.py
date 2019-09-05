@@ -111,13 +111,13 @@ class Ui_MainWindow(object):
 
     def test(self):
         self.text.appendPlainText('啊 加个文字')
-        self.zhuangtai.setText('测试一下')
+        self.zhuangtai.setText('测试开始~')
         self.lineEdit.setText('127.0.0.1')
 
     def net(self):
         sk=socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         ip=self.lineEdit.text()
-        sk.connect(('127.0.0.1',1082))
+        sk.connect((ip,1082))
         self.zhuangtai.setText('连接服务器')
 
         try:

@@ -23,7 +23,7 @@ def fu():
 #客户端
 def ke():
     sk=socket.socket()
-    sk.connect(('127.0.0.1',9999))
+    sk.connect(('127.0.0.1',1082))
 
     while 1:
         inp=input('输入要发送的消息').strip()

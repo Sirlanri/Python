@@ -7,19 +7,13 @@
 # WARNING! All changes made in this file will be lost!
 
 
-# 报错信息：114行
-# AttributeError: 'Ui_MainWindow' object has no attribute 'lineEdit'
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import *
 import sys
 import socket
 
-
-class Ui_MainWindow(QMainWindow):
-
-
+class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -32,18 +26,12 @@ class Ui_MainWindow(QMainWindow):
         self.xiaoxi.setGeometry(QtCore.QRect(0, 0, 531, 281))
         self.xiaoxi.setObjectName("xiaoxi")
         self.tou = QtWidgets.QLabel(self.centralwidget)
-        self.tou.setGeometry(QtCore.QRect(28, 10, 151, 21))
+        self.tou.setGeometry(QtCore.QRect(20, 10, 201, 21))
         font = QtGui.QFont()
         font.setFamily("等线")
         font.setPointSize(13)
         self.tou.setFont(font)
         self.tou.setObjectName("tou")
-
-        self.kaiqi = QtWidgets.QPushButton(self.centralwidget)
-        self.kaiqi.setGeometry(90, 410, 100, 40)
-        self.kaiqi.setText('连接服务器')
-        #self.kaiqi.clicked.connect(self.connectNet())
-
         self.guanbi = QtWidgets.QPushButton(self.centralwidget)
         self.guanbi.setGeometry(QtCore.QRect(590, 482, 111, 41))
         font = QtGui.QFont()
@@ -57,7 +45,7 @@ class Ui_MainWindow(QMainWindow):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.zhuangtai = QtWidgets.QLineEdit(self.frame_2)
-        self.zhuangtai.setGeometry(QtCore.QRect(100, 20, 191, 20))
+        self.zhuangtai.setGeometry(QtCore.QRect(110, 20, 191, 20))
         self.zhuangtai.setObjectName("zhuangtai")
         self.label_2 = QtWidgets.QLabel(self.frame_2)
         self.label_2.setGeometry(QtCore.QRect(20, 20, 61, 21))
@@ -66,42 +54,51 @@ class Ui_MainWindow(QMainWindow):
         font.setPointSize(11)
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
-        self.label = QtWidgets.QLabel(self.centralwidget)
-        self.label.setGeometry(QtCore.QRect(90, 370, 61, 21))
+        self.horizontalLayoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.horizontalLayoutWidget.setGeometry(QtCore.QRect(80, 360, 321, 61))
+        self.horizontalLayoutWidget.setObjectName("horizontalLayoutWidget")
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtWidgets.QLabel(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("等线")
         font.setPointSize(12)
         self.label.setFont(font)
         self.label.setObjectName("label")
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(150, 370, 141, 20))
+        self.horizontalLayout.addWidget(self.label)
+        self.lineEdit = QtWidgets.QLineEdit(self.horizontalLayoutWidget)
         self.lineEdit.setReadOnly(False)
         self.lineEdit.setObjectName("lineEdit")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton.setGeometry(QtCore.QRect(310, 370, 61, 31))
+        self.horizontalLayout.addWidget(self.lineEdit)
+        self.pushButton = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         font = QtGui.QFont()
         font.setFamily("等线")
         font.setPointSize(10)
         self.pushButton.setFont(font)
+        self.pushButton.setIconSize(QtCore.QSize(19, 20))
+        self.pushButton.setAutoDefault(False)
         self.pushButton.setObjectName("pushButton")
-
+        self.horizontalLayout.addWidget(self.pushButton)
         MainWindow.setCentralWidget(self.centralwidget)
-        #MainWindow.setMenuBar(self.menubar)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 23))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
 
         self.retranslateUi(MainWindow)
-        
         self.guanbi.clicked.connect(MainWindow.close)
         self.pushButton.clicked.connect(self.zhuangtai.clear)
         self.pushButton.pressed.connect(self.lineEdit.selectAll)
         self.pushButton.released.connect(self.lineEdit.copy)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.getip()
+        self.pushButton.clicked.connect(self.net)
         
-        self.show()
-        self.xiaoxi.setPlainText('之前测试')
- 
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "socket服务器端"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.xiaoxi.setPlainText(_translate("MainWindow", "消息框"))
         self.tou.setText(_translate("MainWindow", "服务器（接收消息）"))
         self.guanbi.setText(_translate("MainWindow", "关闭"))
@@ -109,40 +106,37 @@ class Ui_MainWindow(QMainWindow):
         self.label.setText(_translate("MainWindow", "本地IP："))
         self.pushButton.setText(_translate("MainWindow", "复制IP"))
 
-
-    def connectNet(self):
-        
-        # 获取本机IP，用于跨电脑传输
-        ip = socket.gethostbyname(socket.gethostname())
+    def getip(self):
+        ip=socket.gethostbyname(socket.gethostname())
         self.lineEdit.setText(ip)
-        self.zhuangtai.setText('成功获取本地IP')
 
-        # 开启socket服务
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.bind(('127.0.0.1', 1081))
-        s.listen(5)
-        self.zhuangtai.setText('开启本地服务器')
-        conn, address = s.accept()  # 等待客户端连接
+    def net(self):
+        s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        ip_port=('127.0.0.1',1082)
+        s.bind(ip_port)
+        s.listen(5) #监听链接请求
+        
+        print('成功启动~')
+        conn,address=s.accept() #等待连接
+
         while 1:
-            client_data = conn.recv(1024).decode()
-            if client_data == 'shutdown58468w':
-                exit('通讯结束')
-
-            # 将接收到的信息，放入文字框
-            self.xiaoxi.appendPlainText(client_data+'\n\n')
-            self.zhuangtai.setText('接收到消息')
-            conn.sendall('(反馈）成功接收'.encode())
-        s.close()
+            client_data=conn.recv(1024).decode()
+            if client_data=='exit':
+                exit('接收到结束请求，结束通讯')
+                break
+            print('客户端消息：{}'.format(client_data))
+            conn.sendall('回馈消息'.encode())
+        conn.close()
 
 
 def do():
-    app=QApplication(sys.argv)
-    ex=Ui_MainWindow()
-    w=QtWidgets.QMainWindow()
+    app = QtWidgets.QApplication(sys.argv)
+    ex = Ui_MainWindow()
+    w = QtWidgets.QMainWindow()
     ex.setupUi(w)
     w.show()
-    
     sys.exit(app.exec_())
-
-
-do()
+def test_net():
+    ex=Ui_MainWindow()
+    ex.net()
+test_net()
