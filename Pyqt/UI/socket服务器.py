@@ -139,4 +139,4 @@ def do():
 def test_net():
     ex=Ui_MainWindow()
     ex.net()
-test_net()
+do()
