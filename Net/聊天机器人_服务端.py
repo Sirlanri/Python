@@ -3,7 +3,7 @@ import socket
 
 words={1:'力量，在我体内流淌！',2:'哦~在这儿停顿！'}
 host=''
-port=1000
+port=1082
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 #绑定socket
 s.bind((host,port))
@@ -19,5 +19,5 @@ while 1:
         break
     print('收到的内容：{}'.format(data))
     conn.sendall(words.get(data,'nothing').encode())
-conn.cloes()
+conn.close()
 s.close()
