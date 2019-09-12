@@ -1,0 +1,1259 @@
+牛客第八场补题和题解
+
+
+
+牛客第八场补题和题解
+
+
+
+
+链接：https://ac.nowcoder.com/acm/contest/888/B来源：牛客网
+题目描述Gromah and LZR have entered the second level. There is a sequence a1, a2,  an 
+​  on the wall.
+There is also a note board saying “the beauty value of a sequence is the number of different elements in the sequence”.
+LZR soon comes up with the password of this level, which is the sum of the beauty values of all successive subintervals of the sequence on the wall.
+Please help them determine the password!
+输入描述:
+The first line contains one positive integer n , denoting the length of the sequence.
+The second line contains n​positive integers a_1, a_2, … an
+​ , denoting the sequence.
+输出描述:
+Print a non-negative integer in a single line, denoting the answer.
+示例1
+输入
+41 2 1 3
+输出
+18
+给定n个数，问所有子序列的价值，价值被定义为此序列中不同数字的个数，例如 1-3是1 2 1 价值就为2 因为只有1 2 不同。
+dp[i]记录下来i位置结尾的前面所有序列的贡献，每次都用bk数组记录下来上一次出现当前数字的位置。
+1.如果没有出现过这个数，那么dp[i]=dp[i-1]+i;
+例如:dp[2]=dp[1]+2; 1到2 多了 1-2 2-2 两个序列，由于之前没有相同的数字，所以多的序列都多i
+2.如果出现过这个数字，那么贡献多1的新增的子序列就从上次出现过的位置后一个位置开始增加
+例如dp[3]=dp[2]+1; 虽然2-3增加了1-3 2-3 3-3 三个序列，但是1-3里面都有1 重复了 所以只加了两遍。
+只有这两种情况，用ans累加起来输出的便是最终的答案。
+链接：https://ac.nowcoder.com/acm/contest/888/C来源：牛客网
+题目描述Gromah and LZR have entered the third level. There is a blank grid of size m\times mm×m, and above the grid is a word “CDMA”.
+In CDMA Technology, a Technology about computer network, every network node should be appointed a unique binary sequence with a fixed and the same length. Moreover, if we regard 0​  in the sequence as -1​ , and regard 1​  as +1​ , then these sequences should satisfy that for any two different sequences s,t​ , the inner product of s,t​  should be exactly 0​ .
+The inner product of two sequences s,s,t​  with the same length n_{}n​    
+So, the key to the next level is to construct a grid of size m\times mm×m, whose elements are all -1_{}−1 
+​ , and for any two different rows, the inner product of them should be exactly 0_{}0​ .
+In this problem, it is guaranteed that m_{}m​  is a positive integer power of 2_{}2​  and there exists some solutions for input m_{}m​ . If there are multiple solutions, you may print any of them.输入描述:Only one positive integer m_{}m​  in one line.
+ ∣k=1,2,⋯,10}输出描述:Print m_{}m​  lines, each contains a sequence with length m_{}m​ , whose elements should be all -1_{}−1​  or 1_{}1​  satisfying that for any two different rows, the inner product of them equals 0_{}0​ .
+You may print multiple blank spaces between two numbers or at the end of each line, and you may print any number of blank characters at the end of whole output file.示例1输入复制2输出复制1 11 -1说明The inner product of the two rows is 1\times(-1) + 1\times 1 = 01×(−1)+1×1=0.
+给定一个n 其中n是2^k (1<=k<=10)中的一个，要求输出一个矩阵，其中任意两行对应列相乘加一起等于0
+从2推4 4推8(神仙思路不是我想的23333)
+分成四块
+1 2
+3 4
+其中1 2 3 都保持上一次的矩阵，4改变一下变成1 2 3的完全相反的矩阵。
+刚开始输入n居然用pow(2,n)来输出，后来发现读错题了原来n输入直接就是正好的。。于是取log对输出的编号进行操作。
+链接：https://ac.nowcoder.com/acm/contest/888/G来源：牛客网
+题目描述Gromah and LZR have entered the seventh level. There are a sequence of gemstones on the wall.
+After some tries, Gromah discovers that one can take exactly three successive gemstones with the same types away from the gemstone sequence each time, after taking away three gemstones, the left two parts of origin sequence will be merged to one sequence in origin order automatically.
+For example, as for “ATCCCTTG”, we can take three ‘C’s away with two parts “AT”, “TTG” left, then the two parts will be merged to “ATTTG”, and we can take three ‘T’s next time.
+The password of this level is the maximum possible times to take gemstones from origin sequence.
+Please help them to determine the maximum times.输入描述:Only one line containing a string s_{}s​ , denoting the gemstone sequence, where the same letters are regarded as the same types.
+​  only contains uppercase letters.输出描述:Print a non-negative integer in a single line, denoting the maximum times.示例1输入复制ATCCCTTG输出复制2说明One possible way is that ATCCCTTG\,"  \; \rightarrow \;ATTTG\,” \; \rightarrow AG\,”‘‘ATCCCTTG”→‘‘ATTTG”→‘‘AG”.
+给定一个字符串，发现三个一样的就消掉，消掉之后如果两边的序列还够三个也消掉，一直消到没有为止，问能肖多少次。
+暴力用一个栈记录下来当前的字符，如果栈的长度>=3 就检查一下是否满足，然后三个字母出栈,ans++
+例如 abbcccbaa 到ccc的时候发现满足条件，于是ans++,此时的栈为abb   b入栈发现bbb成立，此时为a 然后aa进栈，此时aaa满足 ，  答案为3
+比赛后第一次写的时候，发现check函数传过去一个栈会超时，于是去问昊哥 昊哥说如果这样传的话每次都需要拷贝一次非常慢，拷贝着就超时了。于是改成引用或者全局变量就对了。
+TLE代码:
+AC代码:
+比赛的时候铮哥的AC代码:
+详情请见铮哥的博客
+
+牛客第八场补题和题解
+
+
+
+
+链接：https://ac.nowcoder.com/acm/contest/888/B来源：牛客网
+题目描述Gromah and LZR have entered the second level. There is a sequence a1, a2,  an 
+​  on the wall.
+There is also a note board saying “the beauty value of a sequence is the number of different elements in the sequence”.
+LZR soon comes up with the password of this level, which is the sum of the beauty values of all successive subintervals of the sequence on the wall.
+Please help them determine the password!
+输入描述:
+The first line contains one positive integer n , denoting the length of the sequence.
+The second line contains n​positive integers a_1, a_2, … an
+​ , denoting the sequence.
+输出描述:
+Print a non-negative integer in a single line, denoting the answer.
+示例1
+输入
+41 2 1 3
+输出
+18
+给定n个数，问所有子序列的价值，价值被定义为此序列中不同数字的个数，例如 1-3是1 2 1 价值就为2 因为只有1 2 不同。
+dp[i]记录下来i位置结尾的前面所有序列的贡献，每次都用bk数组记录下来上一次出现当前数字的位置。
+1.如果没有出现过这个数，那么dp[i]=dp[i-1]+i;
+例如:dp[2]=dp[1]+2; 1到2 多了 1-2 2-2 两个序列，由于之前没有相同的数字，所以多的序列都多i
+2.如果出现过这个数字，那么贡献多1的新增的子序列就从上次出现过的位置后一个位置开始增加
+例如dp[3]=dp[2]+1; 虽然2-3增加了1-3 2-3 3-3 三个序列，但是1-3里面都有1 重复了 所以只加了两遍。
+只有这两种情况，用ans累加起来输出的便是最终的答案。
+链接：https://ac.nowcoder.com/acm/contest/888/C来源：牛客网
+题目描述Gromah and LZR have entered the third level. There is a blank grid of size m\times mm×m, and above the grid is a word “CDMA”.
+In CDMA Technology, a Technology about computer network, every network node should be appointed a unique binary sequence with a fixed and the same length. Moreover, if we regard 0​  in the sequence as -1​ , and regard 1​  as +1​ , then these sequences should satisfy that for any two different sequences s,t​ , the inner product of s,t​  should be exactly 0​ .
+The inner product of two sequences s,s,t​  with the same length n_{}n​    
+So, the key to the next level is to construct a grid of size m\times mm×m, whose elements are all -1_{}−1 
+​ , and for any two different rows, the inner product of them should be exactly 0_{}0​ .
+In this problem, it is guaranteed that m_{}m​  is a positive integer power of 2_{}2​  and there exists some solutions for input m_{}m​ . If there are multiple solutions, you may print any of them.输入描述:Only one positive integer m_{}m​  in one line.
+ ∣k=1,2,⋯,10}输出描述:Print m_{}m​  lines, each contains a sequence with length m_{}m​ , whose elements should be all -1_{}−1​  or 1_{}1​  satisfying that for any two different rows, the inner product of them equals 0_{}0​ .
+You may print multiple blank spaces between two numbers or at the end of each line, and you may print any number of blank characters at the end of whole output file.示例1输入复制2输出复制1 11 -1说明The inner product of the two rows is 1\times(-1) + 1\times 1 = 01×(−1)+1×1=0.
+给定一个n 其中n是2^k (1<=k<=10)中的一个，要求输出一个矩阵，其中任意两行对应列相乘加一起等于0
+从2推4 4推8(神仙思路不是我想的23333)
+分成四块
+1 2
+3 4
+其中1 2 3 都保持上一次的矩阵，4改变一下变成1 2 3的完全相反的矩阵。
+刚开始输入n居然用pow(2,n)来输出，后来发现读错题了原来n输入直接就是正好的。。于是取log对输出的编号进行操作。
+链接：https://ac.nowcoder.com/acm/contest/888/G来源：牛客网
+题目描述Gromah and LZR have entered the seventh level. There are a sequence of gemstones on the wall.
+After some tries, Gromah discovers that one can take exactly three successive gemstones with the same types away from the gemstone sequence each time, after taking away three gemstones, the left two parts of origin sequence will be merged to one sequence in origin order automatically.
+For example, as for “ATCCCTTG”, we can take three ‘C’s away with two parts “AT”, “TTG” left, then the two parts will be merged to “ATTTG”, and we can take three ‘T’s next time.
+The password of this level is the maximum possible times to take gemstones from origin sequence.
+Please help them to determine the maximum times.输入描述:Only one line containing a string s_{}s​ , denoting the gemstone sequence, where the same letters are regarded as the same types.
+​  only contains uppercase letters.输出描述:Print a non-negative integer in a single line, denoting the maximum times.示例1输入复制ATCCCTTG输出复制2说明One possible way is that ATCCCTTG\,"  \; \rightarrow \;ATTTG\,” \; \rightarrow AG\,”‘‘ATCCCTTG”→‘‘ATTTG”→‘‘AG”.
+给定一个字符串，发现三个一样的就消掉，消掉之后如果两边的序列还够三个也消掉，一直消到没有为止，问能肖多少次。
+暴力用一个栈记录下来当前的字符，如果栈的长度>=3 就检查一下是否满足，然后三个字母出栈,ans++
+例如 abbcccbaa 到ccc的时候发现满足条件，于是ans++,此时的栈为abb   b入栈发现bbb成立，此时为a 然后aa进栈，此时aaa满足 ，  答案为3
+比赛后第一次写的时候，发现check函数传过去一个栈会超时，于是去问昊哥 昊哥说如果这样传的话每次都需要拷贝一次非常慢，拷贝着就超时了。于是改成引用或者全局变量就对了。
+TLE代码:
+AC代码:
+比赛的时候铮哥的AC代码:
+详情请见铮哥的博客
+
+CSS第十一章颜色
+
+
+color属性允许你指定元素中文本的颜色，可以通过CSS中以下三种方法之一来指定颜色：
+这种方式从组成一种颜色分别需要多少红色、绿色、蓝色的角度来表示颜色。 例如 粉红色：color: rgb(255,192,203);
+这种方式是通过六位十六进制编码表示颜色，其中六位编码分别代表一种颜色中红绿蓝的数量 例如#ee3e80
+浏览器可以识别147种预定义的颜色名称。例如 DarkCyan
+CSS在处理每个HTML元素时都假设它们位于一个无形的盒子中，而background-color属性设置的正是这个盒子的背景色。
+可以使用指定前景色一样的三种方式来定义颜色。
+opacity后面或者rgba第四个参数代表透明度，透明度值越小越透明。1234567891011121314p.one {    background-color: rgb(0,0,0);    opacity: 0.5;}p.two {    background-color: rgb(0, 0, 0);    background-color: rgba(255, 0, 0, 0.5);}p.three {    background-color: rgba(255, 0, 0, 0.1);}
+CSS3引入了一种全新并且直观的方式来指定颜色，这种方式通过色调、饱和度和明度值来确定颜色。
+色调接近传统意义上的颜色。在HSL颜色重，经常用一个色环来表示色调，色环上的一个角度来对应一种色调，又是也会用色换上的一个滑块来显示色调，滑块值介于0-360之间。
+饱和度是指用一种颜色重灰色的含量，用百分比来表示。100%表示最高的饱和度，0%则表示某种灰色
+明度值得是一种颜色中白色（明亮）或者黑色（黑暗）的含量，用百分比来表示，0%时是黑色，100%时是白色，50%是标准色。明度又是被称为辉度。
+hsl和hsla作为一种新的颜色指定方式引入到了CSS中，该属性的值以hsl开头，括号里面是以下几种值：
+1.色调 通过介于0°到360°之间的一个角度表示
+2.饱和度通过百分数表示
+
+CSS第一章 CSS简介
+
+1.介绍CSS的工作原理
+2.CSS编写的规则
+3.展示CSS规则在HTML页面下的应用
+
+理解CSS的工作原理的关键在于能够设想每个HTML元素的周围都有一个看不见的盒子。
+盒子               文本        具体方式宽度和高度         字体           在设置某些元素的时候（列表表单）还会有一些具体的方式边框（颜色宽度样式）大小背景颜色和背景图像  颜色在浏览器窗口中的位置 斜体、粗体、大写小写等
+这些规则用来控制置顶元素中内容如何显示。一条CSS规则包含两个部分：一个选择器和一条声明。
+选择器表明要应用规则的元素。同一条规则可以应用在多个元素上，前提是你需要将这些元素名用逗号隔开
+用于表明应该如何显示选择器致命的元素。声明为两个部分（属性和值）并以冒号作为分隔符。
+CSS声明位于花括号中，而且每条声明都由两部分组成：属性和值，两者由冒号分割开。可以在一条声明内指定多个属性，各属性之间用分号隔开。
+属性表明你想要改变元素的哪些方面，例如颜色、字体、宽度、高度和边框
+值用来指定你想要在所选属性上应用的设置。例如，如果要指定一个颜色属性，那么这个属性的值就是你希望这些元素中的文本所呈现的颜色。
+其中12345<head>        <meta charset="utf-8">        <title>CSS example</title>        <link  href="/html/example.css" type="text/css" rel="stylesheet">    </head>指定了CSS文件的位置
+在HTML文档中，元素可以告诉浏览器在何处寻找用于定义页面样式的CSS的文件。它是一个空元素(也就是说不需要结束标签)，而且位于
+该特性表明CSS文件的路径
+该特性表明页面所在链接的类型。它的值应该是text/css。
+该特性表明HTML页面与被链接文件的关系。当连接到一个CSS文件上的时候，值应该是stylesheet。
+一个HTML页面可以写多个CSS文件，这时候需要写多个link元素
+type应该选择为text/css
+当建立一个包含有多个页面的网站时，你应该使用外部样式表。这样做具有以下好处
+1.允许所有的页面使用同样的样式规则
+2.将页面的内容和表现分离
+3.意味着可以通过修改一个文件从而修改所有的页面
+介绍几种选择器类型：
+1.通用选择器含义：应用于文档中的所有元素示例 * {} 应用于页面所有元素
+2.类型选择器含义：匹配元素名称与选择器相同的元素示例 h1,h2,h3 {} 应用于 h1 h2 h3 元素
+3.类选择器含义：匹配这样的元素：元素的class特性的值和此选择器符号（.）后面的部分相同示例 .note{} 应用于所有class特性值为note的元素 p.note{} 只应用于class特性值为note的
+元素
+4.ID选择器含义：匹配元素id特性的值与此选择器井号后面的部分相同示例：#node 应用于id为node的元素
+5.子元素选择器含义：匹配指定元素的直接子元素示例：li>a {} 应用于所有父元素为li的a元素， 对页面其他的a不起作用
+6.后代选择器定义：匹配指定元素与的后代元素(不仅是置顶元素的直接子元素)示例：p a { } 应用于所有位于p中的a 元素，不论他们之间有没有嵌套其他的元素
+7.相邻兄弟选择器含义：匹配一个元素相邻的兄弟元素示例：h1+p {} 应用于 h1元素之后的第一个p元素（对其他的不起作用）
+8.普通兄弟选择器含义：匹配一个元素的兄弟元素，不论这个元素是不是和他的兄弟元素相邻示例：h1~p {} 如果有两个p元素均为h1元素的兄弟元素，那么这些规则对元素都起作用。
+如果有两个或者更多的规则应用在同一个元素上，那么理解这些规则的优先级关系是非常重要的。
+如果出现过两次，那么后面出现的优先级比较高
+如果一个选择器比另一个更下具体，那么具体的选择器优先于一般的选择器。
+在这里
+1.h1 比 * 更具体
+2.p b 比p 更具体
+可以在任意属性值后面加!important来强调这条规则比应用于同元素的其他规则更重要
+
+HTML第八章
+
+
+每个HTML元素都可以附带id特性。id特性用来从页面上其他元素中对一个元素进行唯一标示，它的值以字母或者_开头，在一个页面中没有两个元素的id特性值是相同的。
+使用id可以使JavaScript对特定的元素进行处理。
+由于可以用于任何元素上，id特性被称为全局特性。
+每个HTML元素都可以附带class特性，有时候希望有一种方法指定多个元素和页面上的其他元素分开，而不是一个，此时可以用class
+可以通过div和class的组合实现改变特性的功能： style标签里的是css的选择器的内容
+有些元素在浏览器窗口中显示时总是另起一行。这些元素被称为块级元素。
+块级元素的实例包括
+ 
+有些元素在显示的时候是与它临近元素出现在同一行里，这些元素被称为内联元素。
+内联函数的实例包括     等等。
+div元素允许你将一组元素集中到一个块级元素内。
+span元素就像div的内联版本，用来（1）没有其他合适元素的情况下包含一段文本，并将其与周围的文本区区别开（2）包含若干个内联元素span内的内容可以通过css来控制。1<p>这里是一个新的段落<span> 这里插入一个span 可以用css控制内容</span></p>
+src属性放上想要加的网页，相当于在网页里面内联了一个网页height和width不用多说
+元素位于元素中并包含着所在页面的相关信息
+description
+用于包含一段有关页面的描述信息。
+keywords
+用于包含一组以逗号分割的关键字列表，用户可以通过这些关键字找到这个页面。
+robots
+用于指定搜索引擎是否可以把这个页面加入到搜索结果中，使用noindex如果不希望，如果希望加入结果，但不要收录页面上链接的其他页面，可以使用nofollow
+author
+用来定义网页的设计者
+pragma
+用于防止浏览器对页面的缓存
+expires
+由于浏览器经常缓存页面的内容，expires选项可以用来指定页面的过期时间。
+有一些字符用于编写HTML时作为保留字符，想要输出她们需要用一些特殊的方式 如：
+<小于号 输出的两种编码： < 和 <
+
+HTML第七章表单
+
+
+Google中的搜索框就是一个表单，把信息提供到别的网页上，从而完成一些操作。  可以添加文本，进行选择，提交表单，上传文件
+表单控件应该在form元素中，每个form都应该设置action特性，通常还需要method和id
+特性值是服务器上一个页面的url，这个页面用来接受提交表单的时候用户的填写的信息。
+表单的提交可以使用get和post两种方法。
+type不同决定了类型的不同 text就是文本框，而submit便是一个提交按钮
+当用户向表单中输入信息的时候，服务器需要知道每条信息输入到了哪个表单控件里，哪条数据提供的是密码，所以每个表单控件都需要一个name这个值对表单控件进行标识并与输入的信息一同传到服务器。
+能显示出来的长度，（尽管可以往后写）
+最多能写的长度
+这个特性的值为passowrd的时候是密码
+col控制的是列，row是行
+select元素用来创建下拉列表框，包含两个或者两个以上的option元素
+option用于指定用户可以选择的选项，在起始标签option之间的文字将现实在下拉列表中。
+option元素使用value特性来指定选项的值，如果被选中，那么这个值和选择框里的值一起传到服务器。
+可以控制网页刚被加载出来时候的选择情况。
+可以通过在select中加入multiple特性来允许用户一次选择多个值。
+label可以对表单控件进行有效的标注 
+可以通过两种方式使用label（1）将文本说明和表单输入框全部包围起来 像这样：1<label >Age: <input type="text" name="age" id="age"></label>
+（2）与表单控件分开，使用for特性来指明元素所关联的表单控件 像这样
+for是用来指明标签控件标注的是哪个表单控件。 for指向的是id
+可以把相关的表单控件置于这个元素里，会被自动分成一组，大多数浏览器会多一条线。
+legend元素直接跟上fieldset，对这个组进行解释说明的作用，会被嵌到线里。
+ 可以通过在input标签里面加上required来检测是否输入了东西…啥的
+input元素里的type取search可以形成聊天框
+这个特性里面的value决定你没有输入的时候默认显示的内容。
+
+中石油第十四场补题和题解
+
+
+•题目描述JOIOJI 桑是 JOI 君的叔叔。JOIOJI 这个名字是由J,O,I三种字母各两个构成的。
+最近，JOIOJI 桑喜当爹。JOIOJI 桑想让自己孩子的名字和自己一样由J,O,I三种字母构成，并且想让J,O,I三个字母的出现次数恰好相同。
+JOIOJI 桑家有一份祖传的卷轴，上面写着一首长诗S，长度为N，由J,O,I三种字母组成。JOIOJI 桑想用诗中最长的满足要求的连续子串作为孩子的名字。
+现在 JOIOJI 桑将这首长诗交给了你，请你求出诗中最长的、包含同样数目的J,O,I三种字母的连续子串。输入第一行一个正整数N，代表这首长诗的长度。接下来一行一个长度为N的字符串S，表示这首长诗，保证每个字符都是J,O,I三个字母中的一个。输出输出一行一个正整数，代表最长的包含等数量J,O,I三个字母的最长连续子串的长度。如果不存在这样的子串，输出0。样例输入
+10JOIIJOJOOI样例输出6提示选择IIJOJO这个子串，长度为 6，包含J,O,I三个字母各 2 个，这是最长的满足要求的子串。对于所有测试数据，1≤N≤2×10^5。
+题意很简单，已经给出
+思路是在林姐的博客里学习的 林姐的博客 用j o I三个变量来记录下来之前出现的JOI三个字母的个数，用map的pair一个个的键值对来记录下来JO和OI出现过的差，如果没出现过这个差那就赋值为i，记录上一次这两个差对应关系的位置，下一次再次出现这个键值对说明增量相同，所以答案为 ans=max(ans,i(当前的位置)-mpmake_pair(j-o,o-I)) 这里的jr-or,or和ir和前面的jl-ol,ol-il相等，就证明了每个元素都相等，增量相等： 所以jr-jl=or-ol=ir-il 三个增加的数量都相同，就是要求中要求的最大JOI的个数
+从十二点二十开始看这个题，看到现在一点四十九 ， 就在刚才才突然顿悟其中的道理（太菜了） 懂了道理非常兴奋，于是写下了这篇博客(半夜交题结果中石油又炸了，在vj过了才松一口气)
+!(交题过程)[https://i.loli.net/2019/07/19/5d30b1b83004e41567.png]!(A题的欣喜)[https://i.loli.net/2019/07/19/5d30b206063f646195.png]
+
+中石油第十五场补题
+
+You are given a string S of length N. Among its subsequences, count the ones such that all characters are different, modulo 109+7. Two subsequences are considered different if their characters come from different positions in the string, even if they are the same as strings.
+Here, a subsequence of a string is a concatenation of one or more characters from the string without changing the order.
+Constraints·1≤N≤100000·S consists of lowercase English letters.·|S|=N
+输入Input is given from Standard Input in the following format:
+NS
+输出Print the number of the subsequences such that all characters are different, modulo 109+7.
+
+样例输入复制样例数据4abcd样例输出15
+提示Since all characters in S itself are different, all its subsequences satisfy the condition.
+求给定主串的子串，要求子串里没有相同的字母
+之前求子集的时候求的是2^n 这是因为每个数都有选或者不选两种情况，n个数乘n次2 就变成了2^n 而本题求的是子串的个数，所以先减去1 每个数都有之前的次数*(当前字母的出现次数+1)1是选0次 剩下的是选n次，n-1次，，，到1次  注意这里的选并不是选在一个子串里，而是分给之前可行的情况，最后mod就ok 
+[提交] [状态] [命题人:admin]题目描述There are N stones arranged in a row. The i-th stone from the left is painted in the color Ci.Snuke will perform the following operation zero or more times:Choose two stones painted in the same color. Repaint all the stones between them, with the color of the chosen stones.Find the number of possible final sequences of colors of the stones, modulo 109+7.
+Constraints·1≤N≤2×105·1≤Ci≤2×105(1≤i≤N)·All values in input are integers.
+输入Input is given from Standard Input in the following format:
+NC1:CN
+输出Print the number of possible final sequences of colors of the stones, modulo 109+7.
+样例输入复制样例数据512122样例输出3
+提示We can make three sequences of colors of stones, as follows:·(1,2,1,2,2), by doing nothing.·(1,1,1,2,2), by choosing the first and third stones to perform the operation.·(1,2,2,2,2), by choosing the second and fourth stones to perform the operation.
+给定一个序列，每个数字代表一个颜色，可以选中两个相同的颜色，把中间全部涂成相同的颜色，求最后可能有多少种序列颜色可能性
+利用递推，用一个pos数组来记录上次出现当前输入的这个数位置，dp数组来存pos[a[i]]这个颜色的答案的可能数，每次递推然后每次都mod就是最后的答案 ，刚开始ans=1是因为什么都不做也算一种情况。提供一个中石油里面给的数据 7 1213121 的模拟过程：
+1213121ans=1 什么都不做i=1  ans=1 c[1]=1 d[1]=1;i=2  ans=1 c[2]=1 d[2]=1;i=3  ans=1+c[d[a[i]]]=1+1=2; c[3]=2; d[1]=3;i=4  ans=2+0=2  c[4]=2  d[3]=4;i=5  ans=2+2=4  c[5]=4   d[1]=5;i=6  ans=4+1=5  c[6]=5   d[2]=6;i=7  ans=5+4=9
+
+单源最短路与记录路径
+
+给定n个点，m个边，求出一个点(单源的含义)到其他各个点的最短路径
+
+题目背景本题测试数据为随机数据，在考试中可能会出现构造数据让SPFA不通过，如有需要请移步 P4779。
+题目描述如题，给出一个有向图，请输出从某一点出发到所有点的最短路径长度。
+输入输出格式输入格式：第一行包含三个整数N、M、S，分别表示点的个数、有向边的个数、出发点的编号。
+接下来M行每行包含三个整数Fi、Gi、Wi，分别表示第i条有向边的出发点、目标点和长度。
+输出格式：一行，包含N个用空格分隔的整数，其中第i个整数表示从点S出发到点i的最短路径长度（若S=i则最短路径长度为0，若从点S无法到达点i，则最短路径长度为2147483647）
+输入输出样例输入样例#1：4 6 11 2 22 3 22 4 11 3 53 4 31 4 4输出样例#1：0 2 4 3说明时空限制：1000ms,128M
+数据规模：
+对于20%的数据：N<=5，M<=15；
+对于40%的数据：N<=100，M<=10000；
+对于70%的数据：N<=1000，M<=100000；
+对于100%的数据：N<=10000，M<=500000。保证数据随机。
+对于真正 100% 的数据，请移步 P4779。请注意，该题与本题数据范围略有不同。
+
+图片1到3和1到4的文字位置调换
+题目背景2018 年 7 月 19 日，某位同学在 NOI Day 1 T1 归程 一题里非常熟练地使用了一个广为人知的算法求最短路。
+然后呢？
+100 \rightarrow 60100→60；
+Ag \rightarrow CuAg→Cu；
+最终，他因此没能与理想的大学达成契约。
+小 F 衷心祝愿大家不再重蹈覆辙。
+题目描述给定一个 NN 个点，MM 条有向边的带非负权图，请你计算从 SS 出发，到每个点的距离。
+数据保证你能从 SS 出发到任意点。
+输入输出样例输入样例#1：4 6 11 2 22 3 22 4 11 3 53 4 31 4 4输出样例#1：0 2 4 3说明样例解释请参考 数据随机的模板题。
+开一个结构体node1 用node1类型的vector存储图和权值
+开一个结构体node2 用重载运算符重载小于号，下面开优先队列就可以变成小根堆，自动排序很舒服
+输入存边 定义INF最大值为0x3f3f3f3f或者INT_MAX 初始化dis数组，dis数组是用来存输入的s到各个点的距离的，s点设置为🐖(0)，其他为🐉(INF)如果 p.d!=dis[p.x] continue 这里是一个小小的优化，但是却十分的关键 意思为如果这个点的下一个点的最短路更新完毕，之前push进去的点就不再考虑了 因为优先队列小根堆自动排序，所以现在的p.x就是当前这个点走到下一个点的最小距离的id 走到这个距离上一个点最小距离的点上面便利一下它可以到达的点，如果有更佳的路径，就push到优先队列中。
+如果想要记录最短路径的话，只需要增加一个p数组，如果还想记录下来距离的话还需要开一个d数组 其中用p[j]=i表示从i到j最短路的路径 d记录下来i到j的最短路的边的权值 这样记录下来的是倒着来的，比如说
+1 2 3
+2 3 3
+1 3 10
+这样d数组存下来的就是2和1 代表3的最短前驱为2 和 1 然后while循环 通过pp=p[pp];操作实现取上一个 一直取到0 ans*=当前的最小距离 输出就ok
+
+java内部类和异常类
+
+
+内部类的外嵌类的成员变量在内部类中仍然有效，内部类中的方法也可以调用外嵌类中的方法。
+内部类的类体不可以声明类变量和类方法。外嵌类的类体中可以用内部类声明对象，作为外嵌类的成员
+内部类仅供它的外嵌类使用，其他类不可以调用某个类的内部声明对象。
+Example7_112345678910111213141516171819202122232425262728293031323334353637383940414243444546package book;class RedCowForm{	static String formName;	Redcow cow;	RedCowForm()	{			}	RedCowForm(String s)	{		cow = new Redcow(150,122,5000);		formName = s;	}	public void showCowMess()	{		cow.speak();	}	class Redcow	{		String cowName = "红牛";		int height;		int weight;		int price;		Redcow(int h,int w,int p)		{			height = h;			weight = w;			price = p;		}		void speak()		{			System.out.println("我是"+cowName+",身高:"+height+"体重:"+weight+"KG,生活在"+formName);		}	}}public class Example7_1 {	public static void main(String args[])	{		RedCowForm form = new RedCowForm("红牛农场");		form.showCowMess();		form.cow.speak();	}}
+输出
+我是红牛,身高:150体重:122KG,生活在红牛农场我是红牛,身高:150体重:122KG,生活在红牛农场
+例子：
+输出我是红牛,身高:150体重:122KG,生活在红牛农场我是红牛,身高:150体重:122KG,生活在红牛农场我是红牛,身高:1体重:1KG,生活在红牛农场
+java允许我们直接用一个类的子类的类体创建一个子类对象，也就是说，创建子类对象的时候除了用父类的构造方法，还有类体。这个类体被认为是一个子类去掉类声明后的类体，称作匿名类。
+匿名类就是一个子类，由于无名可用，所以不可能用匿名类声明对象，但是可以直接用匿名类创建一个对象。
+输出
+  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z  α  β  γ  δ  ε  ζ  η  θ  ι  κ  λ  μ  ν  ξ  ο  π  ρ  ?  σ  τ  υ  φ  χ  ψ  ω
+
+啊哈算法（1）
+
+
+先从右边开始找，如果找到比基准数小的停止，再从左边找，找到大的交换一下，最终l=r的时候交换基准数和相遇点的数值即可，然后先从左边开始递归，找到后return返回即可
+定义一个结构体，在结构体中定义一个指针类型的结构体，用来指向下一个数据 如果struct head为null 即第一个节点没有被赋值，这时候把当前的p赋值给head 如果不是第一个就让q的下一个q->next = p 最后让q=p就将链表连接了起来。
+插入操作： t->next==NULL 这一句是针对在链表尾部插入的情况，如果为null就直接分配一个struct node *内存空间，让这个p的data等于要插入的数，让p的next等于t的next t代表的是遍历这个链表的一个量，最后t的next等于p就连接了起来整个链表t->next->data>x 这一句是如果找到下一个大于插入数的地方就在那个前面加上（感觉这个链表只适合排序完了的数据）最后插入完break就行了
+查询： 输出t的data t->next赋值给t
+在闭着眼打了好几次以后已经彻底明白这是个什么东西了2333
+加油  十五天学完这本书!!!
+
+java接口
+
+
+使用关键字interface来定义一个接口
+接口体包括常量的声明和抽象方法两部分。接口体中所有的常量的访问权限一定都是public，而且是static常量(允许省略public final static修饰符)，所有的抽象方法的访问权限一定都是public(允许省略public abstract修饰符)
+例如：12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273package book;interface Computable{	int Max = 46;	int f(int x);	void show();}class China implements Computable{	int number;	public int f(int x)	{		int sum=0;		for(int i=1;i<=x;i++)		{			sum=sum+i;		}		return sum;	}	public void show()	{		System.out.println("China No.1!");	}}class Japan implements Computable{	int number;	public int f(int x)	{		return Max +x;	}	public void show()	{		System.out.println("Japan is good!");	}}class whitegive implements Computable{	int number;	public int  f(int x)	{		return x*100+number;	}	public void show()	{		System.out.println("Today is a WhiteGive day");	}}public class Example6_1 {	public static void main(String args[])	{		China zhang;		Japan henlu;		whitegive W;		W = new whitegive();		zhang = new China();		henlu = new Japan();		zhang.number = 32 + Computable.Max;		henlu.number = 14 + Computable.Max;		W.number = 23+Computable.Max;		System.out.println("zhang的学号\n"+zhang.number+"\nzhang的求和结果\n"+zhang.f(100));		zhang.show();		System.out.println("henlu的学号\n"+henlu.number+"\nhenlu的求和结果\n"+henlu.f(100));		henlu.show();		System.out.println("W的学号\n"+W.number+"\nW的求和结果\n"+W.f(100));		W.show();	}}
+1.如果一个类声明实现一个接口，但是没有重写接口中的所有方法，那么这个类必须是抽象类，也就是说，抽象类既可以重写接口中的方法，也可以直接拥有接口中的方法。2.非抽象类如果声明要实现一个接口，必须重写接口中所有的方法，并且所有的访问权限都是public(不然会引起访问权限变小而错误)。3.如果一个抽象类声明要实现一个接口但是没有重写所有的方法，此时直接拥有接口中没有重写的方法，抽象类的子类必须重写接口中定义的方法&&抽象类中没有重写的方法
+程序可以直接用接口名来调用接口中的常量，如果一个类实现了接口，那么该类可以直接在类体中调用常量
+先创建一个接口类型的变量，然后把某一个实现接口的类创建的对象的引用赋值给该接口声明的接口变量，那么该接口变量就可以调用被类实现的接口方法。
+
+java基础
+
+
+类的上转型对象可以调用隐藏的变量和继承或者重写的方法 不能用子类新添加的方法
+1.用关键字abstract修饰的类称为(抽象类)
+2.abstract类中可以有abstract方法(也可以没有，只有普通方法)
+3.abstract类不能用new运算符创建对象
+1.如果一个非abstract类是abstract类的子类，它必须重写父类的abstract，并且给出方法。。
+2.如果一个abstract类是一个abstract类的子类，它可以重写父类的abstract方法，也可以继承父类的abstract方法
+3.abstract作为上转型对象可以使用abstract类声明对象，但是不能使用new运算符创建对象，可以成为子类对象的上转型对象，那么该对象就可以调用子类的方法
+4.抽象类相当于一个标准:子类需要有什么行为
+输出你好!肥宅!恭喜你又在梦里梦到了我!我会做水煮鱼但是做出来不给你吃!こんにちは!肥やし!あなたはまた夢の中で私の夢を見たことをおめでとう!私はおでんを作ることができますでもやっては食べてくれない!(哭)
+这样写只算一个圆柱是没有问题的，但是用户的需求会发生改变，例如底部的形状可能改成三角形。这时候就需要使用抽象类
+完整代码：1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071package book;//抽象类规定计算底面积abstract class Geometry//几何学{	public abstract double getArea();}class Pillar_1{	Geometry bottom;	double height;	Pillar_1(Geometry bottom,double height)	{		this.bottom=bottom;		this.height=height;	}	public double getVolume()	{		if(bottom==null)		{			System.out.println("么得底，无法计算体积");			return 0;		}		return bottom.getArea()*height;	}}//这里写Circle底面积(继承abstract类Geometry)class Circle_1 extends Geometry{	double r;	Circle_1(double r)	{		this.r=r;	}	public double getArea()	{		return (3.14*r*r);	}}//这里写长方形底面积class Rectangle_1 extends Geometry{	double a;	double b;	Rectangle_1(double a,double b)	{		this.a=a;		this.b=b;	}	public double getArea()	{		return a*b;	}}public class a5_10面向抽象编程抽象 {	public static void main(String[] args)	{		Pillar_1 p;		Geometry bottom = null;		p = new Pillar_1(bottom,100);//null底的柱体		System.out.println("体积"+p.getVolume());		bottom = new Rectangle_1(12,22);//长方形		p=new Pillar_1 (bottom,66);		System.out.println("体积"+p.getVolume());		bottom = new Circle_1(10);		p = new Pillar_1(bottom,58);//圆形		System.out.println("体积"+p.getVolume());	}}
+编写一个抽象类，声明他的上转型对象，使用他的子类重写的方法，如果有需求可以直接添加重写类的子类来调用方法
+是关于一个使用和切换sim卡的实例
+abstract类默认为public 所以继承完要写public或者不写 如果访问权限降低会报错
+
+哈理工304个人赛E题
+
+You may have heard that no two snowflakes are alike. Your task is to write a program to determine whether this is really true. Your program will read information about a collection of snowflakes, and search for a pair that may be identical. Each snowflake has six arms. For each snowflake, your program will be provided with a measurement of the length of each of the six arms. Any pair of snowflakes which have the same lengths of corresponding arms should be flagged by your program as possibly identical.
+
+InputThe first line of input will contain a single integer n, 0 < n ≤ 100000, the number of snowflakes to follow. This will be followed by n lines, each describing a snowflake. Each snowflake will be described by a line containing six integers (each integer is at least 0 and less than 10000000), the lengths of the arms of the snow ake. The lengths of the arms will be given in order around the snowflake (either clockwise or counterclockwise), but they may begin with any of the six arms. For example, the same snowflake could be described as 1 2 3 4 5 6 or 4 3 2 1 6 5.
+OutputIf all of the snowflakes are distinct, your program should print the message:No two snowflakes are alike.If there is a pair of possibly identical snow akes, your program should print the message:Twin snowflakes found.
+Sample Input21 2 3 4 5 64 3 2 1 6 5Sample OutputTwin snowflakes found.
+
+哈理工训练赛20190310(组队赛1)
+
+
+Recently Monocarp got a job. His working day lasts exactly m minutes. During work, Monocarp wants to drink coffee at certain moments: there are n minutes a1,a2,…,an, when he is able and willing to take a coffee break (for the sake of simplicity let’s consider that each coffee break lasts exactly one minute).
+However, Monocarp’s boss doesn’t like when Monocarp takes his coffee breaks too often. So for the given coffee break that is going to be on minute ai, Monocarp must choose the day in which he will drink coffee during the said minute, so that every day at least d minutes pass between any two coffee breaks. Monocarp also wants to take these n coffee breaks in a minimum possible number of working days (he doesn’t count days when he is not at work, and he doesn’t take coffee breaks on such days). Take into account that more than d minutes pass between the end of any working day and the start of the following working day.
+For each of the n given minutes determine the day, during which Monocarp should take a coffee break in this minute. You have to minimize the number of days spent.
+InputThe first line contains three integers n, m, d (1≤n≤2⋅105,n≤m≤109,1≤d≤m) — the number of coffee breaks Monocarp wants to have, the length of each working day, and the minimum number of minutes between any two consecutive coffee breaks.
+The second line contains n distinct integers a1,a2,…,an (1≤ai≤m), where ai is some minute when Monocarp wants to have a coffee break.
+OutputIn the first line, write the minimum number of days required to make a coffee break in each of the n given minutes.
+In the second line, print n space separated integers. The i-th of integers should be the index of the day during which Monocarp should have a coffee break at minute ai. Days are numbered from 1. If there are multiple optimal solutions, you may print any of them.
+ExamplesInput4 5 33 5 1 2Output33 1 1 2Input10 10 110 5 7 4 6 3 2 1 9 8Output22 1 1 2 2 1 2 1 1 2NoteIn the first example, Monocarp can take two coffee breaks during the first day (during minutes 1 and 5, 3 minutes will pass between these breaks). One break during the second day (at minute 2), and one break during the third day (at minute 3).
+In the second example, Monocarp can determine the day of the break as follows: if the minute when he wants to take a break is odd, then this break is on the first day, if it is even, then this break is on the second day.
+你想在几天内喝n次咖啡，m是一天的工作时间(好像没有用到，因为题目给的数据都在正确时间内)，k是每次喝咖啡的间隔
+先输入所有的num 在set中一个一个加入num，正好排序了一下，每次都让set的第一个元素先等于当前的天数cnt，now是现在的时刻，需要注意的是求now的时候要+1 因为喝咖啡需要1单位时间，二分找大于等于当前now的最小下标，如果找到了就让这个值对应的ans=当前的天数，然后把这个数从set中去掉，最后天数加一，最后输出即可。
+A plane is flying at a constant height of h meters above the ground surface. Let’s consider that it is flying from the point (−109,h) to the point (109,h) parallel with Ox axis.
+A glider is inside the plane, ready to start his flight at any moment (for the sake of simplicity let’s consider that he may start only when the plane’s coordinates are integers). After jumping from the plane, he will fly in the same direction as the plane, parallel to Ox axis, covering a unit of distance every second. Naturally, he will also descend; thus his second coordinate will decrease by one unit every second.
+There are ascending air flows on certain segments, each such segment is characterized by two numbers x1 and x2 (x1<x2) representing its endpoints. No two segments share any common points. When the glider is inside one of such segments, he doesn’t descend, so his second coordinate stays the same each second. The glider still flies along Ox axis, covering one unit of distance every second.
+ If the glider jumps out at 1, he will stop at 10. Otherwise, if he jumps out at 2, he will stop at 12.Determine the maximum distance along Ox axis from the point where the glider’s flight starts to the point where his flight ends if the glider can choose any integer coordinate to jump from the plane and start his flight. After touching the ground the glider stops altogether, so he cannot glide through an ascending airflow segment if his second coordinate is 0.
+InputThe first line contains two integers n and h (1≤n≤2⋅105,1≤h≤109) — the number of ascending air flow segments and the altitude at which the plane is flying, respectively.
+Each of the next n lines contains two integers xi1 and xi2 (1≤xi1<xi2≤109) — the endpoints of the i-th ascending air flow segment. No two segments intersect, and they are given in ascending order.
+OutputPrint one integer — the maximum distance along Ox axis that the glider can fly from the point where he jumps off the plane to the point where he lands if he can start his flight at any integer coordinate.
+ExamplesInput3 42 57 910 11Output10Input5 105 711 1216 2025 2630 33Output18Input1 10000000001 1000000000Output1999999999NoteIn the first example if the glider can jump out at (2,4), then the landing point is (12,0), so the distance is 12−2=10.
+In the second example the glider can fly from (16,10) to (34,0), and the distance is 34−16=18.
+In the third example the glider can fly from (−100,1000000000) to (1999999899,0), so the distance is 1999999899−(−100)=1999999999.
+Recently Monocarp has created his own mini-laboratory!
+The laboratory contains n bacteria. Monocarp knows that he can merge any two bacteria having equal sizes, and the resulting bacterium will have the size equal to the sum of sizes of merged bacteria. For example, if two bacteria having sizes equal to 7 merge, one bacterium with size 14 is the result.
+It becomes hard to watch for many bacteria, so Monocarp wants to merge all of them into one bacterium. It may not be possible to do this with the bacteria Monocarp has, so he can buy any number of bacteria of any possible integer sizes in a special store.
+You have to determine the minimum number of bacteria Monocarp has to buy to merge them with the n bacteria his laboratory contains into exactly one bacterium.
+InputThe first line contains one integer n (1≤n≤2⋅105) — the number of bacteria Monocarp’s laboratory contains.
+The second line contains n integers a1,a2,…,an (1≤ai≤109), where ai is the size of the i-th bacterium in the laboratory.
+OutputIf it is impossible to merge the bacteria (possibly after buying some) into only one bacterium, print -1.
+Otherwise print the minimum number of bacteria Monocarp has to buy to merge them with the n bacteria his laboratory contains into exactly one bacterium.
+ExamplesInput21 4Output2Input33 6 9Output-1Input71000000000 1000000000 1000000000 1000000000 1000000000 1000000000 1000000000Output1NoteIn the first example Monocarp should buy one bacterium having size 1 and one bacterium having size 2. Then Monocarp will have 4 bacteria having sizes [1,4,1,2]. Then two bacteria having sizes 1 can be merged into one having size 2. Then Monocarp will have 3 bacteria having sizes [2,4,2]. Then two bacteria having sizes 2 can be merged into one having size 4. Then Monocarp will have 2 bacteria having sizes [4,4], which can be merged into one having size 8.
+In the second example no matter which bacteria Monocarp will buy, he cannot merge all his bacteria.
+In the third example Monocarp needs to buy one bacterium having size 1000000000.
+商店里有n种细菌，问你买几个细菌可以合成一个
+用优先队列维护，如果最小的两个相等，push两个小的相加，如果b/a %2不等于0就输出-1 结束程序 因为2a如果>b 就没有结果了(两个增长速度不一样，永远不会相等) 如果两个数不相等就push进去a\2 注意优先队列默认是大根堆，需要push进去负的手动变成小根堆
+Quite often the jury of Saratov SU use the problem “Masquerade” in different practice sessions before the contest. This problem is quite easy — all you need is to print the product of two integers which were read from the input stream.
+As usual, the jury had prepared this problem once again. The jury had n testcases, the i-th testcase was a pair of positive integers ai and bi, both integers didn’t exceed 107. All testcases were pairwise distinct.
+Unfortunately, something went wrong. Due to hardware issues all testcases have disappeared. All that the jury were able to restore are the number of testcases n and the answers to these testcases, i. e. a sequence of n numbers c1,c2,…,cn, such that ai⋅bi=ci.
+The jury ask you to help them. Can you provide any possible testset? Remember that all testcases were distinct and all numbers in each testcase were positive integers and didn’t exceed 107.
+InputFirst line contains one insteger n (1≤n≤2⋅105) — the number of lost testcases.
+Second line contains n space-separated integers c1,c2,…,cn (1≤ci≤107) — the answers to the testcases.
+OutputIf there is no such testset, print NO.
+Otherwise, print YES in first line. Then print n more lines, the i-th of them should contain two space separated positive integers ai and bi not exceeding 107. All pairs (ai,bi) must be distinct, and, for each i∈[1,n], the condition ai⋅bi=ci must be met.
+ExamplesInput41 3 3 7OutputYES1 11 33 11 7Input53 1 3 3 7OutputNOInput69 10 9 10 9 10OutputYES1 91 103 35 29 12 5NoteIn the first example one of the possible testsets is (a1=1, b1=1), (a2=1, b2=3), (a3=3, b3=1), (a4=1, b4=7).
+In the second example a testset consisting of distinct tests doesn’t exist.
+题意是需要把每个数都拆成两个因数的乘积，但是同样的两个因数不能重复使用(顺序) 例如 10=25 此时的2\5只能用一次
+暴力 用ans2来存已经存在的可以用的因数，如果ans2不为0就使用ans2(此时的ans2应该是下面用过的第一次因数被对应的a[i]除后的数)，使用完ans2以后不要忘记把ans2[a[i]]清零 如果ans2[a[i]]=0的话 ans1[a[i]]++; 如果ans1越界 即 if(ans1[a[i]]ans1[a[i]]>a[i]) 直接f=0 下面对应的是f=0的时候直接break大循环输出NO结束程序。如果找到了可以整除的因子 即 if(a[i]%ans1[a[i]]==0) 用class ans存下来x和y结果 ：     ans[i].x=ans1[a[i]];        ans[i].y=a[i]/ans1[a[i]];如果相等的话就不让ans2[a[i]]=现在的因数被a[i]除完的数(因为不能重复用，例如9=33只能用一次) if(ans[i].x!=ans[i].y)          ans2[a[i]]=a[i]/ans1[a[i]];最后输出结果
+There is a beautiful fence near Monocarp’s house. The fence consists of n planks numbered from left to right. The i-th plank has color ai.
+Monocarp’s father have decided to give his son m orders. Each order is a color cj. After each order Monocarp finds leftmost and rightmost planks currently having color cj and repaints all planks between them into color cj.
+For example, if, at first, fence looked like (from left to right) [1,2,3,1,4,1,5,6], then after fulfilling an order with color 1 fence will look like [1,1,1,1,1,1,5,6].
+Assume that Monocarp fulfills all orders in the order they come, one by one.
+Note that if current order is about color x and there is no more than one plank in the fence having color x, then Monocarp doesn’t repaint anything, so he can skip this order and skip to the next one.
+Find out the color of each plank after Monocarp has done all the given orders.
+InputThe first line contains one integer n (1≤n≤3⋅105) — the number of planks in the fence.
+The second line contains n space-separated integers a1,a2,…,an (1≤ai≤3⋅105), where ai is the initial color of the i-th plank.
+The third line contains one integer m (1≤m≤3⋅105) — the number of orders.
+The fourth line contains m space-separated integers c1,c2,…,cm (1≤cj≤3⋅105), where cj is the color of the j-th order.
+OutputPrint n space-separated integers — the colors of planks in the fence after processing all m orders.
+ExamplesInput41 2 1 222 1Output1 2 2 2Input87 1 7 1 23 9 23 1423 4 7 1Output7 7 7 1 1 1 1 1NoteIn the first example initial appearance of the fence is [1,2,1,2]. After the first order (color 2) fence will look like [1,2,2,2]. After the second order (color 1) appearance of the fence will not change.
+In the second example initial appearance of the fence is [7,1,7,1,23,9,23,1]. After the first order (color 23) the fence will look like [7,1,7,1,23,23,23,1]. After the second order (color 4) appearance of the fence will not change. After the third order (color 7) the fence will look like [7,7,7,1,23,23,23,1]. After the fourth order (color 1) the fence will look like [7,7,7,1,1,1,1,1].
+给你n个栅栏 m个操作，每个操作将栅栏两端相等且等于输入的操作数之间所有的数变成操作数
+Last n days Monocarp used public transport to get to the university. He received a ticket with number ti during the i-th day.
+Tickets’ numbers are six digit non-negative integers with possible leading zeroes. For example, 123456, 000000, 099999, 999999 are correct ticket numbers, but 1234567, 12345, 9 are not. Every day tickets are numbered from zero. The first passenger gets ticket number 000000, the second one — ticket number 000001, the third one — number 000002 and so on every day. Assume that each day the number of passengers doesn’t exceed 106.
+Unluckiness of the ticket is equal to absolute difference between the sum of the first three digits and the sum of the last three. For example, unluckiness of the ticket number 345123 is equal to |(3+4+5)−(1+2+3)|=6, or unluckiness of the ticket number 238526 is equal to |(2+3+8)−(5+2+6)|=0.
+One passenger is luckier than other if unluckiness of first passenger’s ticket is strictly less than unluckiness of the second one’s ticket.
+For each of n days for given Monocarp’s ticket’s number ti calculate the number of passengers who received their tickets before him during this day and are luckier than Monocarp.
+Examine examples for the further understanding of the statement.
+InputThe first line contains one integer n (1≤n≤2⋅105) — the number of days during which Monocarp used public transport.
+Each of the next n lines contains one six digit integer ti (0≤ti<106, ti can have leading zeroes) — the ticket Monocarp received during the corresponding day.
+OutputPrint n lines: one integer per line — the number of passengers who received their tickets before Monocarp during the corresponding day and are luckier than Monocarp.
+ExampleInput5001000000000999000453234654331Output10998999121496470362NoteDuring the first day the only one passenger who got ticket before Monocarp was luckier. This passenger got ticket number 000000.
+During the second day Monocarp was the first one, so there was nobody before him.
+During the third day all passengers except one who got tickets before Monocarp were more luckier than him. The one whose unluckiness was equal to Monocarp’s unluckiness got ticket number 000999.
+输入n个数，每个输入的乘客的幸运指数为字符串前三项数字和-后三项的，如果幸运值小于输入的值就称幸运值小的更幸运，这个题目是输入string 输出比这个数不幸运的个数
+一次预处理 之后直接输出结果就行之前比赛的时候写了一个可以过样例的程序，不知道为什么wa on test 1…
+还用到了stringstream来转换字符串和数字
+(无限使用铮哥的快读挂2333)
+Monocarp has drawn a tree (an undirected connected acyclic graph) and then has given each vertex an index. All indices are distinct numbers from 1 to n. For every edge e of this tree, Monocarp has written two numbers: the maximum indices of the vertices of the two components formed if the edge e (and only this edge) is erased from the tree.
+Monocarp has given you a list of n−1 pairs of numbers. He wants you to provide an example of a tree that will produce the said list if this tree exists. If such tree does not exist, say so.
+InputThe first line contains one integer n (2≤n≤1000) — the number of vertices in the tree.
+Each of the next n−1 lines contains two integers ai and bi each (1≤ai<bi≤n) — the maximal indices of vertices in the components formed if the i-th edge is removed.
+OutputIf there is no such tree that can produce the given list of pairs, print “NO” (without quotes).
+Otherwise print “YES” (without quotes) in the first line and the edges of the tree in the next n−1 lines. Each of the last n−1 lines should contain two integers xi and yi (1≤xi,yi≤n) — vertices connected by an edge.
+Note: The numeration of edges doesn’t matter for this task. Your solution will be considered correct if your tree produces the same pairs as given in the input file (possibly reordered). That means that you can print the edges of the tree you reconstructed in any order.
+ExamplesInput43 41 43 4OutputYES1 33 22 4Input31 31 3OutputNOInput31 22 3OutputNONotePossible tree from the first example. Dotted lines show edges you need to remove to get appropriate pairs.
+The Theater Square can be represented as a rectangle having height n and length m, divided into square 1×1 cells. Let’s denote the cell located at the intersection of i-th row and j-th column as (i,j). The rows are numbered from top to bottom, the columns — from left to right.
+There is a rectangular fountain inside the Teather Square. The cell in its left upper corner is (x1,y1), the cell in its right lower corner is (x2,y2).
+The Theater Square soon will be paved with tiles having height 1 and length 2. Every cell (except cells inside the fountain) should be paved, and no cell should be covered by more than one tile. All tiles will be laid out horizontally, so the cells covered by each tile are in the same row. To pave the whole Theater Square it might be necessary to break some tiles. After breaking a tile, two new tiles of size 1×1 are formed (which cannot be broken further). You may consider that the mayor, who ordered the paving of the Theater Square, has infinite number of tiles 1×2.
+Since broken tiles are not beautiful, among all possible ways to pave the Theater Square the mayor wants to choose a way such that the number of tiles to be broken into two lesser tiles is minimum possible. Pay attention that tiles should be laid horizontally, no tile can cover cells in different rows.
+Help the mayor! Tell him the minimum possible number of tiles to be broken.
+InputThe first line contains two integers n and m (1≤n,m≤2⋅105) — the height and the length of the Theater Square, respectively.
+The second line contains four numbers x1,y1,x2,y2 (1≤x1≤x2≤n,1≤y1≤y2≤m) — the coordinates of left upper corner and right lower corner of the fountain.
+OutputPrint one number — minimum possible number of tiles mayor has to break in order to pave the whole Theater Square.
+ExamplesInput6 51 2 3 4Output5Input6 13 1 4 1Output2Input1 121 3 1 8Output0NoteOne of the optimal ways to pave the Theater Square in the first example:
+5 tiles are to be broken.
+给你一个nm的广场，还有x1 x2 y1 y2 代表在广场开一片区域 只有一种1\2的瓷砖，而且只能横着放，问你最少需要砸烂多少块瓷砖可以正好铺满
+横向和竖向分别讨论，先算没有开到区域的横向，再单独算开区域的 模拟就完了
+There was an electronic store heist last night.
+All keyboards which were in the store yesterday were numbered in ascending order from some integer number x. For example, if x=4 and there were 3 keyboards in the store, then the devices had indices 4, 5 and 6, and if x=10 and there were 7 of them then the keyboards had indices 10, 11, 12, 13, 14, 15 and 16.
+After the heist, only n keyboards remain, and they have indices a1,a2,…,an. Calculate the minimum possible number of keyboards that have been stolen. The staff remember neither x nor the number of keyboards in the store before the heist.
+InputThe first line contains single integer n (1≤n≤1000) — the number of keyboards in the store that remained after the heist.
+The second line contains n distinct integers a1,a2,…,an (1≤ai≤109) — the indices of the remaining keyboards. The integers ai are given in arbitrary order and are pairwise distinct.
+OutputPrint the minimum possible number of keyboards that have been stolen if the staff remember neither x nor the number of keyboards in the store before the heist.
+ExamplesInput410 13 12 8Output2Input57 5 6 4 8Output0NoteIn the first example, if x=8 then minimum number of stolen keyboards is equal to 2. The keyboards with indices 9 and 11 were stolen during the heist.
+In the second example, if x=4 then nothing was stolen during the heist.
+现在知道n个编号，没有编号的并且在最大值和最小值的区间内的物品可能被偷了，问总共有几个可能被偷
+排序一下，用下一项减去上一项加一就是最后的答案(上来我很激动的用桶来做这题，没想到上来-1 后来发现桶没法开题目数据这么大 才想起来的正解2333)
+Monocarp has decided to buy a new TV set and hang it on the wall in his flat. The wall has enough free space so Monocarp can buy a TV set with screen width not greater than a and screen height not greater than b. Monocarp is also used to TV sets with a certain aspect ratio: formally, if the width of the screen is w, and the height of the screen is h, then the following condition should be met: wh=xy.
+There are many different TV sets in the shop. Monocarp is sure that for any pair of positive integers w and h there is a TV set with screen width w and height h in the shop.
+Monocarp isn’t ready to choose the exact TV set he is going to buy. Firstly he wants to determine the optimal screen resolution. He has decided to try all possible variants of screen size. But he must count the number of pairs of positive integers w and h, beforehand, such that (w≤a), (h≤b) and (wh=xy).
+In other words, Monocarp wants to determine the number of TV sets having aspect ratio xy, screen width not exceeding a, and screen height not exceeding b. Two TV sets are considered different if they have different screen width or different screen height.
+InputThe first line contains four integers a, b, x, y (1≤a,b,x,y≤1018) — the constraints on the screen width and height, and on the aspect ratio.
+OutputPrint one integer — the number of different variants to choose TV screen width and screen height so that they meet the aforementioned constraints.
+ExamplesInput17 15 5 3Output3Input14 16 7 22Output0Input4 2 6 4Output1Input1000000000000000000 1000000000000000000 999999866000004473 999999822000007597Output1000000063NoteIn the first example, there are 3 possible variants: (5,3), (10,6), (15,9).
+In the second example, there is no TV set meeting the constraints.
+In the third example, there is only one variant: (3,2).
+直接求gcd 分别处以gcd之后用两数分别除以后面的数，取最小值就是能买的最大数量
+我用了一点很皮的语法__gcd(a,b) 2333
+Let median of some array be the number which would stand in the middle of this array if it was sorted beforehand. If the array has even length let median be smallest of of two middle elements. For example, median of the array [10,3,2,3,2] is 3 (i.e. [2,2,3–,3,10]). Median of the array [1,5,8,1] is 1 (i.e. [1,1–,5,8]).
+Let array be m-good if its median is greater or equal than m.
+Let the partition of array [a1,a2,…,an] be a set of subarrays {b1,b2,…,bk} such that b1=[a1,a2,…,ai1], b2=[ai1+1,ai1+2,…,ai2], …, bk=[aik−1+1,aik−1+2,…,an]. For example, array [10,3,2,3,2] can be partitioned as follows: {[10,3,2,3,2]} or {[10],[3],[2],[3],[2]}, or {[10],[3,2,3,2]}, or {[10,3],[2],[3,2]} and so on.
+You are given array a of length n and integer m. Find the partition of a into maximum number of subarrays such that each subarray is m-good.
+InputThe first line contains two integers n and m (1≤n≤5000, 1≤m≤5000) — length of array a and constant m.
+The second line contains n integers a1, a2, …, an (1≤ai≤5000)— array a.
+OutputIf there is no valid partition of array a into m-good subarrays, print 0. Otherwise print maximum number of subarrays in partition of array a such that each subarray is m-good.
+ExamplesInput5 210 3 2 3 2Output5Input5 310 3 2 3 2Output1Input5 410 3 2 3 2Output0NoteIn the first example array can be partitioned into 5 subarrays: {[10],[3],[2],[3],[2]}. Medians of each part greater of equal than 2.
+In the second example we can’t partition array into several subarrays since medians of [2], [3,2], [2,3,2] and [3,2,3,2] are less than 3.
+这题铮哥刚出来的，直接放代码把2333
+You are given a tube which is reflective inside represented as two non-coinciding, but parallel to Ox lines. Each line has some special integer points — positions of sensors on sides of the tube.
+You are going to emit a laser ray in the tube. To do so, you have to choose two integer points A and B on the first and the second line respectively (coordinates can be negative): the point A is responsible for the position of the laser, and the point B — for the direction of the laser ray. The laser ray is a ray starting at A and directed at B which will reflect from the sides of the tube (it doesn’t matter if there are any sensors at a reflection point or not). A sensor will only register the ray if the ray hits exactly at the position of the sensor.
+ Examples of laser rays. Note that image contains two examples. The 3 sensors (denoted by black bold points on the tube sides) will register the blue ray but only 2 will register the red.Calculate the maximum number of sensors which can register your ray if you choose points A and B on the first and the second lines respectively.
+InputThe first line contains two integers n and y1 (1≤n≤105, 0≤y1≤109) — number of sensors on the first line and its y coordinate.
+The second line contains n integers a1,a2,…,an (0≤ai≤109) — x coordinates of the sensors on the first line in the ascending order.
+The third line contains two integers m and y2 (1≤m≤105, y1<y2≤109) — number of sensors on the second line and its y coordinate.
+The fourth line contains m integers b1,b2,…,bm (0≤bi≤109) — x coordinates of the sensors on the second line in the ascending order.
+OutputPrint the only integer — the maximum number of sensors which can register the ray.
+ExampleInput3 11 5 61 33Output3NoteOne of the solutions illustrated on the image by pair A2 and B2.
+
+哈理工训练赛2019304补题和题解
+
+
+
+Watto, the owner of a spare parts store, has recently got an order for the mechanism that can process strings in a certain way. Initially the memory of the mechanism is filled with n strings. Then the mechanism should be able to process queries of the following type: “Given string s, determine if the memory of the mechanism contains string t that consists of the same number of characters as s and differs from s in exactly one position”.
+Watto has already compiled the mechanism, all that’s left is to write a program for it and check it on the data consisting of n initial lines and m queries. He decided to entrust this job to you.
+InputThe first line contains two non-negative numbers n and m (0 ≤ n ≤ 3·105, 0 ≤ m ≤ 3·105) — the number of the initial strings and the number of queries, respectively.
+Next follow n non-empty strings that are uploaded to the memory of the mechanism.
+Next follow m non-empty strings that are the queries to the mechanism.
+The total length of lines in the input doesn’t exceed 6·105. Each line consists only of letters ‘a’, ‘b’, ‘c’.
+OutputFor each query print on a single line “YES” (without the quotes), if the memory of the mechanism contains the required string, otherwise print “NO” (without the quotes).
+ExamplesInput2 3aaaaaacacacaaabaaccacacccaaacOutputYESNONO
+给出n个单词，查询m个单词，问你查询的m是否在刚才输入的n个数之中并且单词长度相同，必须有一个字母与之不同
+建立一个trie树来储存输入的单词，然后用dfs搜索这个单词在字典树中是否存在过，用一个标记f来表示是否有一个与之前单词不同的字母，如果有一个不匹配f打上标记继续递归(打上标记之后下次查询就不会走下面的循环) 到最后如果字典中能找到那个单词 且!f(有且只有一个字母不同)的时候return true 其他情况return false
+There is an infinite sequence consisting of all positive integers in the increasing order: p = {1, 2, 3, …}. We performed n swap operations with this sequence. A swap(a, b) is an operation of swapping the elements of the sequence on positions a and b. Your task is to find the number of inversions in the resulting sequence, i.e. the number of such index pairs (i, j), that i < j and pi > pj.
+InputThe first line contains a single integer n (1 ≤ n ≤ 105) — the number of swap operations applied to the sequence.
+Each of the next n lines contains two integers ai and bi (1 ≤ ai, bi ≤ 109, ai ≠ bi) — the arguments of the swap operation.
+OutputPrint a single integer — the number of inversions in the resulting sequence.
+ExamplesInput24 21 4Output4Input31 63 42 5Output15NoteIn the first sample the sequence is being modified as follows: . It has 4 inversions formed by index pairs (1, 4)
+Parmida is a clever girl and she wants to participate in Olympiads this year. Of course she wants her partner to be clever too (although he’s not)! Parmida has prepared the following test problem for Pashmak.
+There is a sequence a that consists of n integers a1, a2, …, an. Let’s denote f(l, r, x) the number of indices k such that: l ≤ k ≤ r and ak = x. His task is to calculate the number of pairs of indicies i, j (1 ≤ i < j ≤ n) such that f(1, i, ai) > f(j, n, aj).
+Help Pashmak with the test.
+InputThe first line of the input contains an integer n (1 ≤ n ≤ 106). The second line contains n space-separated integers a1, a2, …, an (1 ≤ ai ≤ 109).
+OutputPrint a single integer — the answer to the problem.
+ExamplesInput71 2 1 1 2 2 1Output8Input31 1 1Output1Input51 2 3 4 5Output0
+For the daily milking, Farmer John’s N cows (1 ≤ N ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
+Farmer John has made a list of Q (1 ≤ Q ≤ 200,000) potential groups of cows and their heights (1 ≤ height ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
+InputLine 1: Two space-separated integers, N and Q.Lines 2.. N+1: Line i+1 contains a single integer that is the height of cow iLines N+2.. N+ Q+1: Two integers A and B (1 ≤ A ≤ B ≤ N), representing the range of cows from A to B inclusive.OutputLines 1.. Q: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.Sample Input6 31734251 54 62 2Sample Output630
+给定n个数q次查询，每次查询都是求区间里最大值和最小值的差 输出极差即可
+这里用到了两个方法，一个是专门求这种问题（最大值最小值）的RMQ算法 一种是刚学的线段树方法 从时间上来看RMQ快一点，但是由于开的是二维数组，所以内存大一点 而线段树时间慢一点，内存却比较小
+RMQ写法采用的是二分的思想，每次都找中间值，模拟一下就会发现，先找到前几个的最大值最小值，然后递推到后面，是可以实现的
+线段树写法只需要在tree结构体中加一个maxn和minn 建树的时候顺便把之前的父节点等于两个叶子节点的操作变成求两个叶子节点的最大值和最小值，这样在查询的时候查询到的正好是这个区间的最大值最小值 还有两个函数: getmax和getmin 如果查询的区间正好包括了当前节点的最大值最小值，就直接返回这个节点(区间)的最大值或者最小值，如果没有一个区间满足的话最后就返回maxn
+举个例子 祖先节点为(1-8) 要查询2-3 
+You may have heard that no two snowflakes are alike. Your task is to write a program to determine whether this is really true. Your program will read information about a collection of snowflakes, and search for a pair that may be identical. Each snowflake has six arms. For each snowflake, your program will be provided with a measurement of the length of each of the six arms. Any pair of snowflakes which have the same lengths of corresponding arms should be flagged by your program as possibly identical.
+InputThe first line of input will contain a single integer n, 0 < n ≤ 100000, the number of snowflakes to follow. This will be followed by n lines, each describing a snowflake. Each snowflake will be described by a line containing six integers (each integer is at least 0 and less than 10000000), the lengths of the arms of the snow ake. The lengths of the arms will be given in order around the snowflake (either clockwise or counterclockwise), but they may begin with any of the six arms. For example, the same snowflake could be described as 1 2 3 4 5 6 or 4 3 2 1 6 5.
+OutputIf all of the snowflakes are distinct, your program should print the message:No two snowflakes are alike.If there is a pair of possibly identical snow akes, your program should print the message:Twin snowflakes found.
+Sample Input21 2 3 4 5 64 3 2 1 6 5Sample OutputTwin snowflakes found.
+C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:”你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：”我知错了。。。”但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.Input第一行一个整数T，表示有T组数据。每组数据第一行一个正整数N（N<=50000）,表示敌人有N个工兵营地，接下来有N个正整数,第i个正整数ai代表第i个工兵营地里开始时有ai个人（1<=ai<=50）。接下来每行有一条命令，命令有4种形式：(1) Add i j,i和j为正整数,表示第i个营地增加j个人（j不超过30）(2)Sub i j ,i和j为正整数,表示第i个营地减少j个人（j不超过30）;(3)Query i j ,i和j为正整数,i<=j，表示询问第i到第j个营地的总人数;(4)End 表示结束，这条命令在每组数据最后出现;每组数据最多有40000条命令Output对第i组数据,首先输出“Case i:”和回车,对于每个Query询问，输出一个整数并回车,表示询问的段中的总人数,这个数保持在int以内。Sample Input1101 2 3 4 5 6 7 8 9 10Query 1 3Add 3 6Query 2 7Sub 10 2Add 6 3Query 3 10EndSample OutputCase 1:63359
+这个题的题意已经很明确了，就是区间查询和区间区间查询sum
+The French author Georges Perec (1936–1982) once wrote a book, La disparition, without the letter ‘e’. He was a member of the Oulipo group. A quote from the book:
+Tout avait Pair normal, mais tout s’affirmait faux. Tout avait Fair normal, d’abord, puis surgissait l’inhumain, l’affolant. Il aurait voulu savoir où s’articulait l’association qui l’unissait au roman : stir son tapis, assaillant à tout instant son imagination, l’intuition d’un tabou, la vision d’un mal obscur, d’un quoi vacant, d’un non-dit : la vision, l’avision d’un oubli commandant tout, où s’abolissait la raison : tout avait l’air normal mais…
+Perec would probably have scored high (or rather, low) in the following contest. People are asked to write a perhaps even meaningful text on some subject with as few occurrences of a given “word” as possible. Our task is to provide the jury with a program that counts these occurrences, in order to obtain a ranking of the competitors. These competitors often write very long texts with nonsense meaning; a sequence of 500,000 consecutive ‘T’s is not unusual. And they never use spaces.
+So we want to quickly find out how often a word, i.e., a given string, occurs in a text. More formally: given the alphabet {‘A’, ‘B’, ‘C’, …, ‘Z’} and two finite strings over that alphabet, a word W and a text T, count the number of occurrences of W in T. All the consecutive characters of W must exactly match consecutive characters of T. Occurrences may overlap.
+InputThe first line of the input file contains a single number: the number of test cases to follow. Each test case has the following format:
+One line with the word W, a string over {‘A’, ‘B’, ‘C’, …, ‘Z’}, with 1 ≤ |W| ≤ 10,000 (here |W| denotes the length of the string W).One line with the text T, a string over {‘A’, ‘B’, ‘C’, …, ‘Z’}, with |W| ≤ |T| ≤ 1,000,000.OutputFor every test case in the input file, the output should contain a single number, on a single line: the number of occurrences of the word W in the text T.
+Sample Input3BAPCBAPCAZAAZAZAZAVERDIAVERDXIVYERDIANSample Output130
+当初上来一个剪布条直接签到成功，没想到过了一会突然换题了。。。不过也好正好会kmp 又卡了一拨人 通过这个题我发现，算法还是学得越多越好
+Given two strings a and b we define ab to be their concatenation. For example, if a = “abc” and b = “def” then ab = “abcdef”. If we think of concatenation as multiplication, exponentiation by a non-negative integer is defined in the normal way: a^0 = “” (the empty string) and a^(n+1) = a*(a^n).InputEach test case is a line of input representing s, a string of printable characters. The length of s will be at least 1 and will not exceed 1 million characters. A line containing a period follows the last test case.OutputFor each s you should print the largest n such that s = a^n for some string a.Sample Inputabcdaaaaababab.Sample Output143HintThis problem has huge input, use scanf instead of cin to avoid time limit exceed.
+这是一道记住结论就能a的题，而这个结论正好是kmp中非常重要的结论，只需要子串自己匹配一次然后用结论就行了，上题改改就ac
+For each prefix of a given string S with N characters (each character has an ASCII code between 97 and 126, inclusive), we want to know whether the prefix is a periodic string. That is, for each i (2 <= i <= N) we want to know the largest K > 1 (if there is one) such that the prefix of S with length i can be written as A K ,that is A concatenated K times, for some string A. Of course, we also want to know the period K.InputThe input consists of several test cases. Each test case consists of two lines. The first one contains N (2 <= N <= 1 000 000) – the size of the string S.The second line contains the string S. The input file ends with a line, having thenumber zero on it.OutputFor each test case, output “Test case #” and the consecutive test case number on a single line; then, for each prefix with length i that has a period K > 1, output the prefix size i and the period K separated by a single space; the prefix sizes must be in increasing order. Print a blank line after each test case.Sample Input
+3aaa12aabaabaabaab0Sample OutputTest case #12 23 3
+Test case #22 26 29 312 4
+从第二项开始找一下最小循环节，找长度和循环了几次就ok 是一个简单的next数组的应用，但是当时打比赛么得想起来 菜了菜了next[i]有值就说明这前面有循环，设置len为i-nexti如果这个长度可以被i整除，说明循环可以完成一次且结束，这时候输出长度和循环了几次即可，len是总长度减去前缀和后缀和最长的(next[i]) i/len就是循环了多少次
+A hat’s word is a word in the dictionary that is the concatenation of exactly two other words in the dictionary.You are to find all the hat’s words in a dictionary.InputStandard input consists of a number of lowercase words, one per line, in alphabetical order. There will be no more than 50,000 words.Only one case.OutputYour output should contain all the hat’s words, one per line, in alphabetical order.Sample InputaahathathatwordhzieewordSample Outputahathatword
+输入许多词，输出可以被字典中其他两个词组成的词
+这题用了两个方法a的 一种是map 一种是trie树 保险起见还是trie树稳妥一些 因为map已经接近了tle的边缘map插入和寻找时间复杂度O(logn)而trie树不仅省空间，时间复杂度插入是logn 如果字符串比较短，查询几乎是O(1)
+看着简单是因为这题单词的长度太短了
+Our Black Box represents a primitive database. It can save an integer array and has a special i variable. At the initial moment Black Box is empty and i equals 0. This Black Box processes a sequence of commands (transactions). There are two types of transactions: 
+ADD (x): put element x into Black Box;GET: increase i by 1 and give an i-minimum out of all integers containing in the Black Box. Keep in mind that i-minimum is a number located at i-th place after Black Box elements sorting by non- descending. 
+Let us examine a possible sequence of 11 transactions: 
+Example 1 
+N Transaction i Black Box contents after transaction Answer 
+1 ADD(3)      0 3   
+2 GET         1 3                                    3 
+3 ADD(1)      1 1, 3   
+4 GET         2 1, 3                                 3 
+5 ADD(-4)     2 -4, 1, 3   
+6 ADD(2)      2 -4, 1, 2, 3   
+7 ADD(8)      2 -4, 1, 2, 3, 8   
+8 ADD(-1000)  2 -1000, -4, 1, 2, 3, 8   
+9 GET         3 -1000, -4, 1, 2, 3, 8                1 
+10 GET        4 -1000, -4, 1, 2, 3, 8                2 
+11 ADD(2)     4 -1000, -4, 1, 2, 2, 3, 8   
+It is required to work out an efficient algorithm which treats a given sequence of transactions. The maximum number of ADD and GET transactions: 30000 of each type. 
+Let us describe the sequence of transactions by two integer arrays: 
+A(1), A(2), …, A(M): a sequence of elements which are being included into Black Box. A values are integers not exceeding 2 000 000 000 by their absolute value, M <= 30000. For the Example we have A=(3, 1, -4, 2, 8, -1000, 2). 
+u(1), u(2), …, u(N): a sequence setting a number of elements which are being included into Black Box at the moment of first, second, … and N-transaction GET. For the Example we have u=(1, 2, 6, 6). 
+The Black Box algorithm supposes that natural number sequence u(1), u(2), …, u(N) is sorted in non-descending order, N <= M and for each p (1 <= p <= N) an inequality p <= u(p) <= M is valid. It follows from the fact that for the p-element of our u sequence we perform a GET transaction giving p-minimum number from our A(1), A(2), …, A(u(p)) sequence. 
+InputInput contains (in given order): M, N, A(1), A(2), …, A(M), u(1), u(2), …, u(N). All numbers are divided by spaces and (or) carriage return characters.OutputWrite to the output Black Box answers sequence for a given sequence of transactions, one number each line.Sample Input7 43 1 -4 2 8 -1000 21 2 6 6Sample Output3312
+题意是输入m个数，n次查询，第一次查询查询第一小的，第二次查询查询第二小的…以此类推设置一个大根堆一个小根堆
+由于我只是在mhr大佬博客学习了这个题的思路 然后模拟了一次 也没有太明白原理 好像是big来维护前n-1个数 还是直接上代码把 不会的话就去问问mhr大佬&&zzh大佬%%%
+其中1<=n<=10000,1<=m<=10000。均为正整数。Input    每组数据第一行输入一个正整数n，表示有n堆果子。
+Output    每组数据单独一行，输出所花费的最小体力值。Sample Input3
+1 2 9
+5
+1 3 9 18 30
+Sample Output15
+109
+贪心是行不通的，因为每次都要求最小的话需要每次都sort 于是想起了很久以前看zx大佬借给我的那本信息学竞赛一本通里的方法:手动将大根堆转化为小根堆:push的时候push负数 求和的时候减去top就解决了根堆转化问题
+注意到最后的时候需要把整个优先队列清零 不然会错误！！！
+
+线段树浅谈(还有自己的板子)
+
+
+
+线段树是一种二叉搜索树，与区间树相似，它将一个区间划分成一些单元区间，每个单元区间对应线段树中的一个叶结点。对于线段树中的每一个非叶子节点[a,b]，它的左儿子表示的区间为[a,(a+b)/2]，右儿子表示的区间为[(a+b)/2+1,b]。因此线段树是平衡二叉树，最后的子节点数目为N，即整个线段区间的长度。使用线段树可以快速的查找某一个节点在若干条线段中出现的次数，时间复杂度为O(logN)。而未优化的空间复杂度为2N，实际应用时一般还要开4N的数组以免越界，因此有时需要离散化让空间压缩。  ——来自百度
+我们有一个问题，对一个给定的输入的数组进行各种操作，数据小的时候直接做当然没有问题，但是数据量一旦过大，就会产生时间过长导致tle的问题，所以线段树应运而生。
+Lazy思想：对整个结点进行的操作，先在结点上做标记，而并非真正执行，直到根据查询操作的需要分成两部分。根据Lazy思想，我们可以在不代表原线段的结点上增加一个值toadd，即为对这个结点，留待以后执行的插入操作k值的总和。对整个结点插入时，只更新sum和toadd值而不向下进行，这样时间复杂度可证明为O(logN）。对一个toadd值为0的结点整个进行查询时，直接返回存储在其中的sum值；而若对toadd不为0的一部分进行查询，则要更新其左右子结点的sum值，然后把toadd值传递下去，再对这个查询本身，左右子结点分别递归下去。时间复杂度也是O(nlogN）。
+线段树有一个特性， 父节点是n的话 左儿子就是2n，右儿子就是2\n+1 所以使用位运算来表示左右儿子 需要注意的是<<1|1的意思是*2+1
+说了这么多 我们来实现它把！！线段树第一步就是建树，通过的是递归的方法，遍历节点，如果该节点的l==r 就让之前输入的数组等于这个节点，相当于走到了叶子节点。顺序是先递归左孩子，回溯之后再递归右孩子。回溯到相应节点记得想加两个儿子取和
+这里如果有lazy tag的话，就把这个tag的值赋给下面的儿子，并且根据区间决定分多少，例如最上面tag=5 需要区间1-3+5 那么下面的一个就+15 之后并不是直接发下去，而是回溯，到需要的时候 例如查询 就把tag往下分发，最后清除标记
+如果要更新的区间比当前的区间大，那么先把当前的区间加上想加的值，因为越往下区间越小，所以如果没有匹配的就往下走，mid决定递归左孩子还是右孩子，最后记得维护一下
+D - Balanced Lineup 
+For the daily milking, Farmer John’s N cows (1 ≤ N ≤ 50,000) always line up in the same order. One day Farmer John decides to organize a game of Ultimate Frisbee with some of the cows. To keep things simple, he will take a contiguous range of cows from the milking lineup to play the game. However, for all the cows to have fun they should not differ too much in height.
+Farmer John has made a list of Q (1 ≤ Q ≤ 200,000) potential groups of cows and their heights (1 ≤ height ≤ 1,000,000). For each group, he wants your help to determine the difference in height between the shortest and the tallest cow in the group.
+InputLine 1: Two space-separated integers, N and Q.Lines 2.. N+1: Line i+1 contains a single integer that is the height of cow iLines N+2.. N+ Q+1: Two integers A and B (1 ≤ A ≤ B ≤ N), representing the range of cows from A to B inclusive.OutputLines 1.. Q: Each line contains a single integer that is a response to a reply and indicates the difference in height between the tallest and shortest cow in the range.Sample Input6 31734251 54 62 2Sample Output630
+求输入区间最大值最小之之差
+用线段树来维护最大值最小值，输出的时候maxn-minn即可
+Color the ball HDU - 1556 
+N个气球排成一排，从左到右依次编号为1,2,3….N.每次给定2个整数a b(a <= b),lele便为骑上他的“小飞鸽”牌电动车从气球a开始到气球b依次给每个气球涂一次颜色。但是N次以后lele已经忘记了第I个气球已经涂过几次颜色了，你能帮他算出每个气球被涂过几次颜色吗？Input每个测试实例第一行为一个整数N,(N <= 100000).接下来的N行，每行包括2个整数a b(1 <= a <= b <= N)。当N = 0，输入结束。Output每个测试实例输出一行，包括N个整数，第I个数代表第I个气球总共被涂色的次数。Sample Input31 12 23 331 11 21 30Sample Output1 1 13 2 1
+
+树状数组及其例题
+
+
+
+树状数组是一个查询和修改复杂度都为log(n)的数据结构。主要用于数组的单点修改和区间求和。
+建议用二进制的思想而不是十进制的思想来看线段树
+注: 1010&1001=1000 &是逻辑与，二进制中两个对应的数都相等的时候才是1
+
+上面是树状数组的基本画法
+
+求和后的树状数组
+C[i]代表 子树的叶子结点的权值之和
+如图可以知道
+C[1]=A[1];
+C[2]=A[1]+A[2];
+C[3]=A[3];
+C[4]=A[1]+A[2]+A[3]+A[4];
+C[5]=A[5];
+C[6]=A[5]+A[6];
+C[7]=A[7];
+C[8]=A[1]+A[2]+A[3]+A[4]+A[5]+A[6]+A[7]+A[8];
+再将其转化为二进制看一下:
+C[1] = C[0001] = A[1];
+C[2] = C[0010] = A[1]+A[2];
+C[3] = C[0011] = A[3];
+C[4] = C[0100] = A[1]+A[2]+A[3]+A[4];
+C[5] = C[0101] = A[5];
+C[6] = C[0110] = A[5]+A[6];
+C[7] = C[0111] = A[7];
+C[8] = C[1000] = A[1]+A[2]+A[3]+A[4]+A[5]+A[6]+A[7]+A[8];对照式子可以发现 C[i]=A[i- 2^k +1]+A[i- 2^k +2]+……A[i]; （k为i的二进制中从最低位到高位连续零的长度，也就是二进制中最低位1的位置-1）例如i=8(1000)时，k=3;
+C[8] = A[8-2^3+1]+A[8-2^3+2]+……+A[8]
+
+二进制的树
+现在来看lowbit得出的结论是 lowbit(i)就是上面的2^k 因为2^k后面一定有k个0，比如2^5的二进制为100000，2^5正好等于i最低位的1。
+lowbit(x)是取出x的最低位1具体操作代码：
+这里我打出了一个便于理解的表3011101 取 1 再加上2的 
+4100100 取 100
+5101011 取1
+6110010  取10
+701111001 取1
+8100001111000  取1000
+我的理解是，算getsum的时候这样可以保证每次加上的都是需要加上的并且加的时候没有重复
+比如i=8的时候 要计算8的前缀和，8&(-8)=8 因为这时候的c[8]已经是前八项的和了 
+再比如i=6的时候 要计算前六项 6 110 010  取10 看图就会发现 c[6]=a[5]+a[4] 这样i-2相当于加上c[4] 而c[4]=a[1]+a[2]+a[3]+a[4];这样求和的时候大有用场啊
+二进制中，对于一个数的负数就等于对这个数取反+1以二进制数11010为例:11010的补码为00101,加1后为00110,两者相与（&）便是最低位的1理解：补码和原码必然相反,所以原码有0的部位补码全是1,补码再+1之后由于进位那么最末尾的1和原码最右边的1一定是同一个位置(当遇到第一个1的时候补码此位为0,由于前面会进一位,所以此位会变为1)所以我们只需要进行a&(-a)就可以取出最低位的1了会了lowbit,就可以进行区间查询和单点更新了
+继续看上面给出的树状数组图如果要更改a[1]那么需要进行以下的同步更新1(001) c[1] += a[1]
+lowbit(1)=001 1+lowbit(1)=2(010) C[2] += a[1]
+lowbit(2)=010 2+lowbit(2)=4(100) C[4] += a[1]
+lowbit(4)=100 4+lowbit(4)=8(1000) C[8] += a[1]
+这样在更新的时候 由于刚开始只更新了a[1]，而c[2]=a[1]+a[2] 所以还需要更新一下c[2] c[2]又包含于c[4]所以还需要更新c[4] 一直更新到数组的数量8(对于这里来说)，而在这里就能看出来lowbit函数的奇妙之处:每次都能向上扩展一个sum数组
+举例：当i=5c[4]=a[1]+a[2]+a[3]+a[4];c[5]=a[5];可得：sum(i=5)=c[4]+c[5];序号写为二进制：sum(101) = c[100] + c[101];
+这时候求和只需要求5和4的 因为此时i=5 i-lowbit(i) lowbit(i)取1 再往下的话i=4 直接取4 直接结束 意思是这里已经包括了前几项的前缀和(太巧秒了！)
+昨天做的比赛中的f题 上来朴素想混一下试试 发现行不通= = 只能用这个
+F - 敌兵布阵 
+C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:”你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：”我知错了。。。”但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.Input第一行一个整数T，表示有T组数据。每组数据第一行一个正整数N（N<=50000）,表示敌人有N个工兵营地，接下来有N个正整数,第i个正整数ai代表第i个工兵营地里开始时有ai个人（1<=ai<=50）。接下来每行有一条命令，命令有4种形式：(1) Add i j,i和j为正整数,表示第i个营地增加j个人（j不超过30）(2)Sub i j ,i和j为正整数,表示第i个营地减少j个人（j不超过30）;(3)Query i j ,i和j为正整数,i<=j，表示询问第i到第j个营地的总人数;(4)End 表示结束，这条命令在每组数据最后出现;每组数据最多有40000条命令Output对第i组数据,首先输出“Case i:”和回车,对于每个Query询问，输出一个整数并回车,表示询问的段中的总人数,这个数保持在int以内。Sample Input1101 2 3 4 5 6 7 8 9 10Query 1 3Add 3 6Query 2 7Sub 10 2Add 6 3Query 3 10EndSample OutputCase 1:63359
+给你n个数，对他们进行操作，不同的字符串对应不同的操作 输出的是查询的
+利用树状数组
+
+欧几里得和扩展欧几里得算法
+
+by ljp学长
+
+求 a 和 b 的最大公公约数（Greatest Common Divisor）
+首先介绍一下整除的概念及相关定理：定义1：　　设 a,b ∈ Z , a ≠ 0，如果存在 q ∈ Z , 使得 b=aq，那么就说 b 可被 a 整除，记作 b | a，且称 b 是 a 的倍数，a 是 b 的约数。
+定理1：　　a | b <=> -a | b <=> a | -b <=> |a| | |b|。
+　　　　Gcd(a,b) = Gcd(-a,b) = Gcd(a,-b) = Gcd( |a| , |b| )。
+　　　　设 Gcd(m,a) = 1，则有 Gcd(m,ab) = Gcd(m,b)。        这就是说“求 m 与另一个数的最大公约数时，可以把另一个数中与 m 互素的因数去掉”
+gcd(27,4)=1 -> gcd(27,3*4)=gcd(27,3)=3 求最大公约数时可以把另一个数中的m互素的因数去掉
+　　　　设 Gcd(m,a) = 1，那么若 m | ab，则 m | b。        这就是说“若一个数被 m 整除，则把这个数中与 m 互素的因数去掉后仍被 m 整除”。
+Gcd(25,2)=1 -> if Gcd(25,2*5) -> Gcd(25,5);
+　　　　Lcm(a,b)*Gcd(a,b) = |ab|。
+这个意思是最大公约数和最小公倍数乘积为|ab| 这个用过很多次了就不提了
+(目前不大会…先写上到时候在看看)    证明欧几里得算法正确性的关键是证明 Gcd(a,b)=Gcd(b%a,a);    令x=Gcd(a,b),y=Gcd(b%a,a);    b%a可表示为a和b的线性组合：b%a=b-(b/a)*a;    因为 a%x=0,b%x=0;    所以 (b%a)%x=0;    故y%x=0;    又(b%a)%y=[b-(b/a)*a]%y=0, a%y=0;    根据同余定理可得    b%y-(b/a)a%y=0,所以b%y=(b/a)a%y=0;    所以x%y=0;    所以Gcd(a,b)=Gcd(b%a,a);    证毕;
+另一种写法
+
+求最大质因数的位置
+
+Largest prime factor HDU - 2136 
+Everybody knows any number can be combined by the prime number.Now, your task is telling me what position of the largest prime factor.The position of prime 2 is 1, prime 3 is 2, and prime 5 is 3, etc.Specially, LPF(1) = 0.InputEach line will contain one integer n(0 < n < 1000000).OutputOutput the LPF(n). 
+
+Sample Input12345Sample Output01213
+求最大质因数的位置
+直接取出质数，每次都加相应的质数，这些数j当前最大的质因数就是这里的p 每次更新之后 数组ans里面的每个数存的都是对应的最大质因数
+
+素数埃式筛法和欧拉筛法
+
+来自队内ljp鹏哥的笔记
+
+计算整数区间[2，n]中的所有素数的最为简便的筛法——埃拉托斯特尼筛法（The Sieve of Eratosthenes）
+埃式筛法筛掉的是[2,n]内的合数1）首先定义一个布尔类型的数组isPrime[100000]；2）初始化isPrime数组全为true,并初始化isPrime[1]=false;3）从2开始往后便利，找到使isPrime[i]=true的 i，并将isPrime[i*k]标记为false;
+具体步骤如下：第二个数2是质数留下来，而把2后面所有能被2整除的数都划去。2后面第一个没划去的数是3，把3留下，再把3后面所有能被3整除的数都划去。3后面第一个没划去的数是5，把5留下，再把5后面所有能被5整除的数都划去。这样一直做下去，就会把不超过N的全部合数都筛掉，留下的就是不超过N的全部质数。
+O(n*log log n)
+手动地模拟欧拉筛法就可以发现，某个数字可能被不止一次地删去，基于此，引进了一种时间复杂度为O(n)的优化算法—欧拉筛法。
+如何保证任意的合数只被筛去一次？
+answer:if( I % prime[j] == 0)        break;
+假设 xy = ab，其中 x,a 为质数，那么有 x | b , a | y.
+例如：    26 = 34    2 | 4 , 3 | 6引理2：    任何一个合数都可以表示成一个质数和一个整数的乘积。
+对于一个合数 A①如果 A 只能分解成一个 素数整数 的形式，那么这个整数必为素数，这也就意味着 i 为素数；    那么 if( i%prime[j] == 0) 始终为false.例如：假设A=21=37当 i = 7 是，会与之前求出的所有的素数相乘，使得 isPirme[ iprime[j] ] =false那么对于所有的只能分解成 素数素数 形式的合数会全部筛去。
+②如果 A 可以分解成多个 素数合数 的形式不妨假设 A = a1b1 = a2b2 ，并且 a1,a2为素数，a1 < a2;那么由引理1可得        a1 | b2 , a2 | b1由于 a1 < a2，所以 b1 > b2，当 i = b2时，在执行完 prime[ a1b2 ]=false 后，一定会执行 if( b2%a1 == 0) 这条语句，那么就不会执行 prime[ a2*b2 ]=false 这条语句。
+其中2|4的意思是2能被4整除
+18  36 = 92我们来模拟一下
+i = 2 2*2=4  2%2==0 ->break;i = 3 3*2=6 3*3=9 3%3==0 ->break;i = 4 4*2=8 4%2==0 ->breaki = 5 5*2=10 5*3=15 5*5=25 5%5==0 ->breaki = 6 6*2=12 (这时候不继续筛下一个，下一个由9来筛) 6%2==0 ->breaki = 7 7*2=14 7*3=21 7*5=35 7*7=49 7%7==0 -> breaki = 8 8*2=16 8%2==0 -> breaki = 9 9*2=18 (18在这里被筛选) …
+这样模拟就发现每一个合数只被筛选一次 所以时间复杂度降低 
+O(n)
+
+HTML5第六章表格
+
+
+通过的是scope属性 col是列标题 row是行标题
+有时候表格有的属性需要跨过好几个列(例如课程表) 这时候就用到了colspan属性
+colspan = “2” 意思是一个东西跨过两个列 如果位置不对，上面的列标题会跟着变化
+和跨列同理
+边框是border 数字貌似是边框的厚度背景颜色bgcolor 用的是网络编码
+
+Html5第五章和实例
+
+
+用的是align属性
+可以把图片放到文字的右边
+
+HTML5第四章和实例
+
+
+
+HTML前三章和列表实例
+
+
+
+欧拉函数
+
+百度百科：在数论，对正整数n，欧拉函数是小于n的正整数中与n互质的数的数目（φ(1)=1）。此函数以其首名研究者欧拉命名(Euler’s totient function)，它又称为Euler’s totient function、φ函数、欧拉商数等。 例如φ(8)=4，因为1,3,5,7均和8互质。 从欧拉函数引伸出来在环论方面的事实和拉格朗日定理构成了欧拉定理的证明。
+
+筛出输入num之前的所有和num互质的数
+
+二分查找
+
+
+此时输出的是三个值
+
+快速幂模版
+
+
+大佬的博客
+　快速幂这个东西比较好理解，但实现起来到不老好办，记了几次老是忘，今天把它系统的总结一下防止忘记。
+　　首先，快速幂的目的就是做到快速求幂，假设我们要求a^b,按照朴素算法就是把a连乘b次，这样一来时间复杂度是O(b)也即是O(n)级别，快速幂能做到O(logn)，快了好多好多。它的原理如下：
+　　假设我们要求a^b，那么其实b是可以拆成二进制的，该二进制数第i位的权为2^(i-1)，例如当b==11时
+　　　　　　　　　　　　　　　　　　　　　　　　　　   a11=a(2^0+2^1+2^3)　　11的二进制是1011，11 = 2³×1 + 2²×0 + 2¹×1 + 2º×1，因此，我们将a¹¹转化为算 a2^0a2^1a2^3，也就是a1a2a8 ，看出来快的多了吧原来算11次，现在算三次，但是这三项貌似不好求的样子….不急，下面会有详细解释。                                                                                                　　由于是二进制，很自然地想到用位运算这个强大的工具：&和>>     &运算通常用于二进制取位操作，例如一个数 & 1 的结果就是取二进制的最末位。还可以判断奇偶x&1==0为偶，x&1==1为奇。 >>运算比较单纯,二进制去掉最后一位，不多说了，先放代码再解释。
+先把次数化成二进制，从最后一位开始计算，如果最后一位不是0就乘一起，然后2^0计算 11=1011 计算过程:
+题目描述输入b，p，k的值，求b^p mod k的值。其中b，p，k*k为长整型数。
+输入输出格式输入格式：三个整数b,p,k.
+输出格式：输出“b^p mod k=s”
+s为运算结果
+输入输出样例输入样例#1：2 10 9输出样例#1：2^10 mod 9=7
+
+c++oop3
+
+
+析构函数和构造函数不一样，构造函数是在调用类方法的时候先调用一下析构函数是在程序结束的时候再默认调用一次，在之前调用的话就像正常的函数一样调用 例如这里虽然cout<<2写在最后 运行结果还是析构函数中的good bye在最后面
+在用cout的时候由于它太“智能”了所以经常因为自动打开科学计数法而wa
+例如这样:
+此时输出是2.33333e+016
+但是加一个关闭科学计数法就会关上它
+这样输出就是2333333333333333.00000
+这样写可以控制只在三位小数四舍五入后面全是0：
+输出233333333333333.125000
+可以通过显式的和隐式的传参来初始化class中private或者public中的值
+注意！！！ 不能调用构造函数，因为构造函数是用来构造对象的，构造出来对象之前，对象是不存在的。如果不提供任何构造函数，C++将自动提供默认函数，不然无法构造处对象
+如果提供了构造函数但是么有在声明对象的时候传值进去会编译错误，但是可以直接默认构造函数
+这样就可以在声明对象的时候不传值了！
+声明类的时候如果加一个const就可以实现数据不被改变，和const int …一样但是如果这时候直接调用public中的函数是不行的 因为函数不能保证它的值不会变
+像这样:123456789101112131415161718192021222324252627#include<bits/stdc++.h>using namespace std;class test{private:  string name;  int a;public:  test()  {    name="update";    int a=233;  }  void show() //const  {    cout<<name;  }};int main(){  ios::sync_with_stdio(0);  cin.tie(0);  cout.tie(0);  const test t1;  t1.show();}编译器会报错并且不能运行
+c++增加了一个新的语法 在要执行的函数后面加一个const
+这样就ok了！
+
+c++oop2
+
+
+在public中定义operator 类型名+() const 重载类型名强转运算像下面这样调用叫做隐式调用
+这样调用的话如果写两个重载就会出现一个问题：编译器无法识别哪个是要被重载的这时候就可以采取显式调用：
+这时候的结果就是102 和233
+可以通过public来初始和调用/输出想要调用的private中的数，然后在main函数中调用方法函数就ok
+这样输出就是233
+void test::print() 用::来标识函数所属的类
+输出LOVE这样做的好处是可以让另一个类里有一样名字的函数像这样：
+
+oop学习笔记和扩展
+
+
+这样做的意义是什么呢？ 以下代码可以说明作用
+如果输入的n是2话，意思就是输入两次n1和n2 如果都输入 1 1 会发现 两次结果不一样！这是因为没有初始sum1，初始化(构造函数)的作用就很明显了
+这个相当于c语言中的%6d
+这样就声明了T作为类型名
+这样由于是模板，无论是int还是double进去都出来对应的值
+有的函数可以自己定义的时候带一个值
+这里输出分别是1和6，如果不传值过去就默认是定义时候的值
+另外 如果有好几个参数而有的赋初值有的没赋初值的时候，赋初值的写右边。
+这样写的意思是声明b是一个整形引用变量，初值是a，所以现在a和b是一样的
+这里是当时做的 Unix ls UVA-400
+这是错误的
+相当于1int *p=&a;
+因为变量和引用地址也相同
+错误 因为const限定了引用a
+这样是正确的 因为没有加限定
+系统处理方法是12345678910#include<bits/stdc++.h>using namespace std;int main(){  ios::sync_with_stdio(0);  cin.tie(0);  cout.tie(0);  int temp=5;  const int &a=temp;}
+此时并不会四舍五入，以上两种const限定的如果不加const就会报错
+加一个inline可以把函数嵌到主函数里，效率增加
+运行结果是100和10000 ::maxn的意思是全局变量的maxn
+天天用都用烂了 还有什么好说的？
+运行结果 ：cleverlove 7
+
+HTML5 input专题
+
+
+接下来几天我要好好学html，结束以后要学习css和js，向各位大佬学习，不再白给！！！
+
+我的中二青春（自己写的微电影剧本）
+
+
+
+灵感：微微一笑很倾城
+背景介绍：张轩和李萌是高中非常要好的朋友，俩人没事的时候喜欢去步行街逛街，打打游戏什么的。在学霸李萌的带领下，两人一起考入同一所大学。张轩平日做事很没有耐心，总是喜欢用武力来解决麻烦，所以经常就会把事情搞砸。每次遇到麻烦，她的好友李萌总是站出来帮她化解麻烦。一次公选课上，张轩遇到了讨厌鬼陈珂。从此三人之间产生了一些联系，随着时间的推移，张轩渐渐发现陈珂内心深处的柔软，三人之间的矛盾得以化解，最终成为了嬉笑打闹的三人帮。
+场景一:白天 校园路上（对应最后一段）李萌，张轩，陈珂三人走在校园路上（张轩内心独白:给大家介绍一下，这是我的两个好哥们，李萌，学习不错，我的好闺蜜。我们从高中就认识了，在她的指导下，我们考入了齐鲁工业大学（2333）。陈珂，一直喜欢我闺蜜，不过他的恋情到现在还没得到回应，在我看来就是个混大学的，天天窝在宿舍里打游戏，也不学习，但人还不错。我们两个的恩怨是从一节程序设计课开始的）场景二：白天      教室        内杨老师在课上讲着c语言程序设计基础“同学们，今天我们要讲的是指针。指针是c语言中非常重要的一个工具，同时也是非常有用的。现在你们可能体会不到，到以后的大工程需要用到指针的时候一个优秀的程序员写的指针不仅非常巧妙，而且实用性很高，到时候你们就知道了！大家看大屏上的这个程序…”桌子上摆放着一本书，坐在教室最后一排的陈珂后背倚着座位的背，翘着腿，正在得心应手的操作着他最喜欢的英雄–小乔。陈珂嘴里时不时嘟囔着：“我马上就要超神了！。”恰逢打团的关键时刻，张轩揣着课本鬼鬼祟祟溜进后门，碰了陈珂一下张轩：“同学，可不可以往里面坐一下？陈珂不屑的回头撇了一眼，不耐烦的说道：别烦我，没看到我在打团吗？”气急败坏的张轩终于压制不住内心的愤怒，推了陈珂一下，一把夺过手机摔在桌子上，说道：“我警告你，在我没生气之前，快点给我挪一下！我发起火来，连我自己都害怕！”陈珂：“你有病吧？？？干嘛推我？？？”同学们转过头注视着俩人，老师敲了敲桌子，略有气愤的喊道：“我们是继续分析指针进阶呢？还是看你们二位的精彩表演呢？”张轩不好意思的低着头，脸都红了，充满愧疚的笑了笑。咬着牙小声说道：“这下可以让我进去了吧。”两人回到座位坐好，张轩将手中的课本放在桌子上，翻到了指针那一节看着。陈珂撇了一眼张轩，不耐烦的打开课本。
+场景三      白天      宿舍      内   满脸委屈的张轩推开宿舍门，一把将课本扔在床上。李萌坐在床上正在翻看着桌子上摆放的四级真题。李萌放下手中的笔，合上试卷，笑着说：“回来了？怎么了我的小可爱？”张轩叹了口气：“萌萌你可要为我主持公道。”李萌拿起桌子上的一杯水递给张轩：“怎么了？”张轩接过水杯：“别提了，我都快被气死了！今天上课遇见一个男生，不仅害我出糗，还让我在那节杨老师的课有了最高的回头率。”李萌轻轻拍了拍张轩，小声笑道：“恭喜你，出名了哈哈哈。”张轩放下水杯，坐到床边，抱起大鸡腿抱枕，边使劲按着，边气愤的说道：“真是出门忘记查黄历，这今天怎么这么倒霉，遇到这么个人！下次，再让我遇到这个混蛋，我一定要揍他一顿！”李萌俯身拿起桌子上的手机并说道：“好了，好了。收拾收拾去吃饭吧，我都饿了。”顺势将张轩从床上拉起，关上宿舍门。 
+场景四 白天    宿舍    楼外阳光明媚的中午，李萌和好友张轩边说边笑的走在去拿快递路上，男生公寓楼是她们去拿快递的必经之路。即将走过男生宿舍时，突然一盆水泼了过来，脏水正好洒在了李萌的鞋子上面。这时陈珂身穿宽松牛仔裤，拿着宿舍的垃圾在宿舍门外，“唉呀妈呀，外面好冷啊！冻死我了都”，说完顺势将垃圾扔到了垃圾桶里。此时，张轩和李萌正迎面走来，脏水恰巧溅在李萌的衣服上。陈珂并觉，正转身离开却被张轩叫住了。张轩：“拿盆的那个，站住！”陈珂：（此时的陈珂并未回头），说道：“长的帅就是压力大，没想到我这都被跟到家门口了哈哈哈。”张轩：出门之前先照照镜子行嘛。泼完人就想走，连句道歉也不说，你怎么这么心安理得？陈珂：（此时的陈珂转过头来）“是谁胆子这么大啊？在男生宿舍门口这样闹？”在他话音刚落时站在了李萌和张轩的面前，此时，张轩撇了陈珂一眼，，从头到脚将陈珂打量了一番发说到“吆，别看你穿的挺清凉，长的还蛮让人上火的。”说完双手掐着腰哈哈大笑起来。陈珂撸起袖子刚想教训张轩却无意中看到在她身旁长相甜美的李萌，一下子被吸引过去。陈珂尴尬的说道“嗯？我弄到你的衣服上了鸭，”说完立马甩了下头发顺势将胳膊倚靠在墙上对旁边的李萌抛了个媚眼，谄媚的说：“对不起啊，刚才我还特意四周看了看，生怕溅到别人衣服上 ，没想到于千万人中遇到了你。”李萌：“没关系，也没有湿很多”一边说着一边拉了拉在旁边的张轩，脸上有一丝的害羞。张轩这时候大声说道：“我呸 呸呸 ，什么人呐！离这么远我就闻到一股人渣的味道！”陈珂:“我咋啦？希望大小姐您别回回上课都迟到，还打扰我玩游戏！”张轩（挠了挠头）: “你！我是不是在哪见过你…”李萌见状拉起她来就想走，“算了，算了，也没多大的事。”这时陈珂拦了上去，说道：“要不留个联系方式，如果衣服洗不出来我可以做相应的赔偿。”张轩:“对，就该让他们赔！小心你赔的倾家荡产！”离开前陈珂扬着下巴给张轩使了个眼色，张轩回头跟李萌说:“他脸是不是抽筋了，他肯定是有病。”
+场景五    白天      宿舍            内陈珂回到宿舍之后，放下手中的盆子。躺在床上玩游戏的张鹏好奇的问道：“哎，你刚才这么着急干嘛去了？”陈珂转身坐到床上，朝向张鹏，敲了个二郎腿，坐在椅子上不断抖动，兴奋的合不拢嘴：“我给你说，幸好刚才那一泼，否则也遇不到美人啦”。张鹏坐起：“美人？哪呢？哪呢？”陈珂笑道：“美人？像我这么帅气的人才有能有幸遇见，就你还····”“幺幺幺，又嘲讽人，行行行，你帅 你帅行了把哈哈哈。”说罢，又侧躺着玩起了游戏。”陈珂转过身去，看着手里的纸条傻呵呵的：“为了美人，我陈家荡产也在所不辞”。
+场景六    白天      宿舍     内陈珂以赔礼道歉为理由主动约李萌出来，在几次交谈中李萌也得知陈珂是动漫社的，便想还有一个星期就是张轩的生日了想给他一个惊喜，但是一想有求于人，便不好意思拒绝。张轩:“你鬼鬼祟祟干什么去”李萌：“呵呵，没事想出去呼吸呼吸新空气宿舍有点闷。”边说便开始来回伸展胳膊。她又用力一拍李萌肩膀：“要不我陪你去转转”由于要对张轩保密便编了一个很烂的谎：“啊那个谁约我出去，哎呀！我这脑子。”边说边拍了拍脑袋。还没等张轩反应便跑了出去。张轩觉得里面肯定有鬼，于是直接在后面跟着李萌。
+场景七    白天       小路       外果然走到宿舍拐角处就看到一脸高兴的陈珂笑嘻嘻的等着李萌，两人笑嘻嘻的说了几句就向餐厅走去，由于隔的太远张轩什么也没听清楚，看着陈珂渐行渐远的背影张轩臭骂到，混蛋居然敢勾搭我老婆！张轩紧追着跟了上去。
+场景八     白天    小亭子    外边躲边藏的张轩躲在墙角边只见两个人肩并肩的走在洒满落叶的小路上，“喂，你干什么呢！张轩上去就是一个擒拿手。” “以后你别让我再看见你，臭流氓”话刚说完，张轩又是一记重拳落下。张轩用胳膊护住陈珂转头说”我就说他不安好心吧，你看这才第一次见面就贼心不改”李萌愣了一下，解释道：“哎呀，你误会了，是刚刚树叶飘在我头发上了发他是帮我”张轩：“喂，你干什么呢！张轩上去就是一个擒拿手。”陈珂（无奈的）：“我是无辜的好不好”张轩：“这么晚了你约我家萌萌出来干什么，像你这种人一看就不怀好意。”陈珂：“我们两个人约出来关你什么事”张轩拉了拉李萌的手：“我的天！你听听他说的，我就说他不像好人。“陈珂：“我哪里不像好人了，不是，你说话说明白啊？“李萌看着他们叹了口气无奈的走开。张轩：”wtf” 说完拿起小桌子上两人还没喝完的可乐，咕咚咕咚的喝起来，不想喝的太急呛到了噗的一声全部喷了出来。正好喷到了回来拿东西的陈珂身上，陈珂一脸无奈的看着张轩说到：“哎我服了，你真是我的克星啊！”张轩擦了擦嘴一脸抱歉，“对不起啊，我不是故意的，这也没有纸巾啊怎么办？”这时余光扫到亭子凳子上用过的卫生纸张轩二话不说抄起来就往陈珂脸上擦，变擦边说：“真是太对不起了，先拿这个擦擦吧”。“别别别，，，这都用过了。。。我真服了你了”边说边往用手挡住脸往后退。
+场景九          白天      操场    外张轩和李萌照常去晨跑，只见陈珂在篮球场上，旁边还有几个小迷妹在呐喊：“好帅啊！”满脸的花痴。张轩和李萌远远的望见陈珂，也发现了篮球场上很帅气的他，于是停下了脚步。陈珂一个欧洲步，迅速把前面的人过掉然后把球投进了篮筐。“yes”陈珂单脚落地摆出胜利的姿势，回头向李萌一太阳的光线掺杂着李萌甜美笑容，迈着轻盈的步伐走向陈珂，掏出纸巾，羞涩的擦拭着陈珂额头的汗水。陈珂傻傻的沉醉其中，嘴角时不时上扬，突然传来一阵笑声。一群人笑起来停不下来而且非常的大声，在这阵诡异的笑声中，陈珂突然惊起。男生们：“怎么在这睡着了，做什么好梦呢”。陈珂擦了擦嘴边的口水，摸了摸放在地上的篮球：“原来这是个梦啊。”
+场景十 白天 宿舍 内陈珂左思右想觉得当面告白才显得有诚意些，于是他看了看日历，挑了个日期吉利的日子，准备向李萌表白。
+场景十一  白天 宿舍外 外陈珂紧张的在宿舍外走来走去，时不时的拿出手机自拍功能照镜子。
+场景十二 白天 宿舍楼梯 内张轩：一会咱去吃什么吧李萌看了看手表：“去吃包子吧，还要去早自习，我们得快点，不然要迟到了。“张轩点头：“ok！”两人走到宿舍楼下门口时看到陈珂张轩：“他来干什么？”陈珂看到李萌将要走出门，马上跑上前去，本来想要单膝跪地，结果不小心双膝同时跪下，这时张轩从李萌身后走出来。张轩：“大清早的来跪安，免礼平身哈哈哈哈“。陈珂拍拍裤腿小声嘀咕：“气死我了！鞋带怎么开了！“然后抬头说道：“哎哟好巧啊。“李萌：“你没事吧？”陈珂：“没事啊，我很好。“张轩拉住李萌说到：“没事我们就走了！“
+场景十三  傍晚  小路  外陈珂给李萌打电话陈珂挠挠头：你现在有空吗，我有点事想当面跟你说李萌：“我在跑步打卡呢，你有什么事？“电话那头传来了气喘吁吁的跑步声。陈珂问道：“张轩和你在一起不？“李萌：“她现在应该回宿舍了。“陈珂：“那我一会去操场找你，操场小东门对着的那个角落，打着闪光灯的就是我。“李萌：“ok。”陈珂：“白白。”
+场景十四 小路  六点  外李萌拿着手手机走到了操场草皮角落，陈珂突然蹦起来叫了句：“李萌，”李萌转身，由于转了一圈，不小心扬了陈珂一嘴的灰。陈珂说：“我喜欢你，呸呸呸。”李萌先是一愣，后皱起眉道：“呸什么？”陈珂忙解释：“我不是呸你，我刚刚吃了一嘴灰，我说我喜欢你。”李萌持续着皱眉的动作：“你说什么？”陈珂挠挠头：“嗯…那个什么…就是…”李萌看了看手表，那个什么快上晚自习啦，有什么事回头说。李萌匆匆的走掉。陈珂站在原地小声说着：“我喜欢你呀…“
+场景十五 陈珂宿舍内
+陈珂坐在宿舍的床上对着电脑一直打着什么，边打还边笑。张鹏看出了陈珂的异样，于是走到了陈珂电脑旁看了一下，发现他在打代码。张鹏：“打代码有什么好笑的？你这用的是class？学的还挺快哈哈哈。”于是没说什么就继续去打游戏了。陈珂悄悄地说：“我要用这两个程序来让女神看到我的真心！”（这里是一个表白的程序和一个心形的程序）说着陈珂把电脑控制台的颜色换成了粉红色，把字换成了鲜艳的大红色“这样就能看出我的真心了把”陈珂心想。走出宿舍门，把电脑交到了李萌舍友的手里，又嘱咐了她半天。
+场景十六 日 宿舍内误会解除，冰释前嫌今天是张轩的生日两人早早的约好了，只不过李萌还偷偷的给她准备了一份大礼。中午吃饭的时候，张轩生情并茂的讲述了她打听来的陈珂在高中时，他的所作所为，如何欺负女生尤其怎么欺负我，李萌听了本应该生气的事不知为何总是想捧腹大笑。“好你个见色忘友的家伙，这才几天就开始向着他了”说着就开始挠李萌的痒痒，这回笑得更停不下来了忙喊：“我错了我错了饶了我吧哈哈哈哈”打闹完之后，两人约好回宿舍换好衣服就出门逛街，之是张轩左等右等也等不到李萌就只好到她宿舍去，结果舍友告诉张轩李萌出去了好像是被一个叫陈什么的男生约出去了。
+场景十七 日 小亭子张轩火急火燎的跑出去，满校园的找。小亭子里，陈珂犹豫着开口:“那个，我写的程序你看了吧”李萌:“看啦，很好看的！一会儿再说吧，先准备好生日惊喜吧”陈珂喃喃地:“好吧”张轩跑遍整个校园，最后她在花园里的小亭子看到了陈珂，手里拿着一个礼物盒，唱着生日歌朝她走来，张轩很惊讶一时不知道该怎么办，这时李萌从树后面捧着蛋糕走出来，张轩吓了一跳，往后退了一步，踩到了陈珂，陈珂夸张的哎呦起来，张轩白眼看着陈珂，不屑一顾。此时广播站传出了张轩最喜欢的歌《Love story》。李萌:“许个愿吧，我的小可爱”张轩激动的说不出话来:“我，”阿嚏！陈珂打完喷嚏，揉揉鼻子:“不好意思”张轩李萌相视一笑，把蛋糕抹在了陈珂脸上，三人打闹。张轩独白（这就是我们故事的开始）                            完
+注:场景15里的程序都会放到一个文件夹里面，程序运行结果如下:表白用的
+
+心形图案（会跳动的动态心形，可以试试）
+
+这个真的有点厉害 可以自己运行试试
+
+css超链接伪类测试
+
+本文是对四个对超链接操作的伪类的操作测试，分别是link，visited，hover，active
+下面是效果：这里是效果实例
+
+
+html基础
+
+本节是html一些基本用法的介绍
+
+
+Patrol Robot UVA - 1600
+
+A robot has to patrol around a rectangular area which is in a form of m × n grid (m rows and ncolumns). The rows are labeled from 1 to m. The columns are labeled from 1 to n. A cell (i, j) denotesthe cell in row i and column j in the grid. At each step, the robot can only move from one cell to anadjacent cell, i.e. from (x, y) to (x + 1, y), (x, y + 1), (x − 1, y) or (x, y − 1). Some of the cells in thegrid contain obstacles. In order to move to a cell containing obstacle, the robot has to switch to turbomode. Therefore, the robot cannot move continuously to more than k cells containing obstacles.Your task is to write a program to find the shortest path (with the minimum number of cells) fromcell (1, 1) to cell (m, n). It is assumed that both these cells do not contain obstacles.
+
+InputThe input consists of several data sets. The first line of the input file contains the number of data setswhich is a positive integer and is not bigger than 20. The following lines describe the data sets.For each data set, the first line contains two positive integer numbers m and n separated by space(1 ≤ m, n ≤ 20). The second line contains an integer number k (0 ≤ k ≤ 20). The i-th line of the nextm lines contains n integer aij separated by space (i = 1, 2, . . . , m; j = 1, 2, . . . , n). The value of aij is‘1’ if there is an obstacle on the cell (i, j), and is ‘0’ otherwise.OutputFor each data set, if there exists a way for the robot to reach the cell (m, n), write in one line theinteger number s, which is the number of moves the robot has to make; ‘-1’ otherwise.Sample Input32 500 1 0 0 00 0 0 1 04 610 1 1 0 0 00 0 1 0 1 10 1 1 1 1 00 1 1 1 0 02 200 11 0Sample Output710-1
+机器人要从一个m*n网格的左上角(1,1)走到右下角(m,n)。网格中的一些格子（用0表示），其他格子是障碍（用1表示）。机器人每次可以往四个方向走一格，但不能连续的穿越k个障碍，求最短路长度。
+简单bfs，输入地图以后判断0和1，如果是0的话，如果走过这个地方就continue 如果可以走就记录一下，如果是1陷阱的话需要记录一下k，每次走一步就k– 如果下一步的k超过了现在能走的k就continue，否则记录一下当前能走的k，然后四方搜索，入队的时候step++
+
+Knight Moves UVA - 439
+
+A friend of you is doing research on the Traveling Knight Problem (TKP) where you are to find theshortest closed tour of knight moves that visits each square of a given set of n squares on a chessboardexactly once. He thinks that the most difficult part of the problem is determining the smallest numberof knight moves between two given squares and that, once you have accomplished this, finding the tourwould be easy.Of course you know that it is vice versa. So you offer him to write a program that solves the”difficult” part.Your job is to write a program that takes two squares a and b as input and then determines thenumber of knight moves on a shortest route from a to b.InputThe input file will contain one or more test cases. Each test case consists of one line containing twosquares separated by one space. A square is a string consisting of a letter (a..h) representing the columnand a digit (1..8) representing the row on the chessboard.OutputFor each test case, print one line saying ‘To get from xx to yy takes n knight moves.’.
+
+Sample Inpute2 e4a1 b2b2 c3a1 h8a1 h7h8 a1b1 c3f6 f6Sample OutputTo get from e2 to e4 takes 2 knight moves.To get from a1 to b2 takes 4 knight moves.To get from b2 to c3 takes 2 knight moves.To get from a1 to h8 takes 6 knight moves.To get from a1 to h7 takes 5 knight moves.To get from h8 to a1 takes 6 knight moves.To get from b1 to c3 takes 1 knight moves.To get from f6 to f6 takes 0 knight moves.
+给两个坐标，求一下🐴从第一个坐标跳到第二个至少需要多少步
+简单bfs 只不过在求初始位置和结束位置的时候-‘a’和-‘1’ 所以判断越界的时候范围需要注意一下。用了一下刚学的class感觉和struct一样使2333
+但是如果去掉  //node(int x=0,int y=0,int step=0):x(x),y(y),step(step){};  这一行就会报错通过实验发现 如果去掉这一行的话 q.push(node(x+dx[i],y+dy[i],step+1));这个地方就不能穿入值，所以那一行初始化是为了确定传入class的值是什么，如果没有限定的话或者初始化顺序出错都会导致程序的错误！！！
+
+struct构造的学习&&初见class
+
+本文是对struct构造的一些学习，由于看了构造看不懂于是来学一下
+顺便看了一下class2333
+
+此时是先执行的node()，赋值之后再进行其他操作
+先来构造一个加法
+此时先执行初始化，再执行add函数，结果是30
+开始学class觉得挺有意思的，于是就深入随便学了一下，发现class里面有两个属性，一个是public 一个是private 经历了很多次编译错误我终于明白了struct和class的区别：struct直接默认为public而class有private 而private里的东西不能直接访问，于是程序员通常把数据放到private 其他的构造函数都放到public便于访问
+运行出来是这样的：
+——————–this is what I want to say———————
+明天打算深入学习一下2333顺便学习文件操作  随便一看收获还不少，虽然挺简单的2333
+
+Rails UVA - 514
+
+There is a famous railway station in PopPush City. Country there is incredibly hilly. The stationwas built in last century. Unfortunately, funds were extremely limited that time. It was possible toestablish only a surface track. Moreover, it turned out that the station could be only a dead-end one(see picture) and due to lack of available space it could have only one track.The local tradition is that every train arriving from the direction A continues in the directionB with coaches reorganized in some way. Assume that the train arriving from the direction A hasN ≤ 1000 coaches numbered in increasing order 1, 2, . . . , N. The chief for train reorganizations mustknow whether it is possible to marshal coaches continuing in the direction B so that their order willbe a1.a2, . . . , aN . Help him and write a program that decides whether it is possible to get the requiredorder of coaches. You can assume that single coaches can be disconnected from the train before theyenter the station and that they can move themselves until they are on the track in the direction B. Youcan also suppose that at any time there can be located as many coaches as necessary in the station.But once a coach has entered the station it cannot return to the track in the direction A and also onceit has left the station in the direction B it cannot return back to the station.
+
+InputThe input file consists of blocks of lines. Each block except the last describes one train and possiblymore requirements for its reorganization. In the first line of the block there is the integer N describedabove. In each of the next lines of the block there is a permutation of 1, 2, . . . , N. The last line of theblock contains just ‘0’.The last block consists of just one line containing ‘0’.OutputThe output file contains the lines corresponding to the lines with permutations in the input file. A lineof the output file contains ‘Yes’ if it is possible to marshal the coaches in the order required on thecorresponding line of the input file. Otherwise it contains ‘No’. In addition, there is one empty line afterthe lines corresponding to one block of the input file. There is no line in the output file correspondingto the last “null” block of the input file.Sample Input51 2 3 4 55 4 1 2 3066 5 4 3 2 100Sample OutputYesNoYes
+某城市有一个火车站，有n截车厢从A方向驶入车站，按进站顺序编号为1-n，判断一下能否让他们按照某种特定的顺序驶入B方向的铁轨并且驶出车站。
+如果正好可以从B驶出，就直接numa++，numb++，意思是这个车厢已经从a到b走了，如果不能的话就入栈，再判断是否能从栈按顺序出去，如果这些都不满足就输出no 否则输出yes
+
+Broken Keyboard (a.k.a. Beiju Text) UVA - 11988 
+
+You’re typing a long text with a broken keyboard. Well it’s not so badly broken. The only problemwith the keyboard is that sometimes the “home” key or the “end” key gets automatically pressed(internally).You’re not aware of this issue, since you’re focusing on the text and did not even turn on themonitor! After you finished typing, you can see a text on the screen (if you turn on the monitor).In Chinese, we can call it Beiju. Your task is to find the Beiju tex
+
+InputThere are several test cases. Each test case is a single line containing at least one and at most 100,000letters, underscores and two special characters ‘[’ and ‘]’. ‘[’ means the “Home” key is pressedinternally, and ‘]’ means the “End” key is pressed internally. The input is terminated by end-of-file(EOF).OutputFor each case, print the Beiju text on the screen.Sample InputThis_is_a_[Beiju]_text[[]][][]Happy_Birthday_to_Tsinghua_UniversitySample OutputBeijuThis_is_a__textHappy_Birthday_to_Tsinghua_University
+WJL同学的键盘出现了奇妙的故障，所有键都会正常的工作，但是键盘上的Home以及End键有时候会莫名其妙的自己按下。但是盲打很熟练的他一般习惯关闭显示器打字，因为这样很酷。
+现在他正在打一段文本，假设你已经知道这段文本以及Home和End键会什么时候出现故障自行按下。请你编写一个程序，求出他最后打出的文本。
+输入数据有多组。
+每组数据在一行内包含了至多100000个字母、下划线和两个特别的标点’[‘以及’]’，其中’[‘代表输入到此时”Home”键会被按下。而’]’则代表输入到此时”End”键会被按下。输入数据以EOF作为结束，并且我们保证输入数据的大小不超过5MB。
+广搜，先从字符串尾部开始搜索，遇到]就继续搜dfs(l,x-1),遇到[退出循环，for循环先把括号里面的输出，遇到了[就继续往前搜，最后整串输出
+
+Printer Queue UVA - 12100
+
+The only printer in the computer science students’union is experiencing an extremely heavy workload.Sometimes there are a hundred jobs in the printerqueue and you may have to wait for hours to get asingle page of output.Because some jobs are more important than others,the Hacker General has invented and implemented asimple priority system for the print job queue. Now,each job is assigned a priority between 1 and 9 (with 9being the highest priority, and 1 being the lowest), andthe printer operates as follows.• The first job J in queue is taken from the queue.• If there is some job in the queue with a higher priority than job J, then move J to the end of thequeue without printing it.• Otherwise, print job J (and do not put it back in the queue).In this way, all those important muffin recipes that the Hacker General is printing get printed veryquickly. Of course, those annoying term papers that others are printing may have to wait for quitesome time to get printed, but that’s life.Your problem with the new policy is that it has become quite tricky to determine when your printjob will actually be completed. You decide to write a program to figure this out. The program willbe given the current queue (as a list of priorities) as well as the position of your job in the queue, andmust then calculate how long it will take until your job is printed, assuming that no additional jobswill be added to the queue. To simplify matters, we assume that printing a job always takes exactlyone minute, and that adding and removing jobs from the queue is instantaneous.
+
+InputOne line with a positive integer: the number of test cases (at most 100). Then for each test case:• One line with two integers n and m, where n is the number of jobs in the queue (1 ≤ n ≤ 100)and m is the position of your job (0 ≤ m ≤ n − 1). The first position in the queue is number 0,the second is number 1, and so on.• One line with n integers in the range 1 to 9, giving the priorities of the jobs in the queue. Thefirst integer gives the priority of the first job, the second integer the priority of the second job,and so on.OutputFor each test case, print one line with a single integer; the number of minutes until your job is completelyprinted, assuming that no additional print jobs will arrive.Sample Input31 054 21 2 3 46 01 1 9 1 1 1Sample Output125
+学生会只有一台打印机，但是有许多文件需要打印，因此避免不了等待。现在有一个打印队列，里面的任务是无序的，每个任务有一个权值，打印机会从第一个任务开始执行，如果当前任务的权值是队列中最大的，那么就打印，否则就将该任务放置到队末。每次打印消耗一定的时间，求该序列中的任务分别在什么时候被打印。
+模拟一下队列操作，只不过和队列不一样：循环控制条件是while(a[m]) 当a[m]为0的时候结束循环并且输出，每次循环先找一个最大值，也就是最紧急的事情。先处理这件事(把这一项变成0)，然后下标更新为(id+1)%n 这样就相当于把没有变成0的放在了队尾，滚动了起来
+
+Symmetry UVA - 1595 
+
+The figure shown on the left is left-right symmetric as it is possible to fold the sheet of paper along avertical line, drawn as a dashed line, and to cut the figure into two identical halves. The figure on theright is not left-right symmetric as it is impossible to find such a vertical line.Write a program that determines whether a figure, drawn with dots, is left-right symmetric or not.The dots are all distinct.
+
+InputThe input consists of T test cases. The number of test cases T is given in the first line of the input file.The first line of each test case contains an integer N, where N (1 ≤ N ≤ 1, 000) is the number of dotsin a figure. Each of the following N lines contains the x-coordinate and y-coordinate of a dot. Bothx-coordinates and y-coordinates are integers between −10, 000 and 10, 000, both inclusive.OutputPrint exactly one line for each test case. The line should contain ‘YES’ if the figure is left-right symmetric,and ‘NO’, otherwise.Sample Input35-2 50 06 54 02 342 30 44 00 045 146 105 106 14Sample OutputYESNOYES
+是否能找到一条竖线，使得所有点左右对称。
+找出最左边的和最右边的两个点，如果找到两个点加起来等于左右的相加，就相当于关于中间对称轴对称到最后只要有一个点不满足就输出no 否则输出yes
+
+Compound Words UVA - 10391
+
+You are to find all the two-word compound words in a dictionary. A two-word compound word is aword in the dictionary that is the concatenation of exactly two other words in the dictionary.
+
+InputStandard input consists of a number of lowercase words, one per line, in alphabetical order. There willbe no more than 120,000 words.OutputYour output should contain all the compound words, one per line, in alphabetical order.Sample InputaalienbornlesslienneverneverthelessnewnewbornthezebraSample Outputaliennewborn
+给出一个词典，找出所有的复合词，即恰好有两个单词连接而成的单词
+用set存起来所有的单词，然后利用set的.count函数判断set中是否有指定的单词，如果没有就从当前的单词一个一个字母往后找，例子： a和line就是j=0的时候匹配的，其中a是0-1 lien是1到最后 newborn是j=2的时候 0-2是前三项 ，后面的born是3-最后 找到就输出
+substr函数 对于一个字符串xx.substr(5)//截取x[5]到结尾，即npos.重载原型为string substr(_off,_count=npos)x.substr(0,5)//以x[0]为始，向后截取5位（包含x[0]），重载原型string substr(_off,_count)
+st.count(x)从st中查找是否有字符串x 如果有返回1 否则返回0
+基于哈希表的set 顾名思义 是不具有自动sort的功能的set 但是性能上比set好 而且还可以优化程序。
+ac代码：
+快了足足60ms
+
+Foreign Exchange UVA - 10763 
+
+Your non-profit organization (iCORE - international Confederation of Revolver Enthusiasts) coordinates a very successful foreign student exchange program. Over the last few years, demand has sky-rocketed and now you need assistance with your task.
+The program your organization runs works as follows: All candidates are asked for their original location and the location they would like to go to. The program works out only if every student has a suitable exchange partner. In other words, if a student wants to go from A to B, there must be another student who wants to go from B to A. This was an easy task when there were only about 50 candidates, however now there are up to 500000 candidates!
+
+InputThe input file contains multiple cases. Each test case will consist of a line containing n - the number of candidates (1≤n≤500000), followed by n lines representing the exchange information for each candidate. Each of these lines will contain 2 integers, separated by a single space, representing the candidate’s original location and the candidate’s target location respectively. Locations will be represented by nonnegative integer numbers. You may assume that no candidate will have his or her original location being the same as his or her target location as this would fall into the domestic exchange program. The input is terminated by a case where n = 0; this case should not be processed.
+OutputFor each test case, print “YES” on a single line if there is a way for the exchange program to work out, otherwise print “NO”.
+Sample Input101 22 13 44 3100 200200 10057 22 571 22 1101 23 45 67 89 1011 1213 1415 1617 1819 200Sample OutputYESNO
+有n个学生想交换到其他的学校学习，为了简单起见，规定每个想从A学校交换到B学校的学生必须找一个想从B换到A的搭档。如果每个人都能找到搭档（一个人不能当多个人的搭档），学校就会同意他们交换。每个学生用两个整数AB表示，本题是判断交换是否可行
+既然是判断是否能匹配，那么就sort一下，如果人数不匹配就输出no就ok  算是一道水题了
+
+Unix ls UVA-400
+
+The computer company you work for is introducing a brand new computer line and is developing anew Unix-like operating system to be introduced along with the new computer. Your assignment is towrite the formatter for the ls function.Your program will eventually read input from a pipe (although for now your program will readfrom the input file). Input to your program will consist of a list of (F) filenames that you will sort(ascending based on the ASCII character values) and format into (C) columns based on the length (L)of the longest filename. Filenames will be between 1 and 60 (inclusive) characters in length and will beformatted into left-justified columns. The rightmost column will be the width of the longest filenameand all other columns will be the width of the longest filename plus 2. There will be as many columnsas will fit in 60 characters. Your program should use as few rows (R) as possible with rows being filledto capacity from left to right.
+
+InputThe input file will contain an indefinite number of lists of filenames. Each list will begin with a linecontaining a single integer (1 ≤ N ≤ 100). There will then be N lines each containing one left-justifiedfilename and the entire line’s contents (between 1 and 60 characters) are considered to be part of thefilename. Allowable characters are alphanumeric (a to z, A to Z, and 0 to 9) and from the following set{._-} (not including the curly braces). There will be no illegal characters in any of the filenames andno line will be completely empty.Immediately following the last filename will be the N for the next set or the end of file. You shouldread and format all sets in the input file.OutputFor each set of filenames you should print a line of exactly 60 dashes (-) followed by the formattedcolumns of filenames. The sorted filenames 1 to R will be listed down column 1; filenames R + 1 to 2Rlisted down column 2; etc.Sample Input10tiny2short4mevery_long_file_nameshortersize-1size2size3much_longer_name12345678.123mid_size_name12WeaserAlfalfaStimeyBuckwheatPorkyJoeDarlaCottonButchFroggyMrs_CrabappleP.D.19Mr._FrenchJodyBuffySissyKeithDannyLoriChrisShirleyMarshaJanCindyCarolMikeGregPeterBobbyAliceRuben
+12345678.123 size-12short4me size2mid_size_name size3much_longer_name tiny
+Alfalfa Cotton Joe PorkyBuckwheat Darla Mrs_Crabapple Stimey
+Alice Chris Jan Marsha RubenBobby Cindy Jody Mike ShirleyBuffy Danny Keith Mr._French SissyCarol Greg Lori Peter
+输入一个n，输入n个文件名，按列优先（按列从上往下依次减小）的方式左对齐，假设最长的文件名有m个字符 那么最右列是m个 其他都是m+2个
+和上次的题目差不多 找出最大的列的code个数 ，利用print函数的特性，从当前的单词长度开始到m-2/（最右边是m）少多少就补多少空格，这样就可以对齐了，注意在输出的时候 int yy=j*x+i;是为了保证列优先
+这里有一个新的用法 叫引用 用法和效果和指针差不多，但是这样方便 就是不能动态分配内存 这点不如指针 下面有一个测试
+
+Throwing cards away l UVA - 10935
+
+Given is an ordered deck of n cards numbered 1to n with card 1 at the top and card n at thebottom. The following operation is performed aslong as there are at least two cards in the deck:Throw away the top card and movethe card that is now on the top of thedeck to the bottom of the deck.Your task is to find the sequence of discardedcards and the last, remaining card.InputEach line of input (except the last) contains anumber n ≤ 50. The last line contains ‘0’ andthis line should not be processed.OutputFor each number from the input produce twolines of output. The first line presents thesequence of discarded cards, the second line reportsthe last remaining card. No line will haveleading or trailing spaces. See the sample for theexpected format.
+
+Sample Input7191060Sample OutputDiscarded cards: 1, 3, 5, 7, 4, 2Remaining card: 6Discarded cards: 1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 4, 8, 12, 16, 2, 10, 18, 14Remaining card: 6Discarded cards: 1, 3, 5, 7, 9, 2, 6, 10, 8Remaining card: 4Discarded cards: 1, 3, 5, 2, 6Remaining card: 4
+有n张牌，从第一张牌开始，从上往下编号是1-n，当至少还剩下两张牌的时候进行下面的操作：把第一张牌扔掉，然后把新的第一张牌放到整叠牌的最后，输入每行包括一个n，输出每次扔掉牌和最后一张牌，以输入0结束
+利用队列的原理，用队列模拟每一步，循环控制条件设为 >=2||>1 都可以 这样还剩一张就输出了，记住队列需要每次重新定义一次，不然会影响之前的结果
+
+Ducci Sequence UVA - 1594
+
+A Ducci sequence is a sequence of n-tuples of integers. Given an n-tuple of integers (a1, a2, · · · , an),the next n-tuple in the sequence is formed by taking the absolute differences of neighboring integers:(a1, a2, · · · , an) → (|a1 − a2|, |a2 − a3|, · · · , |an − a1|)Ducci sequences either reach a tuple of zeros or fall into a periodic loop. For example, the 4-tuplesequence starting with 8,11,2,7 takes 5 steps to reach the zeros tuple:(8, 11, 2, 7) → (3, 9, 5, 1) → (6, 4, 4, 2) → (2, 0, 2, 4) → (2, 2, 2, 2) → (0, 0, 0, 0).The 5-tuple sequence starting with 4,2,0,2,0 enters a loop after 2 steps:(4, 2, 0, 2, 0) → (2, 2, 2, 2, 4) → (0,0,0,2,2) → (0, 0, 2, 0, 2) → (0, 2, 2, 2, 2) → (2, 0, 0, 0, 2) →(2, 0, 0, 2, 0) → (2, 0, 2, 2, 2) → (2, 2, 0, 0, 0) → (0, 2, 0, 0, 2) → (2, 2, 0, 2, 2) → (0, 2, 2, 0, 0) →(2, 0, 2, 0, 0) → (2, 2, 2, 0, 2) → (0, 0, 2, 2, 0) → (0, 2, 0, 2, 0) → (2, 2, 2, 2, 0) → (0,0,0,2,2) → · · ·Given an n-tuple of integers, write a program to decide if the sequence is reaching to a zeros tupleor a periodic loop.
+
+InputYour program is to read the input from standard input. The input consists of T test cases. The numberof test cases T is given in the first line of the input. Each test case starts with a line containing aninteger n (3 ≤ n ≤ 15), which represents the size of a tuple in the Ducci sequences. In the followingline, n integers are given which represents the n-tuple of integers. The range of integers are from 0 to1,000. You may assume that the maximum number of steps of a Ducci sequence reaching zeros tupleor making a loop does not exceed 1,000.OutputYour program is to write to standard output. Print exactly one line for each test case. Print ‘LOOP’ ifthe Ducci sequence falls into a periodic loop, print ‘ZERO’ if the Ducci sequence reaches to a zeros tuple.Sample Input448 11 2 754 2 0 2 070 0 0 0 0 0 061 2 3 1 2 3Sample OutputZEROLOOPZEROLOOP
+对于一个n元组(a1,a2,a3,a4…an)，可以对于每个数求出它和下一个数的差的绝对值，得到一个新的n元组(|a1-a2|,|a2-a3|…|an-a1|)。重复这个过程，得到的序列被称为Ducci序列 判断1000步以后是循环还是0
+用数组存起来刚开始的数字，然后写一个判断是否全是0的函数，通过while循环来确定1000次，如果满足zero的条件就break输出
+刚开始直接答案错误= = 需要注意的是每次用完都需要v.clear()一下，不然上次存进去的数对数组有影响(这里看了以前的笔记 看来笔记还是有用的啊2333)
+别忘了多复习啊！
+
+Alignment of Code UVA - 1593 
+
+You are working in a team that writes Incredibly Customizable Programming Codewriter (ICPC) whichis basically a text editor with bells and whistles. You are working on a module that takes a piece ofcode containing some definitions or other tabular information and aligns each column on a fixed verticalposition, while keeping the resulting code as short as possible, making sure that only whitespaces thatare absolutely required stay in the code. So, that the first words on each line are printed at positionp1 = 1; the second words on each line are printed at the minimal possible position p2, such that all firstwords end at or before position p2 − 2; the third words on each line are printed at the minimal possibleposition p3, such that all second words end at or before position p3 − 2, etc.For the purpose of this problem, the code consists of multiple lines. Each line consists of one ormore words separated by spaces. Each word can contain uppercase and lowercase Latin letters, allASCII punctuation marks, separators, and other non-whitespace ASCII characters (ASCII codes 33 to126 inclusive). Whitespace consists of space characters (ASCII code 32).
+
+InputThe input file contains one or more lines of the code up to the end of file. All lines (including the lastone) are terminated by a standard end-of-line sequence in the file. Each line contains at least one word,each word is 1 to 80 characters long (inclusive). Words are separated by one or more spaces. Lines ofthe code can have both leading and trailing spaces. Each line in the input file is at most 180 characterslong. There are at most 1000 lines in the input file.OutputWrite to the output file the reformatted, aligned code that consists of the same number of lines, withthe same words in the same order, without trailing and leading spaces, separated by one or more spacessuch that i-th word on each line starts at the same position pi.Note for the Sample:The ‘⊔’ character in the example below denotes a space character in the actual files (ASCII code32).Sample Input␣␣start:␣␣integer;␣␣␣␣//␣begins␣herestop:␣integer;␣//␣␣ends␣here␣s:␣␣string;c:␣␣␣char;␣//␣tempSample Outputstart:␣integer;␣//␣begins␣herestop:␣␣integer;␣//␣ends␣␣␣heres:␣␣␣␣␣string;c:␣␣␣␣␣char;␣␣␣␣//␣temp
+输入若干行代码，要求各列单词左边界对齐且尽量靠左。单词之间要空一格，每个单词不超过80字符
+找出每一列最长的，用maxn数组存下来，在输出的时候如果比最长的要短，就从长度开始到最长的长度补齐空格，这样下一个单词输出的时候就自动对齐到了上面最长的单词的结尾 注意最后一个单词不需要空格，所以需要加一个条件是j！=vec[i].size()-1;
+
+Parentheses Balance UVA - 673
+
+You are given a string consisting of parentheses () and []. A string of this type is said to be correct:(a) if it is the empty string(b) if A and B are correct, AB is correct,(c) if A is correct, (A) and [A] is correct.Write a program that takes a sequence of strings of this type and check their correctness. Yourprogram can assume that the maximum string length is 128.InputThe file contains a positive integer n and a sequence of n strings of parentheses ‘()’ and ‘[]’, one stringa line.OutputA sequence of ‘Yes’ or ‘No’ on the output file.Sample Input3([])(([()])))([()])()Sample OutputYesNoYes
+
+
+就是看一下括号是否匹配，注意一下括号不能拆开 像这样[(])
+利用栈的思想先入栈一个，如果不匹配就先入栈，如果匹配就pop出去，继续匹配上一个括号，如果到最后前面进去的括号都出来了就说明匹配全部成功，这时候输出Yes 不然输出No
+❌这里有个问题是一样的输入字符 cin>>a是错误的而 scanf(“%c”,&a)是正确的 不知道是为什么❌这个问题得到了解决！原来是因为cin不能接收空格 而scanf就可以 以后字符都用scanf了！
+ac代码：
+wa代码：
+非常的迷
+
+python 物块的移动（包括加速度和摩擦力）
+
+
+文件名是settings.py
+第二个文件：精灵组文件名是 sprites.py
+·
+这样就可以让物块在没有动键盘的情况下自己停止啦！！
+
+python实现一个可爱的粉色怪物蹦来蹦去（2333）
+
+前情在上一篇博客
+
+附上可爱的粉红色小怪物2333
+
+
+python面向对象
+
+利用python来进行一些简单的动画操作：
+
+
+浪在ACM集训队寒假集训第二场补题和题解
+
+
+
+One day Kefa found n baloons. For convenience, we denote color of i-th baloon as si — lowercase letter of the Latin alphabet. Also Kefa has k friends. Friend will be upset, If he get two baloons of the same color. Kefa want to give out all baloons to his friends. Help Kefa to find out, can he give out all his baloons, such that no one of his friens will be upset — print «YES», if he can, and «NO», otherwise. Note, that Kefa’s friend will not upset, if he doesn’t get baloons at all.
+InputThe first line contains two integers n and k (1 ≤ n, k ≤ 100) — the number of baloons and friends.
+Next line contains string s — colors of baloons.
+OutputAnswer to the task — «YES» or «NO» in a single line.
+You can choose the case (lower or upper) for each letter arbitrary.
+ExamplesInput4 2aabbOutputYESInput6 3aacaabOutputNONoteIn the first sample Kefa can give 1-st and 3-rd baloon to the first friend, and 2-nd and 4-th to the second.
+In the second sample Kefa needs to give to all his friends baloons of color a, but one baloon will stay, thats why answer is «NO».
+这题的意思是kefa想给朋友发气球，但是发给一个朋友两个一样颜色的朋友就伐开心（2333），所以只要保证每个字母不超过k次就可以，第一想法就是开一个char–int map来记录，最后遍历一遍查看是否有大于k的 代码：
+#B - Godsend
+Leha somehow found an array consisting of n integers. Looking at it, he came up with a task. Two players play the game on the array. Players move one by one. The first player can choose for his move a subsegment of non-zero length with an odd sum of numbers and remove it from the array, after that the remaining parts are glued together into one array and the game continues. The second player can choose a subsegment of non-zero length with an even sum and remove it. Loses the one who can not make a move. Who will win if both play optimally?
+InputFirst line of input data contains single integer n (1 ≤ n ≤ 106) — length of the array.
+Next line contains n integers a1, a2, …, an (0 ≤ ai ≤ 109).
+OutputOutput answer in single line. “First”, if first player wins, and “Second” otherwise (without quotes).
+ExamplesInput41 3 2 3OutputFirstInput22 2OutputSecondNoteIn first sample first player remove whole array in one move and win.
+In second sample first player can’t make a move and lose.
+这题的意思是有两个人在做游戏，第一个人可以拿走和是奇数的序列，第二个人拿走是偶数个的序列，最终到谁不能取未知，不能取的那个人就输了。 可以分为以下几种情况：① 和是奇数，这样的话第一个人第一轮就可以拿走所有的数，第二个人就没有办法取，这样第一个人就赢了② 和是偶数：（1）全都是偶数，这种情况上来就是第一个人无法取，所以就输了。（2）有奇数个奇数，这样第一个人可以选择取走偶数个奇数和所有的偶数，比如说有7个数：1 2 3 4 5 6 7，第一个人可以拿走2 3 4 5 6 ，剩下一个奇数第二个人就没有办法拿走了，所以是第一个人赢了在和是偶数的情况下不会出现偶数个奇数，所以这就是全部的情况了，综上所述：只要有奇数或者所有的数字加在一起是一个奇数就是第一个人赢了，否则是第二个人 代码：
+#C - Leha and Function
+Leha like all kinds of strange things. Recently he liked the function F(n, k). Consider all possible k-element subsets of the set [1, 2, …, n]. For subset find minimal element in it. F(n, k) — mathematical expectation of the minimal element among all k-element subsets.
+But only function does not interest him. He wants to do interesting things with it. Mom brought him two arrays A and B, each consists of m integers. For all i, j such that 1 ≤ i, j ≤ m the condition Ai ≥ Bj holds. Help Leha rearrange the numbers in the array A so that the sum is maximally possible, where A’ is already rearranged array.
+InputFirst line of input data contains single integer m (1 ≤ m ≤ 2·105) — length of arrays A and B.
+Next line contains m integers a1, a2, …, am (1 ≤ ai ≤ 109) — array A.
+Next line contains m integers b1, b2, …, bm (1 ≤ bi ≤ 109) — array B.
+OutputOutput m integers a’1, a’2, …, a’m — array A’ which is permutation of the array A.
+ExamplesInput57 3 5 3 42 1 3 2 3Output4 7 3 5 3Input74 6 5 8 8 2 62 1 2 2 1 1 2Output2 6 4 5 8 8 6
+给两个序列，求出F(A[I],B[I])的最大值。在网上看大佬写的方法： 推导下会发现 F(n,k) = C(n,k)  1 + C(n - 1,k)  2….+C(n - (n - k),k) k , n 相同时 k 越小 ，F(n,k) 越大，让 较大 的 n 和 较小的 k 配对，最优这里也参考了一下lsr大佬的写法，感谢lsr大佬！
+所以就来了一波最大的A对应最小的B，用ans数组来存一下答案，最后输出 代码：
+Leha plays a computer game, where is on each level is given a connected graph with n vertices and m edges. Graph can contain multiple edges, but can not contain self loops. Each vertex has an integer di, which can be equal to 0, 1 or  - 1. To pass the level, he needs to find a «good» subset of edges of the graph or say, that it doesn’t exist. Subset is called «good», if by by leaving only edges from this subset in the original graph, we obtain the following: for every vertex i, di =  - 1 or it’s degree modulo 2 is equal to di. Leha wants to pass the game as soon as possible and ask you to help him. In case of multiple correct answers, print any of them.
+InputThe first line contains two integers n, m (1 ≤ n ≤ 3·105, n - 1 ≤ m ≤ 3·105) — number of vertices and edges.
+The second line contains n integers d1, d2, …, dn ( - 1 ≤ di ≤ 1) — numbers on the vertices.
+Each of the next m lines contains two integers u and v (1 ≤ u, v ≤ n) — edges. It’s guaranteed, that graph in the input is connected.
+OutputPrint  - 1 in a single line, if solution doesn’t exist. Otherwise in the first line k — number of edges in a subset. In the next k lines indexes of edges. Edges are numerated in order as they are given in the input, starting from 1.
+ExamplesInput1 01Output-1Input4 50 0 0 -11 22 33 41 42 4Output0Input2 11 11 2Output11Input3 30 -1 11 22 31 3Output12NoteIn the first sample we have single vertex without edges. It’s degree is 0 and we can not get 1.
+#E - New Year and Ancient Prophecy
+Limak is a little polar bear. In the snow he found a scroll with the ancient prophecy. Limak doesn’t know any ancient languages and thus is unable to understand the prophecy. But he knows digits!
+One fragment of the prophecy is a sequence of n digits. The first digit isn’t zero. Limak thinks that it’s a list of some special years. It’s hard to see any commas or spaces, so maybe ancient people didn’t use them. Now Limak wonders what years are listed there.
+Limak assumes three things:
+Years are listed in the strictly increasing order;Every year is a positive integer number;There are no leading zeros.Limak is going to consider all possible ways to split a sequence into numbers (years), satisfying the conditions above. He will do it without any help. However, he asked you to tell him the number of ways to do so. Since this number may be very large, you are only asked to calculate it modulo 109 + 7.
+InputThe first line of the input contains a single integer n (1 ≤ n ≤ 5000) — the number of digits.
+The second line contains a string of digits and has length equal to n. It’s guaranteed that the first digit is not ‘0’.
+OutputPrint the number of ways to correctly split the given sequence modulo 109 + 7.
+ExamplesInput6123434Output8Input820152016Output4NoteIn the first sample there are 8 ways to split the sequence:
+“123434” = “123434” (maybe the given sequence is just one big number)“123434” = “1” + “23434”“123434” = “12” + “3434”“123434” = “123” + “434”“123434” = “1” + “23” + “434”“123434” = “1” + “2” + “3434”“123434” = “1” + “2” + “3” + “434”“123434” = “1” + “2” + “3” + “4” + “34”Note that we don’t count a split “123434” = “12” + “34” + “34” because numbers have to be strictly increasing.
+In the second sample there are 4 ways:
+“20152016” = “20152016”“20152016” = “20” + “152016”“20152016” = “201” + “52016”“20152016” = “2015” + “2016”
+Today is Wednesday, the third day of the week. What’s more interesting is that tomorrow is the last day of the year 2015.
+Limak is a little polar bear. He enjoyed this year a lot. Now, he is so eager to the coming year 2016.
+Limak wants to prove how responsible a bear he is. He is going to regularly save candies for the entire year 2016! He considers various saving plans. He can save one candy either on some fixed day of the week or on some fixed day of the month.
+Limak chose one particular plan. He isn’t sure how many candies he will save in the 2016 with his plan. Please, calculate it and tell him.
+InputThe only line of the input is in one of the following two formats:
+“x of week” where x (1 ≤ x ≤ 7) denotes the day of the week. The 1-st day is Monday and the 7-th one is Sunday.“x of month” where x (1 ≤ x ≤ 31) denotes the day of the month.OutputPrint one integer — the number of candies Limak will save in the year 2016.
+ExamplesInput4 of weekOutput52Input30 of monthOutput11NotePolar bears use the Gregorian calendar. It is the most common calendar and you likely use it too. You can read about it on Wikipedia if you want to – https://en.wikipedia.org/wiki/Gregorian_calendar. The week starts with Monday.
+In the first sample Limak wants to save one candy on each Thursday (the 4-th day of the week). There are 52 Thursdays in the 2016. Thus, he will save 52 candies in total.
+In the second sample Limak wants to save one candy on the 30-th day of each month. There is the 30-th day in exactly 11 months in the 2016 — all months but February. It means that Limak will save 11 candies in total.
+这道题我一看只有2016年，于是就对着日历一个数一个数数的= = 最后数出来星期五和星期六都有53天还有点不敢相信又查了一遍，等我查完发现大家都a完这道题了。。。而且2016是闰年，2月有29天，所以29天是个分界点，输入的时候输入两个字符串就ok 代码：
+They say “years are like dominoes, tumbling one after the other”. But would a year fit into a grid? I don’t think so.
+Limak is a little polar bear who loves to play. He has recently got a rectangular grid with h rows and w columns. Each cell is a square, either empty (denoted by ‘.’) or forbidden (denoted by ‘#’). Rows are numbered 1 through h from top to bottom. Columns are numbered 1 through w from left to right.
+Also, Limak has a single domino. He wants to put it somewhere in a grid. A domino will occupy exactly two adjacent cells, located either in one row or in one column. Both adjacent cells must be empty and must be inside a grid.
+Limak needs more fun and thus he is going to consider some queries. In each query he chooses some rectangle and wonders, how many way are there to put a single domino inside of the chosen rectangle?
+InputThe first line of the input contains two integers h and w (1 ≤ h, w ≤ 500) – the number of rows and the number of columns, respectively.
+The next h lines describe a grid. Each line contains a string of the length w. Each character is either ‘.’ or ‘#’ — denoting an empty or forbidden cell, respectively.
+The next line contains a single integer q (1 ≤ q ≤ 100 000) — the number of queries.
+Each of the next q lines contains four integers r1i, c1i, r2i, c2i (1 ≤ r1i ≤ r2i ≤ h, 1 ≤ c1i ≤ c2i ≤ w) — the i-th query. Numbers r1i and c1i denote the row and the column (respectively) of the upper left cell of the rectangle. Numbers r2i and c2i denote the row and the column (respectively) of the bottom right cell of the rectangle.
+OutputPrint q integers, i-th should be equal to the number of ways to put a single domino inside the i-th rectangle.
+ExamplesInput5 8…#…#.#…
+##.#…
+##…#.##…41 1 2 34 1 4 11 2 4 52 5 5 8Output401015Input7 39….###…###…#…###…###…###…#…###.…#…#.#…#…#…#…#.#…#…#….###…#.#…#…###…###…#.#…#…###..#…#.#…#…#…#…#.#…#…#.#..###…###…#…###…###…###…#…###.…61 1 3 202 10 6 302 10 7 302 2 7 71 7 7 71 8 7 8Output53891202302NoteA red frame below corresponds to the first query of the first sample. A domino can be placed in 4 possible ways.
+
+这题的意思是输入一个h*w的迷宫，如果有两个连续的”.”就可以放一个板子，问可以放多少个，刚学习了一个解题的方法，就是先把所有的解都存到数组里面，一个r数组用来存横向的可能放板子的结果，c数组用来存放竖向放板子的结果，最后存完答案输入初始的点和结束的点之后是关键，先保持列不变，都是ey和sy，改变行，计算行所有的可行解，再保持行不变，改变列，加上所有列的可行解，最后输出就行了 代码：
+#H - New Year and Old Property
+The year 2015 is almost over.
+Limak is a little polar bear. He has recently learnt about the binary system. He noticed that the passing year has exactly one zero in its representation in the binary system — 201510 = 111110111112. Note that he doesn’t care about the number of zeros in the decimal representation.
+Limak chose some interval of years. He is going to count all years from this interval that have exactly one zero in the binary representation. Can you do it faster?
+Assume that all positive integers are always written without leading zeros.
+InputThe only line of the input contains two integers a and b (1 ≤ a ≤ b ≤ 1018) — the first year and the last year in Limak’s interval respectively.
+OutputPrint one integer – the number of years Limak will count in his chosen interval.
+ExamplesInput5 10Output2Input2015 2015Output1Input100 105Output0Input72057594000000000 72057595000000000Output26NoteIn the first sample Limak’s interval contains numbers 510 = 1012, 610 = 1102, 710 = 1112, 810 = 10002, 910 = 10012 and 1010 = 10102. Two of them (1012 and 1102) have the described property.
+这题的意思是看看输入范围内有多少个转成二进制只有一个0的解，第一时间就想到了学了一段时间的python，因为python转进制比较方便（结果赛后朋哥说不让用python2333），第一步是用map输入两个数，然后转成二进制，因为直接转的话输出的二进制数字会出现前导的”0b”所以需要用[2:]切片切一下，从下标2开始往后取，然后取二进制数的长度，因为第二个数总是比第一个数二进制数要大或者等于，所以就让i从左边界（第一个数的长度）开始，到右边界结束这里要注意的是python的range设定的是左闭右开的区间，所以必须让右边界+1才行 举个例子：l=3，r=4 如果不加这个+1意思就是for(int i=3;i<4;i++) 就走了一次循环
+然后就是位移问题了，举个例子，1往左移三位就变成了1000，减去1就变成了111，再减去1向左移动2、1位就是110和101，这样就保证了满足题目要求，随后利用python特性直接加两个>=就可以判断在不在区间，在区间的话就+=1就行了
+python代码:
+后来看了mhr大佬的博客感觉学到了，c++用这个原理也完全可以做，而且不需要转成2进制了，因为8对应着1000，16对应着10000，这个特性和二进制紧密挂钩的，而且往左移动三位其实就等同于乘以2^3，所以就有了以下代码：
+我看还需要开long double 这是我从来没有开过的，可能精度更高把
+还有一个问题就是使用pow函数的时候一定要用double类型，不然很小的位数用int都会有误差，上次做一道cf上的b题就因为这个pow函数wa了两次。。。 如果想用int类型的话直接可以写一个qpow
+最终代码：
+
+牛客寒假算法基础集训营5补题和题解
+
+
+A.炫酷双截棍=链接：https://ac.nowcoder.com/acm/contest/331/A来源：牛客网
+题目描述小希现在手里有一个连着的两块木条，长度分别为l1 l2 木条之间有一个无摩擦的连接点，木条之间可以相互转动，小希将其称之为双截棍。
+现在小希把长为l1的木条的一端放在原点(0,0)，任意转动这两根木条，小希想知道，是否有可能通过一种转动方式使得双截棍的另一端到达指定点呢?
+如果不能，请输出所有能到达的点中离目标点最近的距离。
+
+输入描述:第一行输入一个两个正整数l1,l2 表示木条长度。
+第二行输入一个正整数T，表示询问次数。
+随后T行，每行两个实数xixi,yiyi表示目标点的坐标。
+l1,l2≤1000T≤1000
+|x|,|y|≤10000输出描述:对于每次询问，如果可以到达，输出0，如果无法到达，给出所有能到达的点中离目标点最近的距离。
+你的答案将被认为是正确的，如果相对误差不大于1e-6。示例1输入复制23 13315 140 00 0输出复制0.000000004.0000000010.00000000
+链接：https://ac.nowcoder.com/acm/contest/331/D来源：牛客网
+题目描述小希现在要从寝室赶到机房，路途可以按距离分为N段，第i个和i+1个是直接相连的，只需要一秒钟就可以相互到达。
+炫酷的是，从第i个到第i+2pi+2p个也是直接相连的（其中p为任意非负整数），只需要一秒钟就可以相互到达。
+更炫酷的是，有K个传送法阵使得某些u,v之间也是直接相连的，只需要一秒钟就可以相互到达，当然，由于设备故障，可能会有一些u=v的情况发生。
+现在小希为了赶路，她需要在最短的时间里从寝室(编号为1)到达机房(编号为N)，她不希望到达这N个部分以外的地方（不能到达位置N+1），也不能走到比自己当前位置编号小的地方（比如从5走到3是非法的）。
+她想知道最短的时间是多少。输入描述:第一行输入两个整数N,K，表示路途的段数和传送法阵的数量。
+从第二行开始K行，每行两个整数ai bi表示两个位置之间相连。2≤N≤1,000,000,0000≤K≤15输出描述:输出一个整数，表示从寝室到机房最短的时间是多少秒。示例1
+输入
+12 21 56 6
+输出
+3
+示例2
+输入
+17 22 58 9
+输出
+1
+链接：https://ac.nowcoder.com/acm/contest/331/G来源：牛客网
+题目描述小希希望你构造一个最小的正整数，使得其有n个因子。输入描述:第一行一个整数T表示数据组数
+每组数据第一行输入一个正整数n，表示其因子数。
+n≤1,000,000
+T≤1,000,000输出描述:输出一行一个整数，表示你构造出的这个数。注意：你需要保证你构造的数≤1,000,000，如果在这个范围里面无法构造出一个正整数满足条件，请输出-1。
+示例1
+输入245输出
+616
+###预处理用到了两个for循环。第一个i的for循环的作用是枚举1-100w所有的因数，第二个for循环则是为所有可以整除当前i的数增加一个因数，比如说i=2的时候，2 4 6 8 2是他们共同的因数，所有这些数的num（因数个数）数组+1 之后的vis[num[i]]=0的时候由于当前i已经过去了，之后再也不会有当前的i的因数，所以看一下现在的i的因数有没有被记录下来，如果没有被记录下来就让这个因数个数情况下的答案等于i 这样就保证了每次处理的vis都是相同因数个数的最小值了 代码：
+链接：https://ac.nowcoder.com/acm/contest/331/I来源：牛客网
+题目描述小希拿到了一个镜子块，镜子块可以视为一个N x M的方格图，里面每个格子仅可能安装\或者/的镜子,会反射90°光线，也可能没有安装镜子，使用.代替。
+但她看不清楚里面的镜子构造是怎样的。
+你是这块镜子块的主人，所以你想计算这块镜子块（从输入的上方往下射入光线）从左到右每一格射入依次分别会从最下面的哪一格子射出，如果无法射出，输出-1。输入描述:第一行输入两个整数N,M。随后的N行，每行M个字符。
+1≤N,M≤5001≤N,M≤500输出描述:输出M行整数，依次为从第i个格子从上往下射入时从下面的哪里射出，如果光线不会从下面射出，则输出-1。示例1输入复制3 3…….\输出复制32-1说明第一列遇到镜子两次反弹通过第三列射出。
+第二列直接射出。
+第三列因为镜子反弹后向右边射出。
+链接：https://ac.nowcoder.com/acm/contest/331/J来源：牛客网
+小希最近想知道一个东西，就是A+B=A|B(其中|为按位或)的二元组有多少个。
+当然，直接做这个式子对小希来说太难了，所以小希改变了一些条件，她仅想知道其中
+A,B<N的情况，其中N为2的幂次。
+当然，(A=1,B=0)和(A=0,B=1)被认为是不同的二元组。输入描述:第一行输入一个非负整数M。
+N=2M,M≤100
+即2的M次为N。输出描述:一个整数ans，对998244353取模。
+示例1
+输入
+0
+输出
+1
+示例2
+输入
+71
+输出
+588378066
+
+牛客寒假算法基础集训营6补题和题解
+
+前几天光忙着过年了，天天磕头陪小孩玩都玩迷了，一看都七号了，非常的惶恐，于是半夜两点开始补题= = 时间过得真快啊！！！
+
+
+合并果子(队列和优先队列)
+
+有两种方法 一种是队列 一种是优先队列（priority_queue）这两种方法的区别是队列定义时没有自动排序 所以只能在输入的时候按顺序才能输出正解（所以队列的方法不被认为是正解） 下面是代码 比较简便
+但是如果用了优先队列的话，刚开始就给你的是一个大根堆（从大到小排序）如果想让这个队列等价于一个小根堆，就可以入队的时候加一个负号，eg：（-1 -2 -9）这样就会按照绝对值从小到大排列 于是计数的时候用ans减去q.top（）就ok了 然后这时候需要一个tmp来记录下来合并果子的和，然后将合并后的果子放到队尾 代码实现：
+
+123456789101112131415161718192021222324252627#include<bits/stdc++.h>using namespace std;priority_queue<int>q;int main() {  ios::sync_with_stdio(0);  cin.tie(0);  cout.tie(0);  int n,x;  cin>>n;  for(int i=0;i<n;i++) {    cin>>x;    q.push(-x);  }  int ans=0,tmp;  while(q.size()>1) {    tmp=q.top();    ans-=q.top();    q.pop();    tmp+=q.top();    ans-=q.top();    q.pop();    q.push(tmp);  }  cout<<ans;}
+前几行是关闭同步，可以加速。 while的地方可以改写成for循环的形式：
+
+java学习笔记（第五章）
+
+区别是在c++中如果想加起来各位数之和的话只需要-‘0’就行了，但是在java中需要把string中每个字符都转换成字符才行，使用charAt函数其他的string函数的用法好像是差不多 都在下面了:
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147package practice;import java.util.*;public class 第五章{	public static void main(String[] args)	{		Scanner in= new Scanner(System.in);		char a[]= {'g','o','o','d'};		String str1 = new String(a);//声明string类		System.out.println(str1);//相当于String str = new String("good");								char b[]= {'s','t','u','d','e','n','t'};		String str2 = new String(b,2,4);		System.out.println(str2);//从下标2到下标4，对应了uden								String str3 = "we are student";		System.out.println(str3);		String s1="hello";		String s2="world!";		String s=s1+" "+s2;		System.out.println(s);		//System.out.println("i like 		//java!"); 这是不允许的，相连的字符串不能写在两行		//但是可以在末尾加"+" 比如这样:		System.out.println("i like"+				" java");								int booktime = 4;		float practice = 2.5f;		System.out.println("我每天花费 "+booktime+" 小时看书 ;  "+practice+" 小时上机练习");		//输出结果为我每天花费 4 小时看书 ;  2.5 小时上机练习  这里的int类型变成了string类型		System.out.println("我每天花费 "+booktime+" 小时看书 ;  "+practice+booktime+" 小时上机练习");		//输出结果为我每天花费 4 小时看书 ;  2.54 小时上机练习  就是由于这里的int类型变成了string类型		System.out.println("我每天花费 "+booktime+" 小时看书 ;  "+(booktime+practice)+" 小时上机练习");		//输出结果为我每天花费 4 小时看书 ;  6.5 小时上机练习，所以要先加括号让他们先加上再变成string类型输出								String str4 = "we are students";		int l=str4.length();//获取字符串长度		System.out.println(l);//每个字符都算进去，包括空格								String str5 = "abcabcabc";		String strfind = "abc";		//indexOf函数用来再指定的字符串中寻找第一次出现指定子串的位置下标		int find1 = str5.indexOf(strfind);								//lastindexOf函数用来在指定的字符串中寻找最后一次制定子串出现的位置下标		int find2 = str5.lastIndexOf(strfind);		System.out.println(find1+" "+find2);//输出0 3 第一次找到abc的地方是下标为0的地方		//最后一次出现的地方下标是6 所以输出0 6		System.out.println(str5.indexOf("d"));//找不到返回-1						String str6 = "hello world";		//charAt函数用来找制定字符串中指定位置的字符		char ch = str6.charAt(6);		System.out.println(ch);//输出'w' 								//String 类的substring()方法对字符串进行截取.substring(beginIndex)		String strjiequ1 = str6.substring(3);		System.out.println(strjiequ1);//输出lo world 从下标3开始截取到最后								//String 类的substring()方法对字符串进行截取str6.substring(beginIndex, endIndex)		String strjiequ2 = str6.substring(0,3);		System.out.println(strjiequ2);//输出hel 从0到3（下标）								//去除空格		String str7 = "  java  class   ";		System.out.println("字符串原来的长度为： "+str7.length());//16		System.out.println("去掉前导和后缀空格以后的长度为： "+str7.trim().length());//11		//str.trim()可以去掉str字符串前后的空格								String str8 = "address";		//str.replace(oldChar, newChar) 把oldchar 换成 newchar		//如果有很多的oldchar需要转换，那么replace方法会把它们都转化成newchar		String newstr8 = str8.replace("a","A" );		System.out.println(newstr8);								//判断字符串的开始和结尾是否为规定的子串		String num1 = "22045612";		String num2 = "21304578";		boolean b1 = num1.startsWith("22");		boolean b2 = num1.endsWith("78");		boolean b3 = num1.startsWith("22");		boolean b4 = num1.endsWith("78");		System.out.println("字符串num1是以22开始的吗？ "+b1);//输出:字符串num1是以22开始的吗？ true		System.out.println("字符串num1是以78结束的吗？ "+b2);//输出:字符串num1是以78结束的吗？ false		System.out.println("字符串num2是以22开始的吗？ "+b3);//输出:字符串num2是以22开始的吗？ true		System.out.println("字符串num2是以78结束的吗？ "+b4);//输出:字符串num2是以78结束的吗？ false		//num1.startsWith(prefix) 判断num1是否以prefix开头		//num1.endsWith(suffix)  判断num2是否以suffix结尾								//判断字符串是否相等		String tom="java";		String jerry="java";		System.out.println(tom==jerry);//此时输出ture: 因为这里只有值没有地址，string不是new的				String tom2=new String("java");		String jerry2=new String("java");		System.out.println(tom2==jerry2);//此时输出false:因为这里字符串是对象，tom2和jerry2是引用，内存不一样，无法判断						//使用tom2.equals(anObject) 判断tom2和anObject是否相同(完全相同，区分大小写)		//使用tom2.equalsIgnoreCase(anotherString) 判断同tom2和anObject是否相同(不分大小写，拼写一样就行)						//按字典序比较两个字符串str.compareTo(String otherstr) 是str和otherstr比的		String str11 = new String("b");		String str12 = new String("a");		String str13 = new String("c");		System.out.println(str11 +" compareTo "+str12 +":" +str11.compareTo(str12));//b compareTo a:1		System.out.println(str11 +" compareTo "+str13 +":" +str11.compareTo(str13));//b compareTo c:-1						//字母大小写转换 toLowerCase() 和 toUpperCase()		String str14 = "abc";		String str15 = "DEF";		System.out.println(str14.toUpperCase()+"   "+str15.toLowerCase());//print: ABC   def			}}
+//用split函数对字符串进行分割，放到字符串数组中
+这里只有第三个str3是合法的e-mail地址格式，因为第str1不满足.***结尾，str2没有@
+解释：\w字符集匹配到任意字符==+==放在后面表示字符可以出现1次或者多次==(\.\{2,3})==表示形如.com格式的字符串可以出现0次或者多次==\.\w{2,3}==匹配结尾字符 如.com
+此时是向尾部加入
+从下标1往后加入字符串
+此时是删除0-2下标对应的字符
+使用字符串生成器的好处是极大的提高了频繁增加字符串的效率 eg：创建一个10000字符的字符串 用StringBuilder只需要1ms或者不到，而简朴的string则需要使用578ms
+
+java学习笔记（第四章）
+
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596package practice;import java.util.*;public class 第四章 {	public static void main(String[] args) {		Scanner in = new Scanner(System.in);		String a;		//a = in.next();		//System.out.println(a);		int x=20; {			int y=40;			System.out.println(y);			int z=245;			boolean b; {				b=y>z;			}		}		String word = "hello java";		System.out.println(word);		//System.out.println(b);这一句是错误的  因为b在上面的复合语句中		int c=100;		if(c==100)			System.out.println(666);		boolean d = false;		if(!d) {			System.out.println("d=false");		}		int xx=1;		int yy;		yy= xx<0?xx:-xx;		System.out.println(yy);		//switch:		String str="abcd";		switch(str) {			case "ab":				System.out.println("java");			case "cd":				System.out.println("good");			default:				System.out.println("none");//输出none 因为必须是连续的字符串才行		}		int day=in.nextInt();		switch(day) {			case 1:				System.out.println("Monday");				break;			case 2:				System.out.println("Tuesday");				break;			case 3:				System.out.println("Wednesday");				break;			case 4:				System.out.println("Thursday");				break;			case 5:				System.out.println("Firday");				break;			case 6:				System.out.println("Satursday");				break;			case 7:				System.out.println("Sunday");				break;			default:				System.out.println("I dont know!");		}		//while		int s=3;		while(s>0) {			System.out.println("233");			s--;		}		int f=100;		do {			System.out.println("ok");			f--;		}while(f==60);//先执行一次再进行判断,所以只执行一次	//foreach	int arr[]= {7,10,1};	for(int i :arr) {		System.out.println(i);	}//遍历完整个数组推出循环	//标签功能	loop:for(int i=0;i<2;i++)			for(int j=0;j<6;j++) {				if(j==4) {					break loop;	  }				System.out.println("i="+i+" j="+j);//j=4的话就退出大循环（loop）	}	  }}
+这里的b，y，z都在主函数里面的另外的一个复合语句中，如果直接在主函数中调用会错误我也不知道java有这东西有啥用，可能我还没有遇到有用的地方8
+暂时就这么多2333
+
+java学习笔记（第三章）
+
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263package practice;public class 第三章 {	static String s1="泥嚎";	static char sss ='1';//静态变量	static final int age = 23;	static double pi = 3.14D;	static int bian = 23;	public static void main(String[] args) { //声明java里的主函数的独特写法		String s2="java";		System.out.println(s1);		System.out.println(s2);		long  a=214312446456345344L;		long  b=3412141434543534L;		long  c=1231234214312423L;//long 得加L;		System.out.println(a+b);		float f1=13.26f;//浮点型+f		double d1 = 32443.23432d;//double类型加d	    char x = 'a';		char xx = 97;//相当于'a' unicode97 ：a		System.out.print(x+" "+xx+'\n');		char word1 = 'd';		char word2 = '@';		System.out.println((int)word1);//print是一行内输出  而println则是输出完换行		System.out.print((int)word2); //输出64		boolean t1 = true;		System.out.print("\n");		System.out.println(t1);//输出的是true而不是1		int java真强啊 =666666;		System.out.println(java真强啊);		//age=24;这一行会报错，因为final变量只能赋值一次		System.out.println(age);//age是静态（全局）final int类型的变量，不能变值		bian =100;		System.out.println(bian);//输出100  因为他不是final类型的变量，可以变化		int e,f,g;		e=f=g=233;//java 可以这样赋值		System.out.println(e+" "+f+" "+g);//这样实现一行输出		int bj1=1;		int bj2=2;		System.out.println(bj1<=bj2);//返回ture java允许<= 和>= 直接比较		//三元运算符		System.out.println(20<45?true:false);//如果20<45就返回true 反之返回false		//等价于下面的语句		boolean aa;		if(20<45)			aa=true;		else			aa=false;		System.out.println(aa);//和上面等价		byte mybyte = 127;		char mychar = 10;		int myint = 233;		double mydouble=2.33D;		//mybyte+myint 变成int类型		//mychar+myint 变成int类型		System.out.println(mydouble+myint);//int类型和double类型相加变成了double类型		int ii =(int)233.33; //intt=233;		int bb= (int)'d';		System.out.println(bb);//输出100  是'd'的Unicode值			}}
+相信很多初学者都会发现java的输入输出和c++不太一样，这里说一下java里的输入
+或者
+这里的*大概是把util下一级的东西都包括进去了（包括Scanner）
+(int类型)
+(String 类型)
+如果改变一下Scanner类的名字，就得这样
+和c语言里freclose关闭文件输入一样，可以不写，但是写的话可以节省资源
+1.println和print的区别是 println自动换行，相当于endline（endl） print就和c++中的cout一样。
+2.main函数必要写法String[] args  我也不知道啥意思反正不写就报错%%%
+3.java支持>= 和<= 判断
+
+小蒟蒻从0开始的python学习
+
+因为对python大精度和他的智能方便等特点非常喜欢，所以本蒟蒻打算从寒假从零开始学习一下python，希望它可以作为我的一个强力的帮手把！！！下面介绍一些非常好用的python函数和用法，也算是我的笔记，没事的时候拿出来看看，就省得记到笔记本上了，就像我的高数笔记，一学期记了整整一本子，结果却没看过几眼= = 不扯淡了 开始吧
+
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475761.介绍一下数学函数部分：import mathprint(math.gcd(12,8))#计算两个参数的最大公因数print (12*8//math.gcd(12,8))#//相当于c中的/而/自动换成float类型print(int(12*8/math.gcd(12,8)))#最小公倍数咯print((math.degrees(1)))#弧度转换为角度print(math.factorial(100))#计算100的阶乘print(math.log(32,2))#2是底数print(int(math.log10(1000)))#计算以10为底的log值import random2.随机数部分print(random.random())#生成0-1之间的随机浮点数print(random.uniform(1,100))print(random.uniform(100,1))#生成1,100和100,1之间的任意浮点数（效果相同）print(random.randint(1,1000))print(random.randrange(1,10,2))#i从1到10 i+=2，从中随机选一个i=0for i in range(1,10,2):#i 从1到10 i+=2  print(float(i))a=['233333','python_tql','i_love_c#','low_c++']print(random.choice(a))#从序列中随机数出一个字符串3.字符串的不可变性和list的修改l='abcd's=list(l)s[-2]='e'#倒序修改(此时是倒数第二项)s[0]='2'#改变第一项print(s)ll='love_live_forever!'#字符串具有不可变性 这些操作不改变llprint(ll.replace('!','!!!!!').upper())#把ll字符串中的！替换成！！！！！print('%.2f' %3.1415)#保留两位小数输出s='love_live'4.python中的寻找帮助print(dir(s))#寻找可用的函数print(help(s.find))#寻找这种函数的使用方法5.推导表达式（相当于c中在一个for循环中，如果满足什么条件就输出相应的数字（就是前面的表达式））a=[i/2 for i in range(1,100)if i%2==0]#[表达式 for 变量 in 列表] 或者 [表达式 for 变量 in 列表 if 条件]print(a)#这里输出是1.0 2.0...因为i%2==0的时候i/2正好等于这些6.python中的字典部分（与c++的map很相似）冒号前面是first 冒号后面是first键、second键：a={'name':'handsome_man','age':'18'}print(a.get('name','none'))print(a.get('233','none'))#字典(第一个参数是要访问的，第二个为了防止出错，若出错就返回默认值none)#下面写成if else语句 意思相同（这是一个推导表达式）print(a['233']if '233'in a else a['name'])#如果'233'在序列a中，那么输出的是a['233']如果不在就输出a['name']7.python 打表操作（这里的样例是打印1-100所有偶数的阶乘）import mathf=open("233.out","w")a=[math.factorial(i)for i in range(101)if i%2==0]for jk in a:  f.write(str(jk)+',')f.close()print('a')8.fraction自动约分（eg.print(Fraction(3.5))此时输出的是7/2）from fractions import Fractionprint(Fraction(3,4)+Fraction(4,3))print(Fraction(3.5))#自动约分，支持分数加减以后再约分，支持浮点数直接约分9.type函数返回此时的变量的类型，此时返回的是<class 'list'>lll=[]print(type(lll))#返回类型，查看当前是什么类型的变量
+
+qluoj第一次讲课笔记（shawn zhou大佬）
+
+第一次听大佬在线讲题，虽然讲的是一些基础，但是从这里就深深的感受到了自己和大佬的差距非常之大如果想填补差距，那就只能一直不断的学习！下面是我对这次讲课的基本整理（是我听讲的时候写的，感觉会有点用的吧233）
+
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001011021031041051061071081091101111121131141151161171181191201211221231241251261271281291301311321331341351361371381391401411421431441451461471481491501511521531541551561571581591601611621631641651661671681691701711721731741751761771781791801811821831841851861871881891901911921931941951961971981992002012022032042052062072082092101.（1 容器 多种多样的数据结构（2 迭代器 用来遍历容器的工具（3 算法 algorithm----------------------------------------------------------------------------------------------------2. 要想使用特定的容器，需要加上对应的头文件example： 栈  #include<stack>	队列#include<queue>	stl堆->优先队列 在queue里	priority_queue优先队列：stl 的容器可以自动调整大小 所以并不用定义大小------stl栈 可以实现栈的所有基本功能：假设现在有一个stack<int>s;s.push(item);       //将item压入栈顶  s.pop();            //删除栈顶的元素，但不会返回  s.top();            //返回栈顶的元素，但不会删除  s.size();           //返回栈中元素的个数  s.empty();          //检查栈是否为空，如果为空返回true，否则返回false   ------stl队列 可以实现队列的所有基本功能：queue<int>a;q.push(item)           //将item压入队列尾部  q.pop()                //删除队首元素，但不返回  q.front()              //返回队首元素，但不删除  q.back()               //返回队尾元素，但不删除  q.size()               //返回队列中元素的个数  q.empty()              //检查队列是否为空，如果为空返回true，否则返回false  ------stl优先队列 可以实现堆的所有基本功能名字是优先队列，但是满足堆的性质。插入和删除的复杂度o(logn)。比较优秀，可以代替手写堆priority_queue<int>a;q.push(item)           //将item压入队列尾部  q.pop()                //删除队首元素，但不返回  a.top()			   	// queue里面为a.front();q.back()               //返回队尾元素，但不删除  q.size()               //返回队列中元素的个数  q.empty()              //检查队列是否为空，如果为空返回true，否则返回false  如果写priority_queue生成一个小根堆  数据从小到大   同下 自动排序好如果要生成大根堆 ：priority_queue<int,vector<int>,greater<int>>q; 此时是从大到小(优先队列自动排序 即输入无序的东西以后要是输出的话自动排序)每次进队以前对数据进行一次比对，然后将输入的数调整到合适的位置-------向量和双端队列：：这里的向量和向量的定义不太一样它的本质就是一个不定长的数组，有的地方也叫它动态数组。需要#include<vector>当你需要一个数组但是并不知道应该用多大（但是可能会很大）的时候 vector就可以派上用场了vector<int>v;v.chear();清除  v.push_back(i);压入元素（队尾）  v.size()；取一下元素个数v.pop_back();将最后的一个删除vector还有一个insert的用法，可以在中间插入什么的= = ！双端队列 支出在两端进行插入和删除，但是普通队列只能一端入队首：q.push_front（）；删除队首：q.集合 映射 对组（关联容器）序列式容器各个元素之间有关系（物理地址连接）但是关联容器的内部构造和上面不一样  （使用迭代器遍历）------集合：集合是一个关联容器，定义就是一个集合元素是唯一的时间复杂度为o（logn）（好像挺快的吧我也不是很清楚23333由于删除和插入都是按照写好的排序规则插入，所以不能指定位置插入set不允许直接存取元素 用迭代器  去重 排序；#include<set>使用insert（）向set里面插入一个或者多个元素，参数为1的时候是插入一个人值当参数为2的时候传入俩指针传入数据段的起始地址begin()     　　 //返回set容器的第一个元素end() 　　　　 //返回set容器的最后一个元素clear()   　　 //删除set容器中的所有的元素empty() 　　　//判断set容器是否为空max_size() 　 //返回set容器可能包含的元素最大个数size() 　　　　 //返回当前set容器中的元素个数rbegin　　　　 //返回的值和end()相同rend()　　　　 //返回的值和rbegin()相同这里有一段代码  实现了set的基本操作#include <iostream>#include <set>using namespace std;int main() {set<int> s;s.insert(1);s.insert(2);s.insert(3);s.insert(1);cout<<"set 的 size 值为 ："<<s.size()<<endl;cout<<"set 的 maxsize的值为 ："<<s.max_size()<<endl;cout<<"set 中的第一个元素是 ："<<*s.begin()<<endl;cout<<"set 中的最后一个元素是:"<<*s.end()<<endl;s.clear();if(s.empty())	{       cout<<"set 为空 ！！！"<<endl;    }      cout<<"set 的 size 值为 ："<<s.size()<<endl;    cout<<"set 的 maxsize的值为 ："<<s.max_size()<<endl;    return 0;}//不知道为啥这个maxn_size()很奇怪，------映射映射和集合类似，内部实现基本相同，提供了映射功能，可以做字典 比如字符下标或者字符串下标map用的比较多啦map基于一种键连接形成，一个键对应一个值，不能重复可以用键来访问值使用的时候需要#include<map>a;由于定义需要定义键和值，所以基本为两个map<char,int>ma;向map中插入元素可以用set类似的insert（）；方便一些：ma['a']=1;遍历map也需要用到迭代器，但是下标有序的时候，直接遍历也可以的map比较方便啦应用！！！：建立转换关系------对组可以理解为由俩变量的结构体第一个变量用.first 第二个.second需要#include<utility>pair<int,int>a;------字符串有点类似于vector；#include<string>string s'与cin相性极好，读到空格结束cin>>s;读到行末 getline(cin,s);string 强在哪里？有一个方法叫substr（起始位置 ，包括起始位置在内的向后选取长度）举个例子  sring s=“23333333”s.substr（3，5） =“33333”；此外  string 可以直接相加 支持直接判断相等和大小s.length（）<==>  s.size（）返回串的长度-----------------------------------------------------------------------------------------------------------------迭代器初步简单理解为已终结楼或者一种对象行为上像迭代器的东西都可以叫做迭代器，实际上每一种容器都有自己的迭代器set只能用迭代器来遍历栈，队列，堆都是运算受限的数据结构，用不到迭代器对于绝大多数容器来说.begin（）返回起始数值 a.end（）返回最终的for(vector<int>::iterator it=v.begin();it!=v.end;it++)cout<<*it;//遍历vectormap的遍历： for(map<char,int>::iterator it=ma.begin; it!=ma.end();it++)cout<<it->first>>" ">>it->second>>endl;------------------------------------------------------------------------------------------------------------stl中的算法 ------排序和乱序排序算法 类似：：快速排序 sort（起始位置迭代器，终止位置迭代器）类似：：归并排序stable_sort（起始位置迭代器，终止位置迭代器）1.省事 排序可以任意类型！2.省事3.自定义排序sort（a，a+10，greater<int>（））；另一种是重载运算符bool operator<(const str&rhs)>const {		return x<rhs.x;		}lhs left hand side 左操作数rhs right hand side 右操作数bool operator<(const str &rhs)const> ｛	return mat>rhs.mat||(mat==rhs.mat)rhs.eng>eng;｝乱序。。。 传入的时候和sort一样 不过功能和sort相反random_shuffle(a,a+10);//全部打乱！！！-------排列和去重next_permutation 可以对一个区间的数进行排列并且生成下一个排列while（next_permutation（a，a+4））；unique去重函数直到完全相反的时候返回一个flase 直接退出循环  （可以生成全排列）a[8]={2,2,3,3,4.4.5,5};int *end=unique(a,a+8)for(int *i = a; i != end; i++)	cout << *i << " ";-------其他swap 交换两个任意相同类型的值min  和  max 返回两者最小/最大值-----------------------------------------------------------------------------------------------------------太！慢！了！stl：：sometimes tle 2333
+
