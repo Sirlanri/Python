@@ -5,7 +5,7 @@ from pyecharts.charts import Pie
 import re
 from collections import Counter
 
-recordpath = r'E:\代码\云端同步\保护\record.txt'
+recordpath = r'E:\代码\云端同步\保护\张丽导师.txt'
 messages = []
 myname = ''
 hername = ''
