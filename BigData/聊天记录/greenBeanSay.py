@@ -27,14 +27,10 @@ def openfile(path):  # 读取文件,为数据分析初始化
             break
 
     #寻找自己的ID
-    for i in range(20,40):
+    for i in range(20,60):
         if messages[i]:
             message=messages[i]
             result1=re.search(r'20\d{2}\-\d{2}\-\d{2}\s',message)
-        else:
-            break
-    for message in messages:
-        if result1:
             if hername in result1.string:
                 continue
             else:
@@ -44,6 +40,8 @@ def openfile(path):  # 读取文件,为数据分析初始化
                     break
                 else:
                     continue
+        else:
+            break
         
 
 def whoSpeak():  # 两人各自的发言数量
@@ -65,7 +63,7 @@ def whoSpeak():  # 两人各自的发言数量
         .set_global_opts(title_opts=opts.TitleOpts(title='发送消息数量', subtitle='那些年我们追过的女孩'))
 
     )
-    c.render(path='发言.html')
+    c.render(path='发言数量.html')
 
 
 def time():  # 发言时间(几点),返回一个字典
@@ -81,34 +79,37 @@ def time():  # 发言时间(几点),返回一个字典
 
 
 def start():  # 聊天发起次数
-    global yourname, hername
+    #仍然有bug
+    global myname, hername
     me = her = 0
     last = '5:33:45'
 
-    def period(time):  # true是同一段对话，flase是另一端对话开始
+    def period(time):  # flase是同一段对话，true是另一端对话开始
         nonlocal last
-        hour1 = int(last[0:1])
-        minute1 = int(last[3:4])
-        hour2 = int(time[0:1])
-        minute2 = int(time[3:4])
+
+        hour1=int(re.search(r'(\d{1,2}):',last).group(1))
+        minute1=int(re.search(r'\d+:(\d{1,2}):',last).group(1))
+        hour2=int(re.search(r'(\d{1,2}):',time).group(1))
+        minute2=int(re.search(r'\d+:(\d{1,2}):',time).group(1))
+        
         if hour1 == hour2:
             long = minute2-minute1
         else:
-            long = 60*(hour2-hour1)+(60-minute1)+minute2
+            long = 60*abs(hour2-hour1)+(60-minute1)+minute2
         last = time
 
-        if long >= 50:
-            return False
-        else:
+        if long >= 30:
             return True
+        else:
+            return False
 
     for message in messages:
         look1 = re.search(r'\d{1,2}\:\d{2}\:\d{2}', message)
 
         if look1 != None:
-            lookfor = look1.string
+            lookfor = look1.group()
             if period(lookfor):  # 发起了新对话
-                if yourname in message:
+                if myname in message:
                     me += 1
                 elif hername in message:
                     her += 1
@@ -120,6 +121,6 @@ def start():  # 聊天发起次数
 
 def test():
     openfile(recordpath)
-
+    start()
 
 test()
