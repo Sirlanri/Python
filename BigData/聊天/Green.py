@@ -31,10 +31,10 @@ def openfile(path):  # 读取文件,为数据分析初始化
         if messages[i]:
             message=messages[i]
             result1=re.search(r'20\d{2}\-\d{2}\-\d{2}\s',message)
-            if hername in result1.string:
+            if result1 and hername in result1.string:
                 continue
             else:
-                if re.search(r'\d{1,2}\:\d{2}\:\d{2}\s(\S)',result1.string):
+                if result1 and re.search(r'\d{1,2}\:\d{2}\:\d{2}\s(\S)',result1.string):
                     myname=re.search(r'\d{1,2}\:\d{2}\:\d{2}\s(\S+)',result1.string).group(1)
                     print(myname)
                     break
@@ -79,7 +79,6 @@ def time():  # 发言时间(几点),返回一个字典
 
 
 def start():  # 聊天发起次数
-    #仍然有bug
     global myname, hername
     me = her = 0
     last = '5:33:45'
