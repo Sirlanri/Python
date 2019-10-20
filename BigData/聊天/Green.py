@@ -23,6 +23,7 @@ def openfile(path):  # 读取文件,为数据分析初始化
     for message in messages:
         if re.search(r'消息对象:(\S+)\n',message):
             hername=re.search(r'消息对象:(\S+)\n',message).group(1)
+            
             print(hername)
             break
 
@@ -81,27 +82,35 @@ def time():  # 发言时间(几点),返回一个字典
 def start():  # 聊天发起次数
     global myname, hername
     me = her = 0
-    last = '5:33:45'
+    last = '05:33:45'
 
     def period(time):  # flase是同一段对话，true是另一端对话开始
         nonlocal last
 
-        hour1=int(re.search(r'(\d{1,2}):',last).group(1))
-        minute1=int(re.search(r'\d+:(\d{1,2}):',last).group(1))
-        hour2=int(re.search(r'(\d{1,2}):',time).group(1))
-        minute2=int(re.search(r'\d+:(\d{1,2}):',time).group(1))
-        
+        #换一种方式，尽量不用正则表达式，用切片提高速度
+        if time[1]==':':
+            time='0'+time
+        hour1=int(last[0:2])
+        minute1=int(last[3:5])
+        hour2=int(time[0:2])
+        minute2=int(time[3:5])
+
         if hour1 == hour2:
             long = minute2-minute1
+        elif hour1+1==hour2:
+            long = 60+(60-minute1)+minute2
+            if long >= 30:
+                last = time
+                return True
+            else:
+                last = time
+                return False
         else:
-            long = 60*abs(hour2-hour1)+(60-minute1)+minute2
-        last = time
-
-        if long >= 30:
+            last = time
             return True
-        else:
-            return False
+        
 
+        
     for message in messages:
         look1 = re.search(r'\d{1,2}\:\d{2}\:\d{2}', message)
 
@@ -118,8 +127,27 @@ def start():  # 聊天发起次数
     print('我{} 她{}'.format(me, her))
 
 
+def calender():#日历图
+    #https://pyecharts.org/#/zh-cn/basic_charts?id=calendar%ef%bc%9a%e6%97%a5%e5%8e%86%e5%9b%be
+    
+    def getdays(ndate):
+        year=ndate[0:4]
+        month=ndate[4:6]
+        day=ndate[6:8]
+
+    #获得日期
+    for message in messages:
+        date1=re.search(r'201\d\-\d{2}\-\d{2}',message)
+        if date1:
+            date2=re.sub('-','',date1)
+            days=getdays(int(date2))
+
+    
+
+
 def test():
     openfile(recordpath)
+    whoSpeak()
     start()
 
 test()
