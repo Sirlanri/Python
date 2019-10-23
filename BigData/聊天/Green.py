@@ -5,7 +5,8 @@ from openpyxl import load_workbook
 from pyecharts import options as opts
 from pyecharts.charts import Bar, Calendar, Pie
 
-recordpath = r'E:\代码\云端同步\保护\soul.txt'
+#聊天记录的路径
+recordpath = r'E:\代码\云端同步\保护\example.txt'
 messages = []
 myname = ''
 hername = ''
@@ -61,7 +62,7 @@ def whoSpeak():  # 两人各自的发言数量
     # 可视化
     c = (
         Pie()
-        .add('那些年，我们追过的女孩儿', [('我', me), ('她', her)])
+        .add('', [('我', me), ('她', her)])
         .set_global_opts(title_opts=opts.TitleOpts(title='发送消息数量', subtitle='那些年我们追过的女孩'))
 
     )
