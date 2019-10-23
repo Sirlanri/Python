@@ -1,11 +1,12 @@
-from openpyxl import load_workbook
-from pyecharts import options as opts
-from pyecharts.charts import Bar
-from pyecharts.charts import Pie
+import datetime
 import re
 from collections import Counter
 
-recordpath = r'E:\代码\云端同步\保护\record.txt'
+from openpyxl import load_workbook
+from pyecharts import options as opts
+from pyecharts.charts import Bar, Calendar, Pie
+
+recordpath = r'E:\代码\云端同步\保护\soul.txt'
 messages = []
 myname = ''
 hername = ''
@@ -60,7 +61,7 @@ def whoSpeak():  # 两人各自的发言数量
     # 可视化
     c = (
         Pie()
-        .add('消息', [('我', me), ('她', her)])
+        .add('那些年，我们追过的女孩儿', [('我', me), ('她', her)])
         .set_global_opts(title_opts=opts.TitleOpts(title='发送消息数量', subtitle='那些年我们追过的女孩'))
 
     )
@@ -110,7 +111,6 @@ def start():  # 聊天发起次数
             return True
         
 
-        
     for message in messages:
         look1 = re.search(r'\d{1,2}\:\d{2}\:\d{2}', message)
 
@@ -129,20 +129,53 @@ def start():  # 聊天发起次数
 
 def calender():#日历图
     #https://pyecharts.org/#/zh-cn/basic_charts?id=calendar%ef%bc%9a%e6%97%a5%e5%8e%86%e5%9b%be
-    
+    alldata=[]#里面是元组类型的数据
+    alldata2={}
+    temp1=''
+    count=0
+    flag=False
     def getdays(ndate):
+
         year=ndate[0:4]
         month=ndate[4:6]
         day=ndate[6:8]
+        
+        begin=datetime.date(2019,1,1)
+        end=datetime.date(2019,11,1)
 
-    #获得日期
+    #获得日期,尼玛这算法还是有问题，最后一天无法统计
     for message in messages:
-        date1=re.search(r'201\d\-\d{2}\-\d{2}',message)
+        date1=re.search(r'(201\d\-\d{2}\-\d{2})',message)
         if date1:
-            date2=re.sub('-','',date1)
-            days=getdays(int(date2))
+            if temp1==date1.group(1):
+                count+=1
+                flag=True
+            else:
+                if flag:
+                    
+                    alldata.append([before,count])
+                count=0
+            temp1=date1.group(1)
+            before=temp1
+    print(alldata)
+    #渲染
 
-    
+    c=(
+        Calendar()
+        .add('',alldata,calendar_opts=opts.CalendarOpts(range_=['2019-1','2019-11'],orient='vertical'))
+        .set_global_opts(
+            title_opts=opts.TitleOpts(title="2019聊天频率"),
+            visualmap_opts=opts.VisualMapOpts(
+                max_=800,
+                min_=0,
+                orient="horizontal",
+                is_piecewise=True,
+                pos_top="230px",
+                pos_left="100px",
+            ),
+        )
+    )
+    c.render('聊天分析2.html')
 
 
 def test():
