@@ -1,12 +1,11 @@
 import datetime
 import re
 from collections import Counter
-from openpyxl import load_workbook
 from pyecharts import options as opts
 from pyecharts.charts import Bar, Calendar, Pie
 
 #聊天记录的路径
-recordpath = r'E:\代码\云端同步\保护\example.txt'
+recordpath = r'E:\代码\云端同步\保护\record1.txt'
 messages = []
 myname = ''
 hername = ''
@@ -78,6 +77,7 @@ def time():  # 发言时间(几点),返回一个字典
             after = re.sub(':', '', first)
             times.append(after)
     result = dict(Counter(times))
+    
     return result
 
 
@@ -134,8 +134,8 @@ def calender():  # 日历图
     temp1 = ''
     count = 0
     flag = False
+    
     def getdays(ndate):
-
         year = ndate[0:4]
         month = ndate[4:6]
         day = ndate[6:8]
@@ -180,7 +180,7 @@ def calender():  # 日历图
 
 def test():
     openfile(recordpath)
-    calender()
+    
 
 
 test()
