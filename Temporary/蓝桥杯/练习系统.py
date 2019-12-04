@@ -21,3 +21,4 @@ nextline=[1]
 for i in range(n):
     for j in range(len(lastline)):
         nextline.append(lastline[i-1]+lastline[i])
+    
