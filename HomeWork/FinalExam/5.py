@@ -1,4 +1,5 @@
-special = ['x', 'y', 'z']
+special = ['x', 'y', 'z','X','Y','Z']
+
 while 1:
     getnum = input('input')
     if getnum in special:
