@@ -16,7 +16,8 @@ def exercise():
     while tili>0:
         run()
         rest()
-        time+=1
-    print(tili,time)
+        time+=2
+    tili=tili-300+600
+    print(tili,time-2)
 
 exercise()
