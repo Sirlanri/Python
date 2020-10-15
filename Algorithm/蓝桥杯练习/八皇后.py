@@ -1,6 +1,6 @@
 #存储合适的八皇后列表，里面是元组
 queenList=[]
-
+count=0
 def isRepeat(x,y):
     """
     判断是否冲突
@@ -13,16 +13,30 @@ def isRepeat(x,y):
             return False
     return True
 
-def findQueen(colume):
+def findQueen(firstX,fitstY):
     """
-    主函数 输入行数列数
+    输入第一个行数列数
     """
-    global queenList
-    for x in range(colume):
-        for y in range(colume):
+    global queenList,count
+    for x in range(firstX,8):
+        for y in range(fitstY,8):
             if isRepeat(x,y):
                 #如果合法，就插入数组
                 queenList.append({'x':x,'y':y})
                 print(x,y)
+                count+=1
+                break
+    queenList=[]
+    print()
+    
 
-findQueen(12)
+def firstQueen():
+    """
+    生成第一个皇后的位置
+    """
+    for x in range(8):
+        for y in range(8):
+            findQueen(x,y)
+
+firstQueen()
+print(count)
